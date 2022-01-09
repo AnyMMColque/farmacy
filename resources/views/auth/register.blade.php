@@ -15,8 +15,28 @@
             </div>
 
             <div class="mt-4">
+                <x-jet-label for="ci" value="{{ __('Ci') }}" />
+                <x-jet-input id="ci" class="block mt-1 w-full" type="text" name="ci" :value="old('ci')" required />
+            </div>
+
+            <div class="mt-4">
+                <x-jet-label for="address" value="Direccion" />
+                <x-jet-input id="address" class="block mt-1 w-full" type="text" name="address" :value="old('email')" required />
+            </div>
+
+            <div class="mt-4">
+                <x-jet-label for="telephone" value="Telefono" />
+                <x-jet-input id="telephone" class="block mt-1 w-full" type="text" name="telephone" :value="old('telephone')" required />
+            </div>
+
+            <div class="mt-4">
                 <x-jet-label for="email" value="{{ __('Email') }}" />
                 <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+            </div>
+
+            <div class="mt-4">
+                <x-jet-label for="user" value="Usuario" />
+                <x-jet-input id="user" class="block mt-1 w-full" type="text" name="user" :value="old('user')" required />
             </div>
 
             <div class="mt-4">
