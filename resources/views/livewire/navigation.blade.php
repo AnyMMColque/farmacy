@@ -26,7 +26,20 @@
                     <a href="#" class="px-2 py-1 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded dark:text-gray-200 hover:bg-gray-900 hover:text-gray-100 md:mx-2">Home</a>
                     <a href="#" class="px-2 py-1 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded dark:text-gray-200 hover:bg-gray-900 hover:text-gray-100 md:mx-2">About</a>
                     <a href="#" class="px-2 py-1 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded dark:text-gray-200 hover:bg-gray-900 hover:text-gray-100 md:mx-2">Contact</a>
-                    <a href="/login" class="px-2 py-1 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded dark:text-gray-200 hover:bg-gray-900 hover:text-gray-100 md:mx-2">Iniciar sesión</a>
+                    @if (Route::has('login'))
+                
+                    @auth
+                    <div class="mt-3 md:pl-4 md:mt-0 flex items-center py-2 -mx-1 md:mx-0">
+                        {{-- <a class="block w-1/2 px-3 py-2 mx-1 text-sm font-medium leading-5 text-center text-white transition-colors duration-200 transform bg-gray-500 rounded-md hover:bg-blue-600 md:mx-2 md:w-auto" href="/login">Panel de Control</a> --}}
+                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Panel de Control</a>
+                    </div>
+                    @else
+                        <a href="/login" class="px-2 py-1 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded dark:text-gray-200 hover:bg-gray-900 hover:text-gray-100 md:mx-2">Iniciar sesión</a>
+                        <a href="{{ route('logout') }}" class="px-2 py-1 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded dark:text-gray-200 hover:bg-gray-900 hover:text-gray-100 md:mx-2">Cerrar sesión</a>
+                        
+                    @endauth
+            @endif
+                    
                 </div>
                 
                 <div class="relative">
@@ -81,9 +94,29 @@
                     <input type="text" class="w-full py-3 pl-10 pr-4 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" placeholder="Buscar medicamento">
                 </div>
             </div>
-            <div class="mt-3 md:pl-4 md:mt-0 flex items-center py-2 -mx-1 md:mx-0">
-                <a class="block w-1/2 px-3 py-2 mx-1 text-sm font-medium leading-5 text-center text-white transition-colors duration-200 transform bg-gray-500 rounded-md hover:bg-blue-600 md:mx-2 md:w-auto" href="/login">Login</a>
-            </div>
+            @if (Route::has('login'))
+                
+                    @auth
+                    <div class="mt-3 md:pl-4 md:mt-0 flex items-center py-2 -mx-1 md:mx-0">
+                        {{-- <a class="block w-1/2 px-3 py-2 mx-1 text-sm font-medium leading-5 text-center text-white transition-colors duration-200 transform bg-gray-500 rounded-md hover:bg-blue-600 md:mx-2 md:w-auto" href="/login">Panel de Control</a> --}}
+                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Panel de Control</a>
+                        {{-- <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+
+                            <x-jet-dropdown-link href="{{ route('logout') }}"
+                                     onclick="event.preventDefault();
+                                            this.closest('form').submit();">
+                                {{ __('Log Out') }}
+                            </x-jet-dropdown-link>
+                        </form> --}}
+                    </div>
+                    @else
+                    <div class="mt-3 md:pl-4 md:mt-0 flex items-center py-2 -mx-1 md:mx-0">
+                        <a class="block w-1/2 px-3 py-2 mx-1 text-sm font-medium leading-5 text-center text-white transition-colors duration-200 transform bg-gray-500 rounded-md hover:bg-blue-600 md:mx-2 md:w-auto" href="/login">Login</a>
+                    </div>
+                        
+                    @endauth
+            @endif
         </div>
     </nav>
 </div>
