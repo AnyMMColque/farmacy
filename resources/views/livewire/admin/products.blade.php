@@ -13,7 +13,7 @@
             </div>
         </div>
         <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
-            Table with actions
+            Listado de Productos
         </h4>
         <div class="w-full overflow-hidden rounded-lg shadow-xs">
             <div class="w-full overflow-x-auto">
@@ -21,10 +21,10 @@
                     <thead>
                         <tr
                             class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                            <th class="px-4 py-3">Client</th>
-                            <th class="px-4 py-3">Amount</th>
-                            <th class="px-4 py-3">Status</th>
-                            <th class="px-4 py-3">Date</th>
+                            <th class="px-4 py-3">Producto</th>
+                            <th class="px-4 py-3">Stock</th>
+                            <th class="px-4 py-3">Lote</th>
+                            <th class="px-4 py-3">Fecha de Expiración</th>
                             <th class="px-4 py-3">Actions</th>
                         </tr>
                     </thead>
@@ -659,8 +659,7 @@
                 <label class="block text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Nombre Genérico</span>
                     <input
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                        placeholder="Jane Doe" />
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"/>
                 </label>
 
                 <label class="block text-sm">
