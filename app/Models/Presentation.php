@@ -9,6 +9,8 @@ class Presentation extends Model
 {
     use HasFactory;
     
+    protected $fillable =['name','description'];
+
     public function product()
     {
         return $this->belongsTo(Product::class);

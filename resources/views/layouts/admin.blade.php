@@ -23,6 +23,7 @@
 
 <body>
     <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
+        {{-- Vista Web para Admin --}}
         <!-- Desktop sidebar -->
         <aside class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0">
             <div class="py-4 text-gray-500 dark:text-gray-400">
@@ -46,6 +47,18 @@
                     </li>
                 </ul>
                 <ul>
+                    <li class="relative px-6 py-3">
+                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                            href="{{route('admin.branches')}}">
+                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                <path
+                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
+                                </path>
+                            </svg>
+                            <span class="ml-4">Sucursales</span>
+                        </a>
+                    </li>
                     <li class="relative px-6 py-3">
                         <button
                             class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
@@ -76,7 +89,7 @@
                                 aria-label="submenu">
                                 <li
                                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                    <a class="w-full" href="{{route('admin.products')}}">Productos</a>
+                                    <a class="w-full" href="{{route('admin.laboratories')}}">Laboratorios</a>
                                 </li>
                                 <li
                                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
@@ -86,8 +99,8 @@
                                 </li>
                                 <li
                                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                    <a class="w-full" href="{{route('admin.laboratories')}}">
-                                        Laboratorios
+                                    <a class="w-full" href="{{route('admin.products')}}">
+                                        Productos
                                     </a>
                                 </li>
                             </ul>
@@ -227,6 +240,7 @@
                 </div> --}}
             </div>
         </aside>
+        {{-- Vista Mobil para Admin--}}
         <!-- Mobile sidebar -->
         <!-- Backdrop -->
         <div x-show="isSideMenuOpen" x-transition:enter="transition ease-in-out duration-150"
@@ -262,6 +276,18 @@
                 </ul>
                 <ul>
                     <li class="relative px-6 py-3">
+                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                            href="{{route('admin.branches')}}">
+                            <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                <path
+                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
+                                </path>
+                            </svg>
+                            <span class="ml-4">Sucursales</span>
+                        </a>
+                    </li>
+                    <li class="relative px-6 py-3">
                         <button
                             class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                             @click="togglePagesMenu" aria-haspopup="true">
@@ -291,7 +317,9 @@
                                 aria-label="submenu">
                                 <li
                                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                    <a class="w-full" href="{{route('admin.products')}}">Productos</a>
+                                    <a class="w-full" href="pages/forgot-password.html">
+                                        Laboratorios
+                                    </a>
                                 </li>
                                 <li
                                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
@@ -301,9 +329,7 @@
                                 </li>
                                 <li
                                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                    <a class="w-full" href="pages/forgot-password.html">
-                                        Laboratorio
-                                    </a>
+                                    <a class="w-full" href="{{route('admin.products')}}">Productos</a>
                                 </li>
                             </ul>
                         </template>

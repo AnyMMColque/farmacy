@@ -12,6 +12,8 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $fillable =['name','g_name','stock','lot','exp_date'];
+
     public function laboratory(){
         return $this->belongsTo(Laboratory::class);
     }
