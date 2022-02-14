@@ -21,6 +21,9 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('branch_id');
             $table->foreign('branch_id')->references('id')->on('branches');
 
+            $table->unsignedBigInteger('presentation_id');
+            $table->foreign('presentation_id')->references('id')->on('presentations');
+
             $table->string('name');
             $table->string('g_name');
             $table->string('stock');

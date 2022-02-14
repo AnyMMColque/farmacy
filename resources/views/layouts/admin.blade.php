@@ -7,12 +7,15 @@
     <title>San Lorenzo</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
-     <!-- Styles -->
-     @livewireStyles
-     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <!-- Styles -->
+    @livewireStyles
+    @stack('styles')
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('windmill/assets/css/tailwind.output.css') }}" />
 
     <!-- Scripts -->
+    {{-- Script para poder usar Sweetalert 2 --}}
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ mix('js/app.js') }}" defer></script>
     {{-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script> --}}
     <script src="{{ asset('windmill/assets/js/init-alpine.js') }}"></script>
@@ -36,7 +39,7 @@
                         <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                             aria-hidden="true"></span>
                         <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                            href="{{route('admin.dashboard')}}">
+                            href="{{ route('admin.dashboard') }}">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path
@@ -50,7 +53,7 @@
                 <ul>
                     <li class="relative px-6 py-3">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="{{route('admin.branches')}}">
+                            href="{{ route('admin.branches') }}">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path
@@ -90,17 +93,17 @@
                                 aria-label="submenu">
                                 <li
                                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                    <a class="w-full" href="{{route('admin.laboratories')}}">Laboratorios</a>
+                                    <a class="w-full" href="{{ route('admin.laboratories') }}">Laboratorios</a>
                                 </li>
                                 <li
                                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                    <a class="w-full" href="{{route('admin.presentations')}}">
+                                    <a class="w-full" href="{{ route('admin.presentations') }}">
                                         Presentación
                                     </a>
                                 </li>
                                 <li
                                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                    <a class="w-full" href="{{route('admin.products')}}">
+                                    <a class="w-full" href="{{ route('admin.products') }}">
                                         Productos
                                     </a>
                                 </li>
@@ -109,7 +112,7 @@
                     </li>
                     <li class="relative px-6 py-3">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="{{route('admin.sales')}}">
+                            href="{{ route('admin.sales') }}">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path
@@ -121,7 +124,7 @@
                     </li>
                     <li class="relative px-6 py-3">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="{{route('admin.customers')}}">
+                            href="{{ route('admin.customers') }}">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path
@@ -133,7 +136,7 @@
                     </li>
                     <li class="relative px-6 py-3">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="{{route('admin.users')}}">
+                            href="{{ route('admin.users') }}">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
@@ -144,7 +147,7 @@
                     </li>
                     <li class="relative px-6 py-3">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="{{route('admin.reports')}}">
+                            href="{{ route('admin.reports') }}">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path
@@ -153,7 +156,7 @@
                             </svg>
                             <span class="ml-4">Reportes</span>
                         </a>
-                    {{-- </li>
+                        {{-- </li>
                     <li class="relative px-6 py-3">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                             href="modals.html">
@@ -241,7 +244,7 @@
                 </div> --}}
             </div>
         </aside>
-        {{-- Vista Mobil para Admin--}}
+        {{-- Vista Mobil para Admin --}}
         <!-- Mobile sidebar -->
         <!-- Backdrop -->
         <div x-show="isSideMenuOpen" x-transition:enter="transition ease-in-out duration-150"
@@ -264,7 +267,7 @@
                         <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                             aria-hidden="true"></span>
                         <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                            href="{{route('admin.dashboard')}}">
+                            href="{{ route('admin.dashboard') }}">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path
@@ -278,7 +281,7 @@
                 <ul>
                     <li class="relative px-6 py-3">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="{{route('admin.branches')}}">
+                            href="{{ route('admin.branches') }}">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                 <path
@@ -325,12 +328,12 @@
                                 <li
                                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
                                     <a class="w-full" href="pages/create-account.html">
-                                        Presentación 
+                                        Presentación
                                     </a>
                                 </li>
                                 <li
                                     class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                    <a class="w-full" href="{{route('admin.products')}}">Productos</a>
+                                    <a class="w-full" href="{{ route('admin.products') }}">Productos</a>
                                 </li>
                             </ul>
                         </template>
@@ -1165,7 +1168,7 @@
                     </div>
                 </div> --}}
                 <div class="container px-6 mx-auto grid">
-        
+
                     <!-- Page Heading -->
                     @if (isset($header))
                         <header class="bg-white shadow">
@@ -1174,7 +1177,7 @@
                             </div>
                         </header>
                     @endif
-        
+
                     <!-- Page Content -->
                     <main>
                         {{ $slot }}
@@ -1184,6 +1187,8 @@
         </div>
     </div>
     @livewireScripts
+
+    @stack('script')
 </body>
 
 </html>

@@ -22,13 +22,13 @@ class Product extends Model
         return $this->belongsTo(Branch::class);
     }
 
-    public function presentations()
-    {
-        return $this->hasMany(Presentation::class);
-    }
 
     public function orders()
     {
         return $this->belongsToMany(Order::class)->withPivot('quantity', 'price', 'discount');
+    }
+    
+    public function presentations(){
+        return $this->belongsTo(Presentation::class);
     }
 }
