@@ -9,6 +9,7 @@ class Users extends Component
 {
     public $name, $ci, $address, $telephone, $email, $user;
     public $password;
+    public $true, $num;
 
     protected $rules = [
         'name' => 'required|min:6|max:30',
@@ -19,13 +20,10 @@ class Users extends Component
         'user' => 'required',
         'password' => 'required|numeric',
     ];
-
+    /* Guardar Usuario */
     public function save()
     {
-
-        #Guardar usuario
         $user = new User();
-
         $user->name = $this->name;
         $user->ci = $this->ci;
         $user->address = $this->address;
@@ -40,6 +38,35 @@ class Users extends Component
 
         $this->emit('saved');
     }
+    /* Editar Usuario */
+    public function edit(User $id, $true)
+    {
+        $this->num = $id->id;
+        $this->name = $id->name;
+        $this->ci = $id->ci;
+        $this->address = $id->address;
+        $this->telephone = $id->telephone;
+        $this->email = $id->email;
+        $this->user = $id->user;
+        $this->password = $id->password;
+        $this->true = $true;
+    }
+    public function update(User $user, $name, $ci, $address, $telephone, $email, $password)
+    {
+        $user->name = $name;
+        $user->ci = $ci;
+        $user->address = $address;
+        $user->telephone = $telephone;
+        $user->email = $email;
+        $user->user = $user;
+        $user->password = $password;
+        $user->save();
+
+        $this->reset(['name', 'ci','address','telephone','email','user','password', 'num', 'true']);
+
+        $this->emit('updated');
+    }
+
     public function render()
     {
         $users = User::orderBy('created_at', 'desc')->paginate();

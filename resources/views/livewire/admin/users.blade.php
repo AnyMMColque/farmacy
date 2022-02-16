@@ -61,7 +61,7 @@
                                 <div class="flex items-center space-x-4 text-sm">
                                     <button
                                         class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                        aria-label="Edit">
+                                        aria-label="Edit" wire:click="edit('{{$user->id}}','true')">
                                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
                                             viewBox="0 0 20 20">
                                             <path
@@ -86,7 +86,7 @@
                 </tbody>
             </table>
         </div>
-
+        {{-- Paginación para Usuarios --}}
         <div
             class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
             <span class="flex items-center col-span-3">

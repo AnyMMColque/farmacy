@@ -47,7 +47,6 @@ class Laboratories extends Component
 
         $this->reset(['name', 'description', 'num', 'true']);
 
-        /* session()->flash('message', 'Post successfully updated.'); */
         $this->emit('updated');
     }
     /* Eliminar Laboratorio */

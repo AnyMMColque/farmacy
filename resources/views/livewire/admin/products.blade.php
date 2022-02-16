@@ -56,7 +56,7 @@
                                 <div class="flex items-center space-x-4 text-sm">
                                     <button
                                         class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                        aria-label="Edit">
+                                        aria-label="Edit" wire:click="edit('{{$product->id}}','true')">
                                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
                                             viewBox="0 0 20 20">
                                             <path
@@ -66,7 +66,7 @@
                                     </button>
                                     <button
                                         class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                        aria-label="Delete">
+                                        aria-label="Delete" wire:click="$emit('deleteProduct', {{$product}})">
                                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
                                             viewBox="0 0 20 20">
                                             <path fill-rule="evenodd"
@@ -84,7 +84,7 @@
     </div>
     {{-- Modal para registrar productos --}}
     <!-- Modal backdrop. This what you want to place close to the closing body tag -->
-    <div x-show="isModalOpen" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0"
+    <div wire:ignore x-show="isModalOpen" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
         x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
         class="fixed inset-0 z-30 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
@@ -126,7 +126,7 @@
                     <span class="text-gray-700 dark:text-gray-400">Nombre Genérico</span>
                     <input
                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                        wire:model='gname' />
+                        wire:model='g_name' />
                 </label>
 
                 <div class="grid grid-cols-2 gap-4">
@@ -157,13 +157,12 @@
                     <span class="text-gray-700 dark:text-gray-400">
                         Laboratorio
                     </span>
-                    <select
+                    <select wire:model='laboratory_id'
                         class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                         wire:model='name'>
-                        <option value="" selected disabled>Seleccione un Laboratorio</option>
+                        <option value="" selected>Seleccione un Laboratorio</option>
                         @foreach ($laboratories as $laboratory)
-                            <option>{{ $laboratory->name }}</option>
-                        @endforeach
+                            <option value="{{$laboratory->id}}">{{ $laboratory->name }}</option>                        @endforeach
                     </select>
                 </label>
                 <label class="block mt-4 text-sm">
@@ -172,10 +171,10 @@
                     </span>
                     <select
                         class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                        wire:model='name'>
-                        <option value="" selected disabled>Seleccione una Presentación</option>
+                        wire:model='presentation_id'>
+                        <option value="" selected>Seleccione una Presentación</option>
                         @foreach ($presentations as $presentation)
-                            <option>{{ $presentation->name }}</option>
+                            <option value="{{ $presentation->id }}">{{ $presentation->name }}</option>
                         @endforeach
                     </select>
                 </label>
@@ -185,10 +184,10 @@
                     </span>
                     <select
                         class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                        wire:model='name'>
-                        <option disabled="disabled" selected="selected">Seleccione una Sucursales</option>
+                        wire:model='branch_id'>
+                        <option value="" selected>Seleccione una Sucursales</option>
                         @foreach ($branches as $branch)
-                            <option>{{ $branch->name }}</option>
+                            <option value="{{ $branch->id }}">{{ $branch->name }}</option>
                         @endforeach
                     </select>
                 </label>
