@@ -4,12 +4,21 @@ namespace App\Http\Livewire\Admin;
 
 use App\Models\User;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Users extends Component
 {
+    use WithPagination;
+
     public $name, $ci, $address, $telephone, $email, $user;
     public $password;
-    public $true, $num;
+    public $num;
+
+    private $users;
+
+    public $search = "";
+
+    protected $listeners = ['delete', 'updateSearch', 'resetVariables']; 
 
     protected $rules = [
         'name' => 'required|min:6|max:30',
@@ -20,9 +29,22 @@ class Users extends Component
         'user' => 'required',
         'password' => 'required|numeric',
     ];
+    /* Buscar Usuario */
+    public function updateSearch($search)
+    {
+        $this->search = $search;
+        $this->resetPage();
+    }
+
+    public function resetVariables()
+    {
+        $this->reset(['name', 'address', 'telephone', 'turn', 'nit', 'authorization', 'lat', 'lng']);
+    }
     /* Guardar Usuario */
     public function save()
     {
+        $this->validate($this->rules);
+
         $user = new User();
         $user->name = $this->name;
         $user->ci = $this->ci;
@@ -33,43 +55,51 @@ class Users extends Component
         $user->password = $this->password;
 
         $user->save();
-
         $this->reset(['name','ci', 'address', 'telephone', 'email', 'user', 'password']);
-
         $this->emit('saved');
     }
     /* Editar Usuario */
-    public function edit(User $id, $true)
+    public function edit(User $user1)
     {
-        $this->num = $id->id;
-        $this->name = $id->name;
-        $this->ci = $id->ci;
-        $this->address = $id->address;
-        $this->telephone = $id->telephone;
-        $this->email = $id->email;
-        $this->user = $id->user;
-        $this->password = $id->password;
-        $this->true = $true;
+        $this->num = $user1->id;
+        $this->name = $user1->name;
+        $this->ci = $user1->ci;
+        $this->address = $user1->address;
+        $this->telephone = $user1->telephone;
+        $this->email = $user1->email;
+        $this->user = $user1->user;
+        $this->password = $user1->password;
     }
-    public function update(User $user, $name, $ci, $address, $telephone, $email, $password)
+    /* Actualizar Usuario */
+    public function update(User $user1)
     {
-        $user->name = $name;
-        $user->ci = $ci;
-        $user->address = $address;
-        $user->telephone = $telephone;
-        $user->email = $email;
-        $user->user = $user;
-        $user->password = $password;
-        $user->save();
+        $user1->name = $this->name;
+        $user1->ci = $this->ci;
+        $user1->address = $this->address;
+        $user1->telephone = $this->telephone;
+        $user1->email = $this->email;
+        $user1->user = $this->user;
+        $user1->password = $this->password;
 
-        $this->reset(['name', 'ci','address','telephone','email','user','password', 'num', 'true']);
-
+        $user1->save();
+        $this->reset(['name', 'ci','address','telephone','email','user','password', 'num']);
         $this->emit('updated');
+    }
+    /* Eliminar Usuario */
+    public function delete(User $user1)
+    {
+        $user1->delete();
+        $this->emit('deleted');
+    }
+    /* Paginacion Sucursal */
+    public function paginationView()
+    {
+        return 'pagination::personal2-tailwind';
     }
 
     public function render()
     {
-        $users = User::orderBy('created_at', 'desc')->paginate();
+        $users = User::where('name', 'like', '%'.$this->search.'%',)->orderBy('created_at', 'desc')->paginate();
         return view('livewire.admin.users', compact('users'))->layout('layouts.admin');
     }
 }

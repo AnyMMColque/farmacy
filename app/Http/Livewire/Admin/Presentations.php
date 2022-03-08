@@ -4,31 +4,50 @@ namespace App\Http\Livewire\Admin;
 
 use App\Models\Presentation;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Presentations extends Component
 {
-    public $name, $description, $true, $num;
+    use WithPagination;
+    
+    public $name, $description;
+    public $true, $num;
+
+
+    private $presentations;
+
+    public $search = "";
+
+    protected $listeners = ['delete', 'updateSearch', 'resetVariables']; 
 
     protected $rules = [
         'name' => 'required|min:3|max:30',
         'description' => 'nullable',
     ];
 
-    protected $listeners = ['delete'];
-
-    /* Guardar presentación */
-    public function save()
+    /* Buscar Presentacion */
+    public function updateSearch($search)
     {
+        $this->search = $search;
+        $this->resetPage();
+    }
+
+    public function resetVariables()
+    {
+        $this->reset(['name', 'description']);
+    }
+
+    /* Guardar Presentación */
+    public function save()
+    { 
+        $this->validate($this->rules);
         
         $presentation = new Presentation();
-
         $presentation->name = $this->name;
         $presentation->description = $this->description;
 
         $presentation->save();
-
         $this->reset(['name', 'description']);
-
         $this->emit('saved');
     }
     /* Editar Presentacion */
@@ -40,14 +59,13 @@ class Presentations extends Component
         $this->true = $true;
     }
     /* Actualizar Presentacion */
-    public function update(Presentation $presentation, $name, $description)
+    public function update(Presentation $presentation)
     {
-        $presentation->name = $name;
-        $presentation->description = $description;
+        $presentation->name = $this->name;
+        $presentation->description = $this->description;
+        
         $presentation->save();
-
         $this->reset(['name', 'description', 'num', 'true']);
-
         $this->emit('updated');
     }
     /* Eliminar Presentación */
@@ -55,10 +73,15 @@ class Presentations extends Component
     {
         $presentation->delete();
     }
+    /* Paginacion Sucursal */
+    public function paginationView()
+    {
+        return 'pagination::personal2-tailwind';
+    }
 
     public function render()
     {
-        $presentations = Presentation::orderBy('created_at', 'desc')->paginate();
+        $presentations = Presentation::where('name', 'like', '%'.$this->search.'%',)->orderBy('created_at', 'desc')->paginate();
 
         return view('livewire.admin.presentations', compact('presentations'))->layout('layouts.admin');
     }

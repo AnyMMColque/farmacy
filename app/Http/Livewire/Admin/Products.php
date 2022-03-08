@@ -3,18 +3,26 @@
 namespace App\Http\Livewire\Admin;
 
 use App\Models\Product;
-
 use App\Models\Branch;
 use App\Models\Laboratory;
 use App\Models\Presentation;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Products extends Component
 {
+    use WithPagination;
+
     public $name, $g_name, $stock, $lot, $exp_date;
     public $laboratory_id, $branch_id, $presentation_id;
     public $branches, $presentations, $laboratories;
-    public $true, $num;
+    public $num;
+
+    private $products;
+
+    public $search = "";
+
+    protected $listeners = ['delete', 'updateSearch', 'resetVariables']; 
 
     protected $rules = [
         'name' => 'required|min:6|max:30',
@@ -23,9 +31,12 @@ class Products extends Component
         'lot' => 'nullable',
         'exp_date' => 'required|date',
     ];
-
-    protected $listeners = ['delete'];
-
+    /* Buscar Sucursal */
+    public function updateSearch($search)
+    {
+        $this->search = $search;
+        $this->resetPage();
+    }
     /* Aqui mandamos los datos de otras vistas */
     public function mount()
     {
@@ -33,11 +44,16 @@ class Products extends Component
         $this->presentations =Presentation::all();
         $this->laboratories =Laboratory::all();
     }
+    public function resetVariables()
+    {
+        $this->reset(['name', 'g_name', 'stock', 'lot', 'exp_date', 'laboratory_id', 'branch_id', 'presentation_id']);
+    }
     /* Guardar Producto  */
     public function save()
     {
+        /* $this->validate($this->rules); */
+        
         $product = new Product();
-
         $product->name = $this->name;
         $product->g_name = $this->g_name;
         $product->stock = $this->stock;
@@ -48,51 +64,53 @@ class Products extends Component
         $product->presentation_id = $this->presentation_id;
 
         $product->save();
-
         $this->reset(['name', 'g_name', 'stock', 'lot', 'exp_date']);
-
         $this->emit('saved');
     }
     /* Editar Producto */
-    public function edit(Product $id, $true)
+    public function edit(Product $product)
     {
-        $this->num = $id->id;
-        $this->name = $id->name;
-        $this->g_name = $id->g_name;
-        $this->stock = $id->stock;
-        $this->lot = $id->lot;
-        $this->exp_date = $id->exp_date;
-        $this->laboratory_id = $id->laboratory_id;
-        $this->branch_id = $id->branch_id;
-        $this->presentation_id = $id->presentation_id;
-        $this->true = $true;
+        $this->num = $product->id;
+        $this->name = $product->name;
+        $this->g_name = $product->g_name;
+        $this->stock = $product->stock;
+        $this->lot = $product->lot;
+        $this->exp_date = $product->exp_date;
+        $this->laboratory_id = $product->laboratory_id;
+        $this->branch_id = $product->branch_id;
+        $this->presentation_id = $product->presentation_id;
     }
+
     /* Actualizar Producto */
-    public function update(Product $product, $name, $g_name, $stock, $lot, $exp_date, $laboratory_id, $branch_id, $presentation_id)
+    public function update(Product $product)
     {
-        $product->name = $name;
-        $product->g_name = $g_name;
-        $product->stock = $stock;
-        $product->lot = $lot;
-        $product->exp_date = $exp_date;
-        $product->laboratory_id = $laboratory_id;
-        $product->branch_id = $branch_id;
-        $product->presentation_id = $presentation_id;
+        $product->name = $this->name;
+        $product->g_name = $this->g_name;
+        $product->stock = $this->stock;
+        $product->lot = $this->lot;
+        $product->exp_date = $this->exp_date;
+        $product->laboratory_id = $this->laboratory_id;
+        $product->branch_id = $this->branch_id;
+        $product->presentation_id = $this->presentation_id;
+        
         $product->save();
-
-        $this->reset(['name', 'g_name','stock','lot','exp_date','laboratory_id','branch_id','presentation_id','num', 'true']);
-
+        $this->reset(['name', 'g_name','stock','lot','exp_date','laboratory_id','branch_id','presentation_id','num']);
         $this->emit('updated');
     }
     /* Eliminar Producto */
     public function delete(Product $product)
     {
         $product->delete();
+        $this->emit('deleted');
     }
 
     public function render()
     {
-        $products = Product::orderBy('created_at', 'desc')->paginate();
+        $products = Product::where(function($query){
+            $query->where('name', 'like', '%'.$this->search.'%');
+            $query->orwhere('g_name', 'like', '%'.$this->search.'%');
+        })->orderBy('created_at', 'desc')->paginate();
+
         return view('livewire.admin.products', compact('products'))->layout('layouts.admin');
     }
 }

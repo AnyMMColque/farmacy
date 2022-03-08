@@ -16,13 +16,13 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('laboratory_id');
-            $table->foreign('laboratory_id')->references('id')->on('laboratories');
+            $table->foreign('laboratory_id')->references('id')->on('laboratories')->onDelete('cascade');
 
             $table->unsignedBigInteger('branch_id');
-            $table->foreign('branch_id')->references('id')->on('branches');
+            $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');
 
             $table->unsignedBigInteger('presentation_id');
-            $table->foreign('presentation_id')->references('id')->on('presentations');
+            $table->foreign('presentation_id')->references('id')->on('presentations')->onDelete('cascade');
 
             $table->string('name');
             $table->string('g_name');

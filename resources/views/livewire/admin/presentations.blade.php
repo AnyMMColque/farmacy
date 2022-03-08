@@ -28,7 +28,6 @@
                         d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z" />
                 </svg>
             </div>
-
             <div class="px-4 py-2 -mx-3">
                 <div class="mx-3">
                     <span class="font-semibold text-emerald-500 dark:text-emerald-400">Success</span>
@@ -38,18 +37,24 @@
         </div>
     @endif
     <div class="grid grid-cols-2 gap-4">
-        <div><label class="block text-sm">
+        <div>
+            <label class="block text-sm">
                 <span class="text-gray-700 dark:text-gray-400">Nombre</span>
                 <input
                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                     wire:model='name' />
+                    {{-- Validacion de Nombre --}}
+                    <x-jet-input-error for="name" />
             </label>
         </div>
-        <div><label class="block text-sm">
+        <div>
+            <label class="block text-sm">
                 <span class="text-gray-700 dark:text-gray-400">Descripción</span>
                 <input
                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                     wire:model='description' />
+                    {{-- Validacion de Descripcion --}}
+                    <x-jet-input-error for="description" />
             </label>
         </div>
         <div>
@@ -63,7 +68,7 @@
     {{-- Botones para registrar y actualizar laboratorio --}}
     <div class="py-3">
         <button wire:click='save'
-            class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 dark:bg-green-700 border border-transparent rounded-lg active:bg-green-700 hover:bg-green-700 focus:outline-none focus:shadow-outline-purple">
+        class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-700 dark:bg-green-700 border border-transparent rounded-lg active:bg-green-800 hover:bg-green-800 focus:outline-none focus:shadow-outline-purple">
             Registrar Presentación
         </button>
         @if ($true == true)
@@ -73,6 +78,7 @@
             </button>
         @endif
     </div>
+    {{-- Sweet Alert despues de registrar Presentacion --}}
     <x-jet-action-message class="mr-3" on="saved">
         <div class="alert alert-success dark:bg-green-700 text-white">
             <div class="flex-1">
@@ -85,15 +91,15 @@
             </div>
         </div>
     </x-jet-action-message>
+    {{-- Lista donde se muestran las presentaciones registradas --}}
     <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300 py-3 my-3">
-        Lista de presentación de medicamentos
+        Lista de Presentaciones
     </h4>
     <div class="w-full overflow-hidden rounded-lg shadow-xs">
         <div class="w-full overflow-x-auto">
             <table class="w-full whitespace-no-wrap">
                 <thead>
-                    <tr
-                        class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                    <tr class="text-xs font-semibold tracking-wide text-left bg-green-600 dark:bg-green-700 text-gray-50 uppercase border-b dark:border-gray-700 dark:text-gray-50 ">
                         <th class="px-4 py-3">Nombre</th>
                         <th class="px-4 py-3">Descripción</th>
                         <th class="px-4 py-3">Acciones</th>
@@ -112,18 +118,17 @@
                             </td>
                             <td class="px-4 py-3">
                                 <div class="flex items-center space-x-4 text-sm">
-                                    <button
-                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                    {{-- Accion de editar dentro de la lista --}}
+                                    <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg dark:text-green-700 focus:outline-none focus:shadow-outline-gray"
                                         aria-label="Edit" wire:click="edit('{{$presentation->id}}','true')">
                                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
                                             viewBox="0 0 20 20">
-                                            <path
-                                                d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+                                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
                                             </path>
                                         </svg>
                                     </button>
-                                    <button
-                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                    {{-- Accion de eliminar dentro de la lista --}}
+                                    <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg dark:text-green-700 focus:outline-none focus:shadow-outline-gray"
                                         aria-label="Delete" wire:click="$emit('deletePresentation', {{$presentation}})">
                                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
                                             viewBox="0 0 20 20">
@@ -140,20 +145,19 @@
             </table>
         </div>
         {{-- Paginacion para presentaciones --}}
-        <div
-            class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+        <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
             <span class="flex items-center col-span-3">
                 {!! $presentations->links("pagination::message") !!}
             </span>
             <span class="col-span-2"></span>
             <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
                 <nav aria-label="Table navigation">
-                    {!! $presentations->links("pagination::personal-tailwind") !!}
+                    {{$presentations->links()}}
                 </nav>
             </span>
         </div>
     </div>
-    {{-- Sweetalert cuando se eliminan laboratorios--}}
+    {{-- Sweetalert cuando se eliminan presentaciones--}}
     @push('script')
         <script>
             Livewire.on('deletePresentation', Presentation => {
