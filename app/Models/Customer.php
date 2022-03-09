@@ -12,6 +12,12 @@ class Customer extends Model
 
     protected $fillable =['ci','name','cellphone'];
 
+    public static  function search($searchKey)
+    {
+        return self::where('name', 'LIKE', '%' . $searchKey . '%')
+            ->orWhere('ci', 'LIKE', '%' . $searchKey . '%');
+    }
+
     public function orders()
     {
         return $this->hasMany(Order::class);
