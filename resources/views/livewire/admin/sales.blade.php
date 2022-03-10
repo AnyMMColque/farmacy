@@ -1,26 +1,15 @@
 <div>
-    @push('styles')
-        {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
-    @endpush
+
     <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
         Ventas
     </h2>
     {{-- Boton para registrar nueva venta --}}
-    <div>
+    <div >
         <button
             class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-700 dark:bg-green-700 border border-transparent rounded-lg active:bg-green-800 hover:bg-green-800 focus:outline-none focus:shadow-outline-purple"
-            wire:click='changeView'>
+            wire:click="new">
             Nuevo
         </button>
-    </div>
-    @if ($button)
-        <select class="js-data-example-ajax"></select>
-        <select class="js-example-basic-single" name="state">
-            <option value="AL">Alabama</option>
-              ...
-            <option value="WY">Wyoming</option>
-          </select>
-    @else
         <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300 py-3 my-3">
             Lista de Ventas
         </h4>
@@ -91,31 +80,17 @@
             </div>
             {{-- Paginación para Lista de Sucursales --}}
             {{-- <div
-            class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
-            <span class="flex items-center col-span-3">
-                {!! $branches->links('pagination::message') !!}
-            </span>
-            <span class="col-span-2"></span>
-            <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
-                <nav aria-label="Table navigation">
-                    {{ $branches->links() }}
-                </nav>
-            </span>
-        </div> --}}
+                    class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+                    <span class="flex items-center col-span-3">
+                        {!! $branches->links('pagination::message') !!}
+                    </span>
+                    <span class="col-span-2"></span>
+                    <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
+                        <nav aria-label="Table navigation">
+                            {{ $branches->links() }}
+                        </nav>
+                    </span>
+                </div> --}}
         </div>
-    @endif
-
-    @push('script')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-        <script>
-            $('.js-data-example-ajax').select2({
-                ajax: {
-                    url: 'https://api.github.com/search/repositories',
-                    dataType: 'json'
-                    // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
-                }
-            });
-        </script>
-    @endpush
+    </div>
 </div>

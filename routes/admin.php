@@ -9,6 +9,7 @@ use App\Http\Livewire\Admin\Presentations;
 use App\Http\Livewire\Admin\Products;
 use App\Http\Livewire\Admin\Reports;
 use App\Http\Livewire\Admin\Sales;
+use App\Http\Livewire\Admin\SalesCreate;
 use App\Http\Livewire\Admin\Users;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,7 @@ Route::get('/productos', Products::class)->name('admin.products');
 Route::get('/presentaciones', Presentations::class)->name('admin.presentations');
 Route::get('/laboratorios', Laboratories::class)->name('admin.laboratories');
 Route::get('/ventas', Sales::class)->name('admin.sales');
+Route::get('/ventas/create', SalesCreate::class)->name('admin.sales.create');
 Route::get('/clientes', Customers::class)->name('admin.customers');
 Route::get('/usuarios', Users::class)->name('admin.users');
 Route::get('/reportes', Reports::class)->name('admin.reports');
