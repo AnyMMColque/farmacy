@@ -12,7 +12,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable =['name','g_name','stock','lot','exp_date'];
+    protected $fillable =['name','g_name','stock','lot','exp_date', 'price'];
 
     public function laboratory(){
         return $this->belongsTo(Laboratory::class);
@@ -28,7 +28,7 @@ class Product extends Model
         return $this->belongsToMany(Order::class)->withPivot('quantity', 'price', 'discount');
     }
     
-    public function presentations(){
+    public function presentation(){
         return $this->belongsTo(Presentation::class);
     }
 }

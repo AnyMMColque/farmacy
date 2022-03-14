@@ -11,7 +11,7 @@ class Presentation extends Model
     
     protected $fillable =['name','description'];
 
-    public function products(){
-        return $this->hasMany(Product::class);
+    public function product(){
+        return $this->hasOne(Product::class);
     }
 }

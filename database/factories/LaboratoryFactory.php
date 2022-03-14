@@ -14,9 +14,8 @@ class LaboratoryFactory extends Factory
     public function definition()
     {
         return [
-            'nit' => '1352352',
             'name' => $this->faker->sentence(2),
-            'cellphone' => '231353',
+            'description' => $this->faker->sentence(6),
         ];
     }
 }

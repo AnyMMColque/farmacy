@@ -29,6 +29,7 @@ class CreateProductsTable extends Migration
             $table->string('stock');
             $table->string('lot');
             $table->string('exp_date');
+            $table->string('price');
             $table->timestamps();
         });
     }

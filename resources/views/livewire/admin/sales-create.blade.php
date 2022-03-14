@@ -1,42 +1,129 @@
-<div>
+@php
+use App\Models\Product;
+@endphp
+<div x-data="{
+    open: true,
+    open2: false,
+    button: true}">
     @push('styles')
-        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
     @endpush
+    <x-jet-action-message class="mt-4 mb-2" on="exist">
+        <div class="flex w-full max-w-lg mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
+            <div class="flex items-center justify-center w-12 bg-red-500">
+                <svg class="w-6 h-6 text-white fill-current" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M20 3.36667C10.8167 3.36667 3.3667 10.8167 3.3667 20C3.3667 29.1833 10.8167 36.6333 20 36.6333C29.1834 36.6333 36.6334 29.1833 36.6334 20C36.6334 10.8167 29.1834 3.36667 20 3.36667ZM19.1334 33.3333V22.9H13.3334L21.6667 6.66667V17.1H27.25L19.1334 33.3333Z" />
+                </svg>
+            </div>
+
+            <div class="px-4 py-2 -mx-3">
+                <div class="mx-3">
+                    <span class="font-semibold text-red-500 dark:text-red-400">Error</span>
+                    <p class="text-sm text-gray-600 dark:text-gray-200">¡Este producto ya a sido agregado!</p>
+                </div>
+            </div>
+        </div>
+    </x-jet-action-message>
+
+    <x-jet-action-message class="mt-4 mb-2" on="saved">
+        <div class="flex w-full max-w-lg mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
+            <div class="flex items-center justify-center w-12 bg-emerald-500">
+                <svg class="w-6 h-6 text-white fill-current" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z" />
+                </svg>
+            </div>
+            <div class="px-4 py-2 -mx-3">
+                <div class="mx-3">
+                    <span class="font-semibold text-emerald-500 dark:text-emerald-400">Exito</span>
+                    <p class="text-sm text-gray-600 dark:text-gray-200">¡Cliente resgistrado!</p>
+                </div>
+            </div>
+        </div>
+    </x-jet-action-message>
+
     <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
         Nueva venta
     </h2>
-    <button
-        class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-700 dark:bg-green-700 border border-transparent rounded-lg active:bg-green-800 hover:bg-green-800 focus:outline-none focus:shadow-outline-purple"
-        @click="setCustomer()">
-        cam
-    </button>
-    <div x-data="{ open: true }" class="mt-4 px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
 
+    <div class="mt-4 px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+        <button
+            class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-700 dark:bg-green-700 border border-transparent rounded-lg active:bg-green-800 hover:bg-green-800 focus:outline-none focus:shadow-outline-purple"
+            wire:click="addProducts">
+            Agregar productos
+        </button>
 
-        <div wire:ignore>
-            <select onchange="setCustomer()" id="customer"
-                class="js-example-basic-single block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                name="state">
-                <option value=""></option>
-                @foreach ($customers as $cus)
-                    <option value="{{ $cus->id }}">{{ $cus->name }}</option>
-                @endforeach
-            </select>
-            <select onchange="setCustomer()" id="customer2"
-                class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                name="state">
-                <option value=""></option>
-                @foreach ($customers as $cus)
-                    <option value="{{ $cus->id }}">{{ $cus->name }}</option>
-                @endforeach
-            </select>
+        <div class="mt-4 grid grid-cols-3 gap-5">
+            <div>
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Seleccionar producto</span>
+                    <div wire:ignore>
+                        <select onchange="setProduct()" id="products" class="js-products-basic-single block w-full mt-1"
+                            name="state">
+                            <option value="0" disabled selected>Selecciona un producto</option>
+                            @foreach ($products as $prod)
+                                <option value="{{ $prod->id }}" wire:key='{{$prod->id}}'>{{ $prod->name }} {{$prod->presentation->name}}</option>
+                                <option value="{{ $prod->id }}" wire:key='{{$prod->id}}'>{{ $prod->g_name }} {{$prod->presentation->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </label>
+                <x-jet-input-error for="product" />
+
+                
+            </div>
+
+            <div>
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Cantidad</span>
+                    <input wire:model.defer="quantity" type="number" min="0" step="1"
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        placeholder="0" />
+                </label>
+                <x-jet-input-error for="quantity" />
+            </div>
+
+            <div>
+                <label class="block text-sm">
+                    @if (isset($product->price))
+                        <span class="text-gray-700 dark:text-gray-400">Precio</span>
+                        <input value="{{$product->price*$quantity}}" disabled
+                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            placeholder="0" />
+                        
+                    @else
+                    <span class="text-gray-700 dark:text-gray-400">Precio</span>
+                    <input value="0" disabled
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        placeholder="0" />
+                    @endif
+                </label>
+            </div>
         </div>
 
-        <button
-            class="mt-3 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-700 dark:bg-green-700 border border-transparent rounded-lg active:bg-green-800 hover:bg-green-800 focus:outline-none focus:shadow-outline-purple"
-            @click="open = !open">
-            cam
-        </button>
+        <label class="mt-4 block text-sm">
+            <span class="text-gray-700 dark:text-gray-400">Seleccionar cliente</span>
+            <div wire:ignore>
+                <select onchange="setCustomer()" id="customer"
+                    class="js-example-basic-single block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                    name="state">
+                    <option value="0" disabled selected>Selecciona una opción</option>
+                    @foreach ($customers as $cus)
+                        <option value="{{ $cus->id }}" wire:key='{{$cus->id}}'>{{ $cus->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </label>
+        <x-jet-input-error for="customer" />
+
+        <template x-if="open">
+            <button
+                class="mt-3 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-700 dark:bg-green-700 border border-transparent rounded-lg active:bg-green-800 hover:bg-green-800 focus:outline-none focus:shadow-outline-purple"
+                @click="open = !open">
+                Registrar nuevo cliente
+            </button>
+        </template>
 
         <div :class="{'block':!open, 'hidden': open}" class="hidden grid grid-cols-3">
             <div>
@@ -70,42 +157,114 @@
             <div>
                 <button
                     class="mt-3 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-700 dark:bg-green-700 border border-transparent rounded-lg active:bg-green-800 hover:bg-green-800 focus:outline-none focus:shadow-outline-purple"
-                    wire:click=registerCustomer
-                    @click="open = !open">
+                    wire:click="registerCustomer" @click="Livewire.on('saved', () => { open = true; })">
                     Registar cliente
                 </button>
             </div>
 
         </div>
     </div>
-    {{ $search }}
-    {{ $customer }}
+    {{-- {{ print_r($listProducts) }} --}}
+    {{-- Lista que muestra productos registrados --}}
+    <div class="w-full overflow-x-auto">
+        <table class="w-full whitespace-no-wrap">
+            <thead>
+                <tr
+                    class="text-xs font-semibold tracking-wide text-left bg-green-600 dark:bg-green-700 text-gray-50 uppercase border-b dark:border-gray-700 dark:text-gray-50 ">
+                    <th class="px-4 py-3">Producto</th>
+                    <th class="px-4 py-3">Stock</th>
+                    <th class="px-4 py-3">Lote</th>
+                    <th class="px-4 py-3">Fecha de Expiración</th>
+                    <th class="px-4 py-3">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                @foreach ($input as $product)
+                    <tr class="text-gray-700 dark:text-gray-400">
+                        <td class="px-4 py-3">
+                            <div
+                                class="flex items-center text-sm  dark:bg-green-700 rounded-full px-2 py-1 dark:text-green-100">
+                                <p class="font-semibold">{{ $product->name }}</p>
+                            </div>
+                        </td>
+                        <td class="px-4 py-3 text-sm">
+                            {{ $product->stock }}
+                        </td>
+                        <td class="px-4 py-3 text-xs">
+                            <span class="px-2 py-1">
+                                {{ $product->lot }}
+                            </span>
+                        </td>
+                        <td class="px-4 py-3 text-sm">
+                            {{ $product->exp_date }}
+                        </td>
+                        <td class="px-4 py-3">
+                            <div class="flex items-center space-x-4 text-sm">
+                                {{-- Accion de eliminar dentro de la lista --}}
+                                <button
+                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg dark:text-green-700 focus:outline-none focus:shadow-outline-gray"
+                                    aria-label="Delete" wire:click="removeProduct({{ $product->id }})">
+                                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
+                                        viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd"
+                                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                            clip-rule="evenodd">
+                                        </path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 
-    @push('script')
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
-                integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g=="
-                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-        <script>
-            // In your Javascript (external .js resource or <script> tag)
-            $(document).ready(function() {
-                $('.js-example-basic-single').select2();
-            });
-        </script>
-        <script>
-            function setCustomer() {
-                var customer = document.getElementById("customer");
-                $('#customer2 option:first').text('Month');
-                $('#customer option:first').text('Month');
-                $('.js-example-basic-single').select2();
+</div>
 
-                console.log($("#customer2 :selected").text())
+@push('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
+        integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        // In your Javascript (external .js resource or <script> tag)
+        $(document).ready(function() {
+            $('.js-example-basic-single').select2();
+            $('.js-products-basic-single').select2();
+        });
+    </script>
+    <script>
+        function setCustomer() {
+            var customer = document.getElementById('customer');
+            var selectedCustomer = customer.options[customer.selectedIndex].value;
+            console.log(selectedCustomer)
+            Livewire.emit('selectCustomer', selectedCustomer)
+        }
 
-                console.log($("#customer :selected").text())
-                var selectedValue = customer.options[customer.selectedIndex].value;
-                // console.log(selectedValue)
-                Livewire.emit('selectCustomer', selectedValue)
-            }
-        </script>
-    @endpush
+        Livewire.on('select', (name, id) => {
+            // console.log(name)
+            $('#customer option:first').text(name);
+            $('#customer').val(0);
+            $('#customer option:selected').prop('disabled', false);
+            $('#customer').select2();
+            var customer = document.getElementById('customer');
+            customer.options[customer.selectedIndex].value = id;
+            console.log(id)
+        })
+
+        Livewire.on('clearProduct', () => {
+            // Set selected 
+            $('#products').val(0);
+            $('#products').select2();
+        })
+
+        function setProduct() {
+            var product = document.getElementById('products');
+            var selectedProduct = product.options[product.selectedIndex].value;
+            // console.log(selectedProduct)
+            Livewire.emit('selectProduct', selectedProduct)
+        }
+    </script>
+@endpush
 </div>
