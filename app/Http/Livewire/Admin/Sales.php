@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin;
 
 use App\Models\Customer;
+use App\Models\Order;
 use Livewire\Component;
 
 class Sales extends Component
@@ -29,6 +30,8 @@ class Sales extends Component
         return view('livewire.admin.sales', [
             'articles' => $articles,
         ])->layout('layouts.admin'); */
-        return view('livewire.admin.sales')->layout('layouts.admin');
+        $orders = Order::all();
+
+        return view('livewire.admin.sales', compact('orders'))->layout('layouts.admin');
     }
 }

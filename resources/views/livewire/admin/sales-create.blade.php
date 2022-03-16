@@ -54,8 +54,8 @@ use App\Models\Product;
             Agregar productos
         </button>
 
-        <div class="mt-4 grid grid-cols-3 gap-5">
-            <div>
+        <div class="mt-4 grid grid-cols-5 gap-5">
+            <div class="col-span-4">
                 <label class="block text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Seleccionar producto</span>
                     <div wire:ignore>
@@ -63,42 +63,27 @@ use App\Models\Product;
                             name="state">
                             <option value="0" disabled selected>Selecciona un producto</option>
                             @foreach ($products as $prod)
-                                <option value="{{ $prod->id }}" wire:key='{{$prod->id}}'>{{ $prod->name }} {{$prod->presentation->name}}</option>
-                                <option value="{{ $prod->id }}" wire:key='{{$prod->id}}'>{{ $prod->g_name }} {{$prod->presentation->name}}</option>
+                                <option value="{{ $prod->id }}" wire:key='{{ $prod->id }}'>{{ $prod->name }}
+                                    ({{ $prod->presentation->name }})
+                                </option>
+                                <option value="{{ $prod->id }}" wire:key='{{ $prod->id }}'>{{ $prod->g_name }}
+                                    ({{ $prod->presentation->name }})</option>
                             @endforeach
                         </select>
                     </div>
                 </label>
+                <x-jet-input-error for="listProducts" />
                 <x-jet-input-error for="product" />
-
-                
             </div>
 
-            <div>
+            <div class="col-span-1">
                 <label class="block text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Cantidad</span>
-                    <input wire:model.defer="quantity" type="number" min="0" step="1"
+                    <input wire:model.lazy="quantity" type="number" min="0" step="1"
                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                         placeholder="0" />
                 </label>
                 <x-jet-input-error for="quantity" />
-            </div>
-
-            <div>
-                <label class="block text-sm">
-                    @if (isset($product->price))
-                        <span class="text-gray-700 dark:text-gray-400">Precio</span>
-                        <input value="{{$product->price*$quantity}}" disabled
-                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                            placeholder="0" />
-                        
-                    @else
-                    <span class="text-gray-700 dark:text-gray-400">Precio</span>
-                    <input value="0" disabled
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                        placeholder="0" />
-                    @endif
-                </label>
             </div>
         </div>
 
@@ -110,9 +95,11 @@ use App\Models\Product;
                     name="state">
                     <option value="0" disabled selected>Selecciona una opción</option>
                     @foreach ($customers as $cus)
-                        <option value="{{ $cus->id }}" wire:key='{{$cus->id}}'>{{ $cus->name }}</option>
+                        <option value="{{ $cus->id }}" wire:key='{{ $cus->id }}'>{{ $cus->name }}
+                        </option>
                     @endforeach
                 </select>
+
             </div>
         </label>
         <x-jet-input-error for="customer" />
@@ -125,7 +112,7 @@ use App\Models\Product;
             </button>
         </template>
 
-        <div :class="{'block':!open, 'hidden': open}" class="hidden grid grid-cols-3">
+        <div :class="{'block':!open, 'hidden': open}" class="hidden grid grid-cols-3 gap-5">
             <div>
                 <label class="block text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Nombre</span>
@@ -164,7 +151,6 @@ use App\Models\Product;
 
         </div>
     </div>
-    {{-- {{ print_r($listProducts) }} --}}
     {{-- Lista que muestra productos registrados --}}
     <div class="w-full overflow-x-auto">
         <table class="w-full whitespace-no-wrap">
@@ -173,13 +159,14 @@ use App\Models\Product;
                     class="text-xs font-semibold tracking-wide text-left bg-green-600 dark:bg-green-700 text-gray-50 uppercase border-b dark:border-gray-700 dark:text-gray-50 ">
                     <th class="px-4 py-3">Producto</th>
                     <th class="px-4 py-3">Stock</th>
-                    <th class="px-4 py-3">Lote</th>
-                    <th class="px-4 py-3">Fecha de Expiración</th>
+                    <th class="px-4 py-3">Precio</th>
+                    <th class="px-4 py-3">Cantidad</th>
+                    <th class="px-4 py-3">Subtotal</th>
                     <th class="px-4 py-3">Actions</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                @foreach ($input as $product)
+                @foreach ($input as $key => $product)
                     <tr class="text-gray-700 dark:text-gray-400">
                         <td class="px-4 py-3">
                             <div
@@ -190,20 +177,24 @@ use App\Models\Product;
                         <td class="px-4 py-3 text-sm">
                             {{ $product->stock }}
                         </td>
+                        <td class="px-4 py-3 text-sm">
+                            {{ $product->price }}
+                        </td>
                         <td class="px-4 py-3 text-xs">
                             <span class="px-2 py-1">
-                                {{ $product->lot }}
+                                {{ $subtotal[$key] }}
                             </span>
                         </td>
                         <td class="px-4 py-3 text-sm">
-                            {{ $product->exp_date }}
+                            {{ $product->price * $subtotal[$key] }}
                         </td>
                         <td class="px-4 py-3">
                             <div class="flex items-center space-x-4 text-sm">
                                 {{-- Accion de eliminar dentro de la lista --}}
                                 <button
                                     class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg dark:text-green-700 focus:outline-none focus:shadow-outline-gray"
-                                    aria-label="Delete" wire:click="removeProduct({{ $product->id }})">
+                                    aria-label="Delete"
+                                    wire:click="removeProduct({{ $product->id }}, {{ $key }})">
                                     <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
                                         viewBox="0 0 20 20">
                                         <path fill-rule="evenodd"
@@ -218,6 +209,40 @@ use App\Models\Product;
                 @endforeach
             </tbody>
         </table>
+    </div>
+
+
+
+    {{-- Total --}}
+    <div class="grid justify-items-stretch">
+
+        {{-- Descuento --}}
+        <div class="justify-self-end">
+
+            <div class="mt-4 mb-4">
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Descuento</span>
+                    <input wire:model.lazy="discount" type="number" min="0" max="10" step="1"
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        placeholder="0" />
+                </label>
+                <x-jet-input-error for="discount" />
+            </div>
+        </div>
+        <div class="justify-self-end stats bg-primary text-primary-content">
+            <div class="stat">
+                <div class="stat-title">Balance total</div>
+                
+                <div class="stat-value">{{$total}}</div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <button wire:click="saveOrder"
+            class="mt-4 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+            Registrar venta
+        </button>
     </div>
 
 </div>
@@ -242,6 +267,7 @@ use App\Models\Product;
             Livewire.emit('selectCustomer', selectedCustomer)
         }
 
+        /* ubica al usuario creado en el select */
         Livewire.on('select', (name, id) => {
             // console.log(name)
             $('#customer option:first').text(name);
@@ -250,7 +276,7 @@ use App\Models\Product;
             $('#customer').select2();
             var customer = document.getElementById('customer');
             customer.options[customer.selectedIndex].value = id;
-            console.log(id)
+            // console.log(id)
         })
 
         Livewire.on('clearProduct', () => {

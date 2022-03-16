@@ -23,7 +23,7 @@ class CreateOrderProductTable extends Migration
             $table->string('quantity');
             $table->float('price');
             $table->float('discount');
-            $table->timestamps();
+
         });
     }
 
