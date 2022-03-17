@@ -1,10 +1,9 @@
 <div>
-
     <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
         Ventas
     </h2>
     {{-- Boton para registrar nueva venta --}}
-    <div >
+    <div>
         <button
             class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-700 dark:bg-green-700 border border-transparent rounded-lg active:bg-green-800 hover:bg-green-800 focus:outline-none focus:shadow-outline-purple"
             wire:click="new">
@@ -14,68 +13,89 @@
             Lista de Ventas
         </h4>
         <div class="w-full overflow-hidden rounded-lg shadow-xs">
+
             {{-- Lista que muestra ventas registradas --}}
             <div class="w-full overflow-x-auto">
                 <table class="w-full whitespace-no-wrap">
                     <thead>
                         <tr
                             class="text-xs font-semibold tracking-wide text-left bg-green-600 dark:bg-green-700 text-gray-50 uppercase border-b dark:border-gray-700 dark:text-gray-50 ">
-                            <th class="px-4 py-3">Sucursal</th>
-                            <th class="px-4 py-3">Dirección</th>
-                            <th class="px-4 py-3">Teléfono</th>
-                            <th class="px-4 py-3">NIT</th>
+                            <th class="px-4 py-3">ID</th>
+                            <th class="px-4 py-3">Usuario</th>
+                            <th class="px-4 py-3">Cliente</th>
+                            <th class="px-4 py-3">C.I./NIT</th>
+                            <th class="px-4 py-3">Total</th>
                             <th class="px-4 py-3">Acciones</th>
+                            <th class="px-4 py-3">Estado</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                        {{-- @foreach ($branches as $branch) --}}
-                        <tr class="text-gray-700 dark:text-gray-400">
-                            <td class="px-4 py-3">
-                                <div
-                                    class="flex items-center text-sm  dark:bg-green-700 rounded-full px-2 py-1 dark:text-green-100">
-                                    <p class="font-semibold">name</p>
-                                </div>
-                            </td>
-                            <td class="px-4 py-3 text-sm">
-                                name
-                            </td>
-                            <td class="px-4 py-3 text-xs">
-                                <span class="px-2 py-1">
-                                    name
-                                </span>
-                            </td>
-                            <td class="px-4 py-3 text-sm">
-                                name
-                            </td>
-                            <td class="px-4 py-3">
-                                <div class="flex items-center space-x-4 text-sm">
-                                    {{-- Accion de editar dentro de la lista --}}
-                                    <button @click="open2 = true"
-                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg dark:text-green-700 focus:outline-none focus:shadow-outline-gray"
-                                        aria-label="Edit" wire:click="edit()" id="size2">
-                                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
-                                            viewBox="0 0 20 20">
-                                            <path
-                                                d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
-                                            </path>
-                                        </svg>
-                                    </button>
-                                    {{-- Accion de eliminar dentro de la lista --}}
-                                    <button
-                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg dark:text-green-700 focus:outline-none focus:shadow-outline-gray"
-                                        aria-label="Delete" wire:click="$emit('deleteBranch', )">
-                                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
-                                            viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd"
-                                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                clip-rule="evenodd"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        {{-- @endforeach --}}
-                    </tbody>
+                        @foreach ($orders as $order)
+                            <tr class="text-gray-700 dark:text-gray-400">
+                                <td class="px-4 py-3">
+                                    <div
+                                        class="flex items-center text-sm  dark:bg-green-700 rounded-full px-2 py-1 dark:text-green-100">
+                                        <p class="font-semibold">{{ $order->id }}</p>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    {{ $order->user->name }}
+                                </td>
+                                <td class="px-4 py-3 text-xs">
+                                    <span class="px-2 py-1">
+                                        {{ $order->customer->name }}
+                                    </span>
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    {{ $order->customer->ci }}
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    {{ $order->total }}
+                                </td>
+                                <td class="px-4 py-3" Width="20px;">
+                                    {{route('admin.sales.invoice')}}
+                                    <div class="flex items-center space-x-4 text-sm">
+                                        {{-- Accion de editar dentro de la lista --}}
+                                        <a href="{{ url()->current() }}/pdf/{{$order->id}}" target="_blank" rel="noopener noreferrer">
+                                            <button
+                                                class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg dark:text-green-700 focus:outline-none focus:shadow-outline-gray"
+                                                aria-label="Edit">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6"
+                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                                    stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                                                </svg>
+                                            </button>
+                                        </a>
+                                        {{-- Accion de eliminar dentro de la lista --}}
+                                        <button
+                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-red-700 focus:outline-none focus:shadow-outline-gray"
+                                            aria-label="Delete" wire:click="status('{{ $order->id }}')">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3" Width="5px;">
+                                    @if ($order->status == 0)
+                                    @else
+                                        <div class="-m-2 text-center">
+                                            <div class="p-2">
+                                                <div
+                                                    class="inline-flex items-center leading-none text-red-600 rounded-full p-2 shadow text-teal text-sm">
+                                                    <span
+                                                        class="inline-flex bg-red-600 text-white rounded-full h-6 px-3 justify-center items-center">Anulado</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
                 </table>
             </div>
             {{-- Paginación para Lista de Sucursales --}}

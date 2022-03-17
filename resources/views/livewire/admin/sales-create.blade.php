@@ -233,7 +233,7 @@ use App\Models\Product;
             <div class="stat">
                 <div class="stat-title">Balance total</div>
                 
-                <div class="stat-value">{{$total}}</div>
+                <div class="stat-value">{{$total-$discount}}</div>
             </div>
         </div>
     </div>

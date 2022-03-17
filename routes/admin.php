@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Livewire\Admin\Branches;
 use App\Http\Livewire\Admin\Customers;
@@ -23,3 +24,6 @@ Route::get('/clientes', Customers::class)->name('admin.customers');
 Route::get('/usuarios', Users::class)->name('admin.users');
 Route::get('/reportes', Reports::class)->name('admin.reports');
 Route::get('/sucursales', Branches::class)->name('admin.branches');
+
+/* Ruta para imprimir factura */
+Route::get('/pdf/{id}', [InvoiceController::class, 'pdf'])->name('admin.sales.invoice');

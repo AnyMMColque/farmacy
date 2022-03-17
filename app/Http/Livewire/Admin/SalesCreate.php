@@ -49,6 +49,11 @@ class SalesCreate extends Component
             $this->emit('clearProduct');
             $this->reset(['product', 'quantity']);
         }
+
+        $this->render();
+        foreach ($this->saveProducts as $key => $product) {
+            $this->total = $this->total + $product->price * $this->subtotal[$key];
+        }
         
     }
 
@@ -58,9 +63,9 @@ class SalesCreate extends Component
         $this->products = Product::all();
     }
 
-    public function updateDiscount(){
-        $this->total = $this->total - $this->discount;
-    }
+    // public function updatingDiscount(){
+    //     $this->total = $this->total - $this->discount;
+    // }
 
     public function selectCustomer(Customer $customer)
     {
@@ -130,7 +135,7 @@ class SalesCreate extends Component
             ]);
         }
 
-        // $order->total = $total - $this->discount;
+        $order->total = $this->total - $this->discount;
         $order->save();
 
         return redirect(route('admin.sales'));
@@ -139,9 +144,7 @@ class SalesCreate extends Component
     public function render()
     {
         $input = Product::whereIn('id', $this->listProducts)->get();
-        foreach ($input as $key => $product) {
-            $this->total = $this->total + $product->price * $this->subtotal[$key];
-        }
+
         $this->saveProducts = $input;
 
         return view('livewire.admin.sales-create', compact('input'))->layout('layouts.admin');

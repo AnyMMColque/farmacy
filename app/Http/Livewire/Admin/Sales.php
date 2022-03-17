@@ -15,6 +15,12 @@ class Sales extends Component
         return redirect(route('admin.sales.create'));
     }
 
+    public function status(Order $order)
+    {
+        $order->status = 1;
+        $order->save();
+    }
+
     public function render()
     {
         /* if (!is_null($this->search)) {
