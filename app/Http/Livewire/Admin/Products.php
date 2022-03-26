@@ -13,7 +13,7 @@ class Products extends Component
 {
     use WithPagination;
 
-    public $name, $g_name, $stock, $lot, $exp_date;
+    public $name, $g_name, $stock, $lot, $exp_date, $price;
     public $laboratory_id, $branch_id, $presentation_id;
     public $branches, $presentations, $laboratories;
     public $num;
@@ -30,6 +30,7 @@ class Products extends Component
         'stock' => 'required|numeric',
         'lot' => 'nullable',
         'exp_date' => 'required|date',
+        'price' => 'required|numeric',
     ];
     /* Buscar Sucursal */
     public function updateSearch($search)
@@ -46,7 +47,7 @@ class Products extends Component
     }
     public function resetVariables()
     {
-        $this->reset(['name', 'g_name', 'stock', 'lot', 'exp_date', 'laboratory_id', 'branch_id', 'presentation_id']);
+        $this->reset(['name', 'g_name', 'stock', 'lot', 'exp_date', 'price', 'laboratory_id', 'branch_id', 'presentation_id']);
     }
     /* Guardar Producto  */
     public function save()
@@ -59,12 +60,13 @@ class Products extends Component
         $product->stock = $this->stock;
         $product->lot = $this->lot;
         $product->exp_date = $this->exp_date;
+        $product->price = $this->price;
         $product->laboratory_id = $this->laboratory_id;
         $product->branch_id = $this->branch_id;
         $product->presentation_id = $this->presentation_id;
 
         $product->save();
-        $this->reset(['name', 'g_name', 'stock', 'lot', 'exp_date']);
+        $this->reset(['name', 'g_name', 'stock', 'lot', 'exp_date', 'price']);
         $this->emit('saved');
     }
     /* Editar Producto */
@@ -76,6 +78,7 @@ class Products extends Component
         $this->stock = $product->stock;
         $this->lot = $product->lot;
         $this->exp_date = $product->exp_date;
+        $this->price = $product->price;
         $this->laboratory_id = $product->laboratory_id;
         $this->branch_id = $product->branch_id;
         $this->presentation_id = $product->presentation_id;
@@ -89,12 +92,13 @@ class Products extends Component
         $product->stock = $this->stock;
         $product->lot = $this->lot;
         $product->exp_date = $this->exp_date;
+        $product->price = $this->price;
         $product->laboratory_id = $this->laboratory_id;
         $product->branch_id = $this->branch_id;
         $product->presentation_id = $this->presentation_id;
         
         $product->save();
-        $this->reset(['name', 'g_name','stock','lot','exp_date','laboratory_id','branch_id','presentation_id','num']);
+        $this->reset(['name', 'g_name','stock','lot','exp_date','price','laboratory_id','branch_id','presentation_id','num']);
         $this->emit('updated');
     }
     /* Eliminar Producto */

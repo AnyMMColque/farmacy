@@ -30,7 +30,6 @@ class Branches extends Component
         'lat' => 'required',
         'lng' => 'required',
     ];
-
     /* Buscar Sucursal */
     public function updateSearch($search)
     {
@@ -43,12 +42,11 @@ class Branches extends Component
             $this->search = "";
         } */
     }
-
     public function mount()
     {
 
     }
-
+    /* Obtiene la Ubicación de la Sucursal  */
     public function getLatitudeFromInput($lat, $lng)
     {
         if (!is_null($lat && $lng)){
@@ -56,7 +54,7 @@ class Branches extends Component
             $this->lng = $lng;
         }
     }
-
+    /* Reinicia las variables */
     public function resetVariables()
     {
         $this->reset(['name', 'address', 'telephone', 'turn', 'nit', 'authorization', 'lat', 'lng']);
@@ -94,7 +92,7 @@ class Branches extends Component
         $this->lat = $branch->lat;
         $this->lng = $branch->lng;
 
-        $this->emit('sendLatitude', $this->lat, $this->lng);
+        // $this->emit('sendLatitude', $branch->lat, $branch->lng);
     }    
     /* Actualizar Sucursal */
     public function update(Branch $branch)
@@ -127,6 +125,7 @@ class Branches extends Component
     
     public function render()
     {
+        /* Buscar Sucursal por Nombre o Direccion */
         // $branches = Branch::where('name', 'like', '%'.$this->search.'%',)->orderBy('created_at', 'desc')->paginate();
         $branches = Branch::where(function($query){
             $query->where('name', 'like', '%'.$this->search.'%');

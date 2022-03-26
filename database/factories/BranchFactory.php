@@ -20,8 +20,8 @@ class BranchFactory extends Factory
             'turn' => 'no',
             'nit' => '1352352',
             'authorization' => '143545',
-            'lat' => 'afkgj',
-            'lng' => 'assfdgjf',
+            'lat' => '-19.58899',
+            'lng' => '-65.75406',
         ];
     }
 }

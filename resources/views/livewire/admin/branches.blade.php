@@ -4,7 +4,8 @@
         crossorigin="" />
     <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css" />
 @endpush
-<div x-data="{ open: false, open2: false }">
+<div wire:id='asfgsfdg456' x-data="{ open: false, open2: false }">
+    
     {{-- Alert despues de registrar una sucursal --}}
     <x-jet-action-message class="" on="saved">
         <div
@@ -44,6 +45,9 @@
     <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
         Sucursales
     </h2>
+    <div>
+        <input @input.keydown.enter="@this.set('foo', 'bar)">
+    </div>
     {{-- Boton para registrar nueva Sucursal --}}
     <div>
         <button @click="open = true"
@@ -72,11 +76,11 @@
                 :class="{'block':open, 'hidden': !open}"
                 class="hidden grid grid-cols-2 gap-4 w-full px-6 py-4 overflow-hidden bg-white rounded-t-lg dark:bg-gray-800 sm:rounded-lg sm:m-4 sm:max-w-5xl"
                 role="dialog" id="modal">
+                {{-- Aqui insertamos el mapa para registrar ubicacion --}}
                 <div>
                     <p class="mt-10 mb-2 text-lg font-semibold text-gray-700 dark:text-gray-300">
                         A continuación marque la ubicación aproximada en el mapa
-                    </p>
-                    
+                    </p>                    
                     <div id='mapa' class="h-80" wire:ignore></div>
                     <x-jet-input-error for="lat" />
                 </div>
@@ -88,8 +92,7 @@
                             aria-label="close" @click="open = false, Livewire.emit('resetVariables')">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" role="img"
                                 aria-hidden="true">
-                                <path
-                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                <path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                                     clip-rule="evenodd" fill-rule="evenodd"></path>
                             </svg>
                         </button>
@@ -103,8 +106,7 @@
                         <!-- Modal description -->
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Nombre</span>
-                            <input
-                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 wire:model='name' />
                             {{-- Validacion de Nombre --}}
                             <x-jet-input-error for="name" />
@@ -125,48 +127,23 @@
                             {{-- Validacion de Telefono --}}
                             <x-jet-input-error for="telephone" />
                         </label>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm">
-                                    <span class="text-gray-700 dark:text-gray-400">Latitud</span>
-                                    <input
-                                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                        wire:model='lat' />
-                                    {{-- Validacion de Latitud --}}
-                                    <x-jet-input-error for="lat" />
-                                </label>
-                            </div>
-                            <div>
-                                <label class="block text-sm">
-                                    <span class="text-gray-700 dark:text-gray-400">Longitud</span>
-                                    <input
-                                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                        wire:model='lng' />
-                                    {{-- Validacion de Longitud --}}
-                                    <x-jet-input-error for="lng" />
-                                </label>
-                            </div>
-                        </div>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Turno</span>
-                            <input
-                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 wire:model='turn' />
                             {{-- Validacion de Turno --}}
                             <x-jet-input-error for="turn" />
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">NIT</span>
-                            <input type="text"
-                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 wire:model='nit' />
                             {{-- Validacion de NIT --}}
                             <x-jet-input-error for="nit" />
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Numero de Autorización</span>
-                            <input type="text"
-                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 wire:model='authorization' />
                             {{-- Validacion Numero de Autorizacion --}}
                             <x-jet-input-error for="authorization" />
@@ -180,14 +157,12 @@
                             Cancelar
                         </button>
                         {{-- Modal Registrar: Boton Registrar --}}
-                        <button
-                            class="w-full px-5 py-3 text-sm font-medium leading-5 bg-green-700 text-white transition-colors duration-150 dark:bg-green-700 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-green-900 hover:bg-green-900 focus:outline-none focus:shadow-outline-purple"
+                        <button class="w-full px-5 py-3 text-sm font-medium leading-5 bg-green-700 text-white transition-colors duration-150 dark:bg-green-700 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-green-900 hover:bg-green-900 focus:outline-none focus:shadow-outline-purple"
                             wire:click="save" @click="Livewire.on('saved', Id => {open = false; })">
                             Registrar
                         </button>
                     </footer>
                 </div>
-
             </div>
         </div>
         {{-- Modal para editar Sucursales --}}
@@ -208,16 +183,15 @@
                 <div>
                     <div class="h-80 mt-10" id="edit_mapa" wire:ignore></div>
                 </div>
+                
                 <div>
                     <!-- Remove header if you don't want a close icon. Use modal body to place modal tile. -->
                     <header class="flex justify-end">
-                        <button
-                            class="inline-flex items-center justify-center w-6 h-6 text-gray-400 transition-colors duration-150 rounded dark:hover:text-gray-200 hover: hover:text-gray-700"
+                        <button class="inline-flex items-center justify-center w-6 h-6 text-gray-400 transition-colors duration-150 rounded dark:hover:text-gray-200 hover: hover:text-gray-700"
                             aria-label="close" @click="open2 = false, Livewire.emit('resetVariables')">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" role="img"
                                 aria-hidden="true">
-                                <path
-                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                <path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                                     clip-rule="evenodd" fill-rule="evenodd"></path>
                             </svg>
                         </button>
@@ -229,6 +203,8 @@
                             Actualizar sucursal
                         </p>
                         <!-- Modal description -->
+                        <label class="" id="edit_lat">{!!$lat!!}</label>
+                        <label class="hidden" id="edit_lng">{{$lng}}</label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Nombre</span>
                             <input
@@ -253,50 +229,23 @@
                             {{-- Validacion de Telefono --}}
                             <x-jet-input-error for="telephone" />
                         </label>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm">
-                                    <span class="text-gray-700 dark:text-gray-400">Latitud</span>
-                                    <input
-                                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                        wire:model='lat'
-                                        id="edit_lat" />
-                                    {{-- Validacion de Latitud --}}
-                                    
-                                </label>
-                            </div>
-                            <div>
-                                <label class="block text-sm">
-                                    <span class="text-gray-700 dark:text-gray-400">Longitud</span>
-                                    <input
-                                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                        wire:model='lng'
-                                        id="edit_lng" />
-                                    {{-- Validacion de Longitud --}}
-                                    <x-jet-input-error for="lng" />
-                                </label>
-                            </div>
-                        </div>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Turno</span>
-                            <input
-                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 wire:model='turn' />
                             {{-- Validacion de Turno --}}
                             <x-jet-input-error for="turn" />
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">NIT</span>
-                            <input type="text"
-                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 wire:model='nit' />
                             {{-- Validacion de NIT --}}
                             <x-jet-input-error for="nit" />
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Numero de Autorización</span>
-                            <input type="text"
-                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 wire:model='authorization' />
                             {{-- Validacion Numero de Autorizacion --}}
                             <x-jet-input-error for="authorization" />
@@ -310,8 +259,7 @@
                             Cancelar
                         </button>
                         {{-- Modal Actualizar: Boton Actualizar --}}
-                        <button
-                            class="w-full px-5 py-3 text-sm font-medium leading-5 bg-green-700 text-white transition-colors duration-150 dark:bg-green-700 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-green-900 hover:bg-green-900 focus:outline-none focus:shadow-outline-purple"
+                        <button class="w-full px-5 py-3 text-sm font-medium leading-5 bg-green-700 text-white transition-colors duration-150 dark:bg-green-700 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-green-900 hover:bg-green-900 focus:outline-none focus:shadow-outline-purple"
                             wire:click="update({{ $num }})"
                             @click="Livewire.on('updated', Id => {open2 = false;})">
                             Actualizar
@@ -324,8 +272,7 @@
         <div class="w-full overflow-x-auto">
             <table class="w-full whitespace-no-wrap">
                 <thead>
-                    <tr
-                        class="text-xs font-semibold tracking-wide text-left bg-green-600 dark:bg-green-700 text-gray-50 uppercase border-b dark:border-gray-700 dark:text-gray-50 ">
+                    <tr class="text-xs font-semibold tracking-wide text-left bg-green-600 dark:bg-green-700 text-gray-50 uppercase border-b dark:border-gray-700 dark:text-gray-50 ">
                         <th class="px-4 py-3">Sucursal</th>
                         <th class="px-4 py-3">Dirección</th>
                         <th class="px-4 py-3">Teléfono</th>
@@ -337,8 +284,7 @@
                     @foreach ($branches as $branch)
                         <tr class="text-gray-700 dark:text-gray-400">
                             <td class="px-4 py-3">
-                                <div
-                                    class="flex items-center text-sm  dark:bg-green-700 rounded-full px-2 py-1 dark:text-green-100">
+                                <div class="flex items-center text-sm  dark:bg-green-700 rounded-full px-2 py-1 dark:text-green-100">
                                     <p class="font-semibold">{{ $branch->name }}</p>
                                 </div>
                             </td>
@@ -368,8 +314,7 @@
                                         </svg>
                                     </button>
                                     {{-- Accion de eliminar dentro de la lista --}}
-                                    <button
-                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg dark:text-green-700 focus:outline-none focus:shadow-outline-gray"
+                                    <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg dark:text-green-700 focus:outline-none focus:shadow-outline-gray"
                                         aria-label="Delete" wire:click="$emit('deleteBranch', {{ $branch }})">
                                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
                                             viewBox="0 0 20 20">
@@ -386,8 +331,7 @@
             </table>
         </div>
         {{-- Paginación para Lista de Sucursales --}}
-        <div
-            class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+        <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
             <span class="flex items-center col-span-3">
                 {!! $branches->links('pagination::message') !!}
             </span>

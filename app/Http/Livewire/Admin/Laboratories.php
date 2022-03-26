@@ -30,6 +30,7 @@ class Laboratories extends Component
         $this->search = $search;
         $this->resetPage();
     }
+    /* Reinicia las variables */
     public function resetVariables()
     {
         $this->reset(['name', 'description']);
@@ -79,6 +80,7 @@ class Laboratories extends Component
 
     public function render()
     {
+        /* Buca Sucursales por el nombre */
         $laboratories = Laboratory::where('name', 'like', '%'.$this->search.'%',)->orderBy('created_at', 'desc')->paginate(); 
 
         return view('livewire.admin.laboratories',compact('laboratories'))->layout('layouts.admin');

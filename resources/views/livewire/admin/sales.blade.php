@@ -53,10 +53,9 @@
                                     {{ $order->total }}
                                 </td>
                                 <td class="px-4 py-3" Width="20px;">
-                                    {{route('admin.sales.invoice')}}
                                     <div class="flex items-center space-x-4 text-sm">
                                         {{-- Accion de editar dentro de la lista --}}
-                                        <a href="{{ url()->current() }}/pdf/{{$order->id}}" target="_blank" rel="noopener noreferrer">
+                                        <a href="{{ route('pdf.pdfInvoice', [ 'id' => $order->id ]) }}" target="_blank" rel="noopener noreferrer">
                                             <button
                                                 class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg dark:text-green-700 focus:outline-none focus:shadow-outline-gray"
                                                 aria-label="Edit">

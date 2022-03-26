@@ -1,9 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     if (document.querySelector('#edit_mapa')) {
-        Livewire.on('sendLatitude', (lat, lng) => {
+ 
+            let component = window.livewire.find('EhJ9mH4qGstb2YXdwQtn')
+
+            let lat = component.get('lat')
+            let lng = component.get('lng')
+
+            console.log(lat)
             
-            const edit_mapa = L.map('edit_mapa').setView([lat, lng], 17);
+            const edit_mapa = L.map('edit_mapa').setView([-19.5889474, -65.7529797], 17);
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -61,6 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 Livewire.emit('getLatitudeFromInput', result.latlng.lat, result.latlng.lng);
             }
-        });
+        
     }
 });

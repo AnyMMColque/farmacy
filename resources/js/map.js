@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             //Reverse Geocoding, where pin is placed
             geocodeService.reverse().latlng(position, 17).run(function(error, result) {
-                console.log(result)
+                // console.log(result)
                 marker.bindPopup(result.address.Match_addr);
                 marker.openPopup();
                 fillInputs(result);

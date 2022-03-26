@@ -26,4 +26,4 @@ Route::get('/reportes', Reports::class)->name('admin.reports');
 Route::get('/sucursales', Branches::class)->name('admin.branches');
 
 /* Ruta para imprimir factura */
-Route::get('/pdf/{id}', [InvoiceController::class, 'pdf'])->name('admin.sales.invoice');
+Route::get('/pdf/{id}', [InvoiceController::class, 'pdf'])->name('pdf.pdfInvoice');
