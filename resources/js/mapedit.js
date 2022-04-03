@@ -1,72 +1,70 @@
 document.addEventListener('DOMContentLoaded', () => {
+    Livewire.on('sendLatitude', (lat, lng, id) => {
+        // console.log(id)
+        setTimeout(map, 500);
+        function map() {
+            if (document.querySelector('#'+id)) {
 
-    if (document.querySelector('#edit_mapa')) {
- 
-            let component = window.livewire.find('EhJ9mH4qGstb2YXdwQtn')
+                const edit_mapa = L.map(id).setView([lat, lng], 17);
 
-            let lat = component.get('lat')
-            let lng = component.get('lng')
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(edit_mapa);
 
-            console.log(lat)
-            
-            const edit_mapa = L.map('edit_mapa').setView([-19.5889474, -65.7529797], 17);
+                let size = document.getElementById("size2");
+                size.onclick = badSize2;
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(edit_mapa);
+                /* let mapa = document.getElementById("mapa2");
+                mapa.onmouseover = badSize; */
 
-            let size = document.getElementById("size2");
-            size.onclick = badSize2;
+                function badSize() {
+                    edit_mapa.invalidateSize()
+                }
 
-            /* let mapa = document.getElementById("mapa2");
-            mapa.onmouseover = badSize; */
+                function badSize2() {
+                    setTimeout(badSize, 500);
+                }
 
-            function badSize() {
-                edit_mapa.invalidateSize()
-            }
+                let marker;
 
-            function badSize2() {
-                setTimeout(badSize, 500);
-            }
+                // agregar el pin
+                marker = new L.marker([lat, lng], {
+                    draggable: true,
+                    autoPan: true
+                }).addTo(edit_mapa);
 
-            let marker;
+                //Geocode service
+                const geocodeService = L.esri.Geocoding.geocodeService({
+                    apikey: "AAPK528d8e28633d4e4c83da0275dd9e47a2rpgO3F3VeG7sYd17rgzJr60fK80F6aZoz5swMRZzp35ppAYF7blQYXLo2D1zb7D9"
+                });
 
-            // agregar el pin
-            marker = new L.marker([lat, lng], {
-                draggable: true,
-                autoPan: true
-            }).addTo(edit_mapa);
+                //Detect pin movement
+                marker.on('moveend', function (e) {
+                    marker = e.target;
+                    const position = marker.getLatLng();
 
-            //Geocode service
-            const geocodeService = L.esri.Geocoding.geocodeService({
-                apikey: "AAPK528d8e28633d4e4c83da0275dd9e47a2rpgO3F3VeG7sYd17rgzJr60fK80F6aZoz5swMRZzp35ppAYF7blQYXLo2D1zb7D9"
-            });
+                    //center map
+                    edit_mapa.panTo(new L.LatLng(position.lat, position.lng));
 
-            //Detect pin movement
-            marker.on('moveend', function (e) {
-                marker = e.target;
-                const position = marker.getLatLng();
+                    //Reverse Geocoding, where pin is placed
+                    geocodeService.reverse().latlng(position, 17).run(function (error, result) {
+                        // console.log(result)
+                        marker.bindPopup(result.address.Match_addr);
+                        marker.openPopup();
+                        fillInputs(result);
+                    })
+                });
 
-                //center map
-                edit_mapa.panTo(new L.LatLng(position.lat, position.lng));
-
-                //Reverse Geocoding, where pin is placed
-                geocodeService.reverse().latlng(position, 17).run(function (error, result) {
+                function fillInputs(result) {
                     // console.log(result)
-                    marker.bindPopup(result.address.Match_addr);
-                    marker.openPopup();
-                    fillInputs(result);
-                })
-            });
+                    /* document.querySelector('#address').value = result.address.Address || ''; */
+                    /* document.querySelector('#lat').value = result.latlng.lat || '';
+                    document.querySelector('#lng').value = result.latlng.lng || ''; */
 
-            function fillInputs(result) {
-                // console.log(result)
-                /* document.querySelector('#address').value = result.address.Address || ''; */
-                /* document.querySelector('#lat').value = result.latlng.lat || '';
-                document.querySelector('#lng').value = result.latlng.lng || ''; */
+                    Livewire.emit('getLatitudeFromInput', result.latlng.lat, result.latlng.lng);
+                }
 
-                Livewire.emit('getLatitudeFromInput', result.latlng.lat, result.latlng.lng);
             }
-        
-    }
+        }
+    })
 });

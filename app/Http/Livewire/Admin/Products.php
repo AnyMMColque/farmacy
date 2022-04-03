@@ -107,9 +107,15 @@ class Products extends Component
         $product->delete();
         $this->emit('deleted');
     }
+    /* Paginacion Productos */
+    public function paginationView()
+    {
+        return 'pagination::personal2-tailwind';
+    }
 
     public function render()
     {
+        /* Buscar producto por nombre o nombre generico */
         $products = Product::where(function($query){
             $query->where('name', 'like', '%'.$this->search.'%');
             $query->orwhere('g_name', 'like', '%'.$this->search.'%');

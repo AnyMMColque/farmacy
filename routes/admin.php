@@ -27,3 +27,6 @@ Route::get('/sucursales', Branches::class)->name('admin.branches');
 
 /* Ruta para imprimir factura */
 Route::get('/pdf/{id}', [InvoiceController::class, 'pdf'])->name('pdf.pdfInvoice');
+
+// Reportes excel
+Route::get('facturas/export/', [InvoiceController::class, 'exportAll']);

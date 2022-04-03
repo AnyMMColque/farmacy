@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin;
 
 use App\Models\Branch;
 use Livewire\Component;
+use Illuminate\Support\Str;
 use Livewire\WithPagination;
 
 class Branches extends Component
@@ -11,8 +12,8 @@ class Branches extends Component
     use WithPagination;
 
     public $name, $address, $telephone, $turn, $nit, $authorization;
-    public $lat, $lng;
-    public $num;
+    public $lat = 0, $lng;
+    public $num, $map_id;
 
     private $branches;
 
@@ -59,6 +60,7 @@ class Branches extends Component
     {
         $this->reset(['name', 'address', 'telephone', 'turn', 'nit', 'authorization', 'lat', 'lng']);
         $this->resetValidation();
+        $this->render();
     }
     /* Guardar Sucursal */
     public function save()
@@ -91,8 +93,10 @@ class Branches extends Component
         $this->authorization = $branch->authorization;
         $this->lat = $branch->lat;
         $this->lng = $branch->lng;
+        $str = preg_replace( '/[0-9\@\.\-\"-"]+/', "", Str::uuid());
+        $this->map_id = $str;
 
-        // $this->emit('sendLatitude', $branch->lat, $branch->lng);
+        $this->emit('sendLatitude', $branch->lat, $branch->lng, $this->map_id);
     }    
     /* Actualizar Sucursal */
     public function update(Branch $branch)

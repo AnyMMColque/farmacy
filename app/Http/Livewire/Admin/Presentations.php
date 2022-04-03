@@ -73,7 +73,7 @@ class Presentations extends Component
     {
         $presentation->delete();
     }
-    /* Paginacion Sucursal */
+    /* Paginacion Presentacion */
     public function paginationView()
     {
         return 'pagination::personal2-tailwind';

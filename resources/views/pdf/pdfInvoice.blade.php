@@ -698,10 +698,9 @@
        
     </table> --}}
     @php
-    use App\Models\Branch;
-        $product = $products->first();
-        $branch = Branch::where('id', $product->branch_id)->first();
-
+        $branch = json_decode($invoice->branch);
+        $customer = json_decode($invoice->customer);
+        $user = json_decode($invoice->user);
     @endphp
     <h3 class="text-center">{{$branch->name}}</h3>
     <br>
@@ -713,8 +712,8 @@
     <div>
 
             <div class="text-center">
-                <p>Factura DE VENTA<br>
-                    {{ $order->id }}</p>
+                <p>FACTURA DE VENTA<br>
+                    {{ $invoice->order_id }}</p>
             </div>
             <section>
                 <div>
@@ -723,20 +722,16 @@
                         <thead>
                             <tr>
                                 <th>Datos del Cliente</th>
-
                             </tr>
-
-
                         </thead>
                         <div class="border-bottom"></div>
                         <tbody>
-
                             <tr>
                                 <th>
-                                    <p id="cliente">Sr(a). {{ $order->customer->name }}<br>
-                                        C.I./NIT: {{ $order->customer->ci }}<br>
-                                        Teléfono: {{ $order->created_at }}<br>
-                                        </p>
+                                    <p id="cliente">Sr(a). {{ $customer->name }}<br>
+                                        CI/NIT: {{ $customer->ci }}<br>
+                                        Fecha: {{ $invoice->created_at }}<br>
+                                    </p>
                                 </th>
                             </tr>
                         </tbody>
@@ -752,7 +747,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{ $order->user->name }}</td>
+                        <td>{{ $user->name }}</td>
                         {{-- <td>{{ $v->created_at }}</td> --}}
                     </tr>
                 </tbody>
@@ -776,8 +771,8 @@
                     <td>{{ $det->pivot->quantity }}</td>
                     {{-- <td>{{$det->precio}}</td> --}}
                     <td>{{ $det->g_name }}</td>
-                    <td>{{ $det->price }}</td>
-                    <td>{{ $det->pivot->quantity * $det->price }}</td>
+                    <td>{{ $det->pivot->price }}</td>
+                    <td>{{ $det->pivot->quantity * $det->pivot->price }}</td>
                 </tr>
                 <tr>
                     <td colspan="5" class="border-bottom"></td>
@@ -785,7 +780,7 @@
             @endforeach
 
         </tbody>
-        <tfoot>
+        <tbody>
             {{-- @foreach ($venta as $v)
                 <tr>
                     <th></th>
@@ -809,10 +804,16 @@
             <tr>
                 <th></th>
                 <th></th>
-                <th>Tota a pagar</th>
-                <td>{{ $order->total - $product->pivot->discount }}</td>
+                <th>Total</th>
+                <td>{{ $invoice->total }}</td>
+                <th>Descuento</th>
+                <td>{{ $invoice->discount }}</td>
+                <th>Total a pagar</th>
+                <td>{{ $invoice->pay }}</td>
+                <th>Cambio</th>
+                <td>{{ $invoice->change }}</td>
             </tr>
-        </tfoot>
+        </tbody>
     </table>
     <footer>
         <div id="gracias">

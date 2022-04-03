@@ -4,8 +4,7 @@
         crossorigin="" />
     <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css" />
 @endpush
-<div wire:id='asfgsfdg456' x-data="{ open: false, open2: false }">
-    
+<div x-data="{ open: false, open2: false }">
     {{-- Alert despues de registrar una sucursal --}}
     <x-jet-action-message class="" on="saved">
         <div
@@ -45,9 +44,6 @@
     <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
         Sucursales
     </h2>
-    <div>
-        <input @input.keydown.enter="@this.set('foo', 'bar)">
-    </div>
     {{-- Boton para registrar nueva Sucursal --}}
     <div>
         <button @click="open = true"
@@ -72,23 +68,21 @@
                 x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
                 x-transition:leave-end="opacity-0  transform translate-y-1/2"
                 @click.away="open = false, Livewire.emit('resetVariables')"
-                @keydown.escape="open = false, Livewire.emit('resetVariables')"
-                :class="{'block':open, 'hidden': !open}"
+                @keydown.escape="open = false, Livewire.emit('resetVariables')" :class="{'block':open, 'hidden': !open}"
                 class="hidden grid grid-cols-2 gap-4 w-full px-6 py-4 overflow-hidden bg-white rounded-t-lg dark:bg-gray-800 sm:rounded-lg sm:m-4 sm:max-w-5xl"
                 role="dialog" id="modal">
                 {{-- Aqui insertamos el mapa para registrar ubicacion --}}
                 <div>
                     <p class="mt-10 mb-2 text-lg font-semibold text-gray-700 dark:text-gray-300">
                         A continuación marque la ubicación aproximada en el mapa
-                    </p>                    
+                    </p>
                     <div id='mapa' class="h-80" wire:ignore></div>
                     <x-jet-input-error for="lat" />
                 </div>
                 <div>
                     <!-- Remove header if you don't want a close icon. Use modal body to place modal tile. -->
                     <header class="flex justify-end">
-                        <button
-                            class="inline-flex items-center justify-center w-6 h-6 text-gray-400 transition-colors duration-150 rounded dark:hover:text-gray-200 hover: hover:text-gray-700"
+                        <button class="inline-flex items-center justify-center w-6 h-6 text-gray-400 transition-colors duration-150 rounded dark:hover:text-gray-200 hover: hover:text-gray-700"
                             aria-label="close" @click="open = false, Livewire.emit('resetVariables')">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" role="img"
                                 aria-hidden="true">
@@ -106,23 +100,22 @@
                         <!-- Modal description -->
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Nombre</span>
-                            <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            <input
+                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 wire:model='name' />
                             {{-- Validacion de Nombre --}}
                             <x-jet-input-error for="name" />
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Dirección</span>
-                            <input
-                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 wire:model='address' />
                             {{-- Validacion de Direccion --}}
                             <x-jet-input-error for="address" />
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Teléfono</span>
-                            <input
-                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 wire:model='telephone' />
                             {{-- Validacion de Telefono --}}
                             <x-jet-input-error for="telephone" />
@@ -149,8 +142,7 @@
                             <x-jet-input-error for="authorization" />
                         </label>
                     </div>
-                    <footer
-                        class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-gray-50 dark:bg-gray-800">
+                    <footer class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-gray-50 dark:bg-gray-800">
                         {{-- Modal Registrar: Boton Cancelar --}}
                         <button @click="open = false, Livewire.emit('resetVariables')"
                             class="w-full px-5 py-3 text-sm font-medium leading-5 text-green-700 transition-colors duration-150 border border-green-400 rounded-lg dark:text-green-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-green-500 focus:border-green-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
@@ -180,10 +172,10 @@
                 :class="{'block':open2, 'hidden': !open2}"
                 class="hidden grid grid-cols-2 gap-4 w-full px-6 py-4 overflow-hidden bg-white rounded-t-lg dark:bg-gray-800 sm:rounded-lg sm:m-4 sm:max-w-5xl"
                 role="" id="modal">
+                {{-- Aqui insertamos el mapa  --}}
                 <div>
-                    <div class="h-80 mt-10" id="edit_mapa" wire:ignore></div>
+                    <div class="h-80 mt-10" id="{{$map_id}}" wire:ignore></div>
                 </div>
-                
                 <div>
                     <!-- Remove header if you don't want a close icon. Use modal body to place modal tile. -->
                     <header class="flex justify-end">
@@ -200,31 +192,26 @@
                     <div class="mt-4 mb-6">
                         <!-- Modal title -->
                         <p class="mb-2 text-lg font-semibold text-gray-700 dark:text-gray-300">
-                            Actualizar sucursal
+                            Actualizar Sucursal
                         </p>
                         <!-- Modal description -->
-                        <label class="" id="edit_lat">{!!$lat!!}</label>
-                        <label class="hidden" id="edit_lng">{{$lng}}</label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Nombre</span>
-                            <input
-                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 wire:model='name' />
                             {{-- Validacion de Nombre --}}
                             <x-jet-input-error for="name" />
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Dirección</span>
-                            <input
-                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 wire:model='address' />
                             {{-- Validacion de Direccion --}}
                             <x-jet-input-error for="address" />
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Teléfono</span>
-                            <input
-                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 wire:model='telephone' />
                             {{-- Validacion de Telefono --}}
                             <x-jet-input-error for="telephone" />
@@ -304,12 +291,10 @@
                                     {{-- Accion de editar dentro de la lista --}}
                                     <button @click="open2 = true"
                                         class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg dark:text-green-700 focus:outline-none focus:shadow-outline-gray"
-                                        aria-label="Edit" wire:click="edit({{ $branch->id }})"
-                                        id="size2">
+                                        aria-label="Edit" wire:click="edit({{ $branch->id }})" id="size2">
                                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
                                             viewBox="0 0 20 20">
-                                            <path
-                                                d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+                                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
                                             </path>
                                         </svg>
                                     </button>
@@ -375,76 +360,5 @@
                 crossorigin=""></script>
         <script src="https://unpkg.com/esri-leaflet"></script>
         <script src="https://unpkg.com/esri-leaflet-geocoder"></script>
-        {{-- <script defer>
-            const lat = -19.5889474;
-            const lng = -65.7529797;
-
-            const mapa = L.map('mapa').setView([lat, lng], 17);
-
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(mapa);
-
-            let marker;
-
-            // agregar el pin
-            marker = new L.marker([lat, lng], {
-                draggable: true,
-                autoPan: true
-            }).addTo(mapa);
-
-            //Geocode service
-            const geocodeService = L.esri.Geocoding.geocodeService({
-                apikey: "AAPK528d8e28633d4e4c83da0275dd9e47a2rpgO3F3VeG7sYd17rgzJr60fK80F6aZoz5swMRZzp35ppAYF7blQYXLo2D1zb7D9"
-            });
-
-            //Search addresses
-            /* const search = document.querySelector('#address_1');
-            search.addEventListener('blur', searchAddress); */
-
-            //Detect pin movement
-            marker.on('moveend', function(e) {
-                marker = e.target;
-                const position = marker.getLatLng();
-
-                //center map
-                mapa.panTo(new L.LatLng(position.lat, position.lng));
-
-                //Reverse Geocoding, where pin is placed
-                geocodeService.reverse().latlng(position, 17).run(function(error, result) {
-                    console.log(result)
-                    marker.bindPopup(result.address.Match_addr);
-                    marker.openPopup();
-                    fillInputs(result);
-                })
-            });
-
-            /* function searchAddress(e) {
-                if (e.target.value.length > 1) {
-                    provider.search({ query: e.target.value })
-                    .then(result => {
-                        if (result) {
-                            geocodeService.reverse().latlng(result[0].bounds[0], 16).run(function(error, result) {
-                                //marker.bindPopup(result.address.Match_addr);
-                                //marker.openPopup();
-                                //fillInputs(result);
-                            })
-                        }
-                    })
-                    .catch( error => { 
-                        console.log(error)
-                    })
-                }
-            } */
-
-            function fillInputs(result) {
-                /* console.log(result) */
-                /* document.querySelector('#address').value = result.address.Address || ''; */
-                /* document.querySelector('#lat').value = result.latlng.lat || '';
-                document.querySelector('#lng').value = result.latlng.lng || ''; */
-
-                Livewire.emit('getLatitudeForInput', result.latlng.lat, result.latlng.lng);
-            }
-        </script> --}}
     @endpush
 </div>
