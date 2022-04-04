@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -24,6 +25,7 @@
     <script src="{{ asset('windmill/assets/js/charts-lines.js') }}" defer></script>
     <script src="{{ asset('windmill/assets/js/charts-pie.js') }}" defer></script> --}}
 </head>
+
 <body>
     <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
         {{-- Vista Web para Admin --}}
@@ -31,22 +33,26 @@
             <div class="py-4 text-gray-500 dark:text-gray-400">
                 <a class="ml-6 inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                     href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
                     </svg>
                     <span class="ml-8 " style="font-size: 2em; color:#019267;">San Lorenzo</span>
                 </a>
                 <ul class="mt-6">
                     <li class="relative px-6 py-3">
                         {{-- Desliza la barrita de color cuando entra a la vista de dashboard --}}
-                        <span class=" {{(url()->current() == route('admin.dashboard')) ? 'bg-green-600' : 'none';}} absolute inset-y-0  left-0 w-1 rounded-tr-lg rounded-br-lg"
+                        <span
+                            class=" {{ url()->current() == route('admin.dashboard') ? 'bg-green-600' : 'none' }} absolute inset-y-0  left-0 w-1 rounded-tr-lg rounded-br-lg"
                             aria-hidden="true">
                         </span>
                         <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                             href="{{ route('admin.dashboard') }}">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                                <path
+                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
                                 </path>
                             </svg>
                             <span class="ml-4">Dashboard</span>
@@ -57,14 +63,16 @@
                     {{-- Vista Sucursales --}}
                     <li class="relative px-6 py-3">
                         {{-- Desliza la barrita de color cuando entra a la vista de sucursales --}}
-                        <span class=" {{(url()->current() == route('admin.dashboard').'/sucursales') ? 'bg-green-600' : 'none';}} absolute inset-y-0  left-0 w-1 rounded-tr-lg rounded-br-lg"
+                        <span
+                            class=" {{ url()->current() == route('admin.dashboard') . '/sucursales' ? 'bg-green-600' : 'none' }} absolute inset-y-0  left-0 w-1 rounded-tr-lg rounded-br-lg"
                             aria-hidden="true">
                         </span>
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                             href="{{ route('admin.branches') }}">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
+                                <path
+                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
                                 </path>
                             </svg>
                             <span class="ml-4">Sucursales</span>
@@ -72,12 +80,14 @@
                     </li>
                     {{-- Vista Farmacia --}}
                     <li class="relative px-6 py-3">
-                        <button class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                        <button
+                            class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                             @click="togglePagesMenu" aria-haspopup="true">
                             <span class="inline-flex items-center">
                                 <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                     stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z">
+                                    <path
+                                        d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z">
                                     </path>
                                 </svg>
                                 <span class="ml-4">Farmacia</span>
@@ -99,18 +109,21 @@
                                 class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900"
                                 aria-label="submenu">
                                 {{-- Menu Desplegable: Laboratorios --}}
-                                <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                <li
+                                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
                                     <a class="w-full"
                                         href="{{ route('admin.laboratories') }}">Laboratorios</a>
                                 </li>
                                 {{-- Menu Desplegable: Presentacion --}}
-                                <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                <li
+                                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
                                     <a class="w-full" href="{{ route('admin.presentations') }}">
                                         Presentación
                                     </a>
                                 </li>
                                 {{-- Menu Desplegable: Productos --}}
-                                <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                <li
+                                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
                                     <a class="w-full" href="{{ route('admin.products') }}">
                                         Productos
                                     </a>
@@ -121,14 +134,16 @@
                     {{-- Vista Ventas --}}
                     <li class="relative px-6 py-3">
                         {{-- Desliza la barrita de color cuando entra a la vista de ventas --}}
-                        <span class=" {{(url()->current() == route('admin.dashboard').'/ventas') ? 'bg-green-600' : 'none';}} absolute inset-y-0  left-0 w-1 rounded-tr-lg rounded-br-lg"
+                        <span
+                            class=" {{ url()->current() == route('admin.dashboard') . '/ventas' ? 'bg-green-600' : 'none' }} absolute inset-y-0  left-0 w-1 rounded-tr-lg rounded-br-lg"
                             aria-hidden="true">
                         </span>
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                             href="{{ route('admin.sales') }}">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
+                                <path
+                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
                                 </path>
                             </svg>
                             <span class="ml-4">Ventas</span>
@@ -137,14 +152,16 @@
                     {{-- Vista Clientes --}}
                     <li class="relative px-6 py-3">
                         {{-- Desliza la barrita de color cuando entra a la vista de clientes --}}
-                        <span class=" {{(url()->current() == route('admin.dashboard').'/clientes') ? 'bg-green-600' : 'none';}} absolute inset-y-0  left-0 w-1 rounded-tr-lg rounded-br-lg"
+                        <span
+                            class=" {{ url()->current() == route('admin.dashboard') . '/clientes' ? 'bg-green-600' : 'none' }} absolute inset-y-0  left-0 w-1 rounded-tr-lg rounded-br-lg"
                             aria-hidden="true">
                         </span>
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                             href="{{ route('admin.customers') }}">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                                <path
+                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
                                 </path>
                             </svg>
                             <span class="ml-4">Clientes</span>
@@ -153,7 +170,8 @@
                     {{-- Vista Usuarios --}}
                     <li class="relative px-6 py-3">
                         {{-- Desliza la barrita de color cuando entra a la vista de usuarios --}}
-                        <span class=" {{(url()->current() == route('admin.dashboard').'/usuarios') ? 'bg-green-600' : 'none';}} absolute inset-y-0  left-0 w-1 rounded-tr-lg rounded-br-lg"
+                        <span
+                            class=" {{ url()->current() == route('admin.dashboard') . '/usuarios' ? 'bg-green-600' : 'none' }} absolute inset-y-0  left-0 w-1 rounded-tr-lg rounded-br-lg"
                             aria-hidden="true">
                         </span>
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
@@ -168,13 +186,15 @@
                     </li>
                     {{-- Vista Reportes --}}
                     <li class="relative px-6 py-3">
-                        <span class=" {{(url()->current() == route('admin.dashboard').'/reportes') ? 'bg-green-600' : 'none';}} absolute inset-y-0  left-0 w-1 rounded-tr-lg rounded-br-lg"
+                        <span
+                            class=" {{ url()->current() == route('admin.dashboard') . '/reportes' ? 'bg-green-600' : 'none' }} absolute inset-y-0  left-0 w-1 rounded-tr-lg rounded-br-lg"
                             aria-hidden="true"></span>
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                             href="{{ route('admin.reports') }}">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122">
+                                <path
+                                    d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122">
                                 </path>
                             </svg>
                             <span class="ml-4">Reportes</span>
@@ -430,63 +450,110 @@
                         </template>
                     </li>
                     <!-- Profile menu -->
-                    <li class="relative">
-                        <button class="align-middle rounded-full focus:shadow-outline-purple focus:outline-none"
-                            @click="toggleProfileMenu" @keydown.escape="closeProfileMenu" aria-label="Account"
-                            aria-haspopup="true">
-                            <img class="object-cover w-8 h-8 rounded-full"
-                                src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
-                                alt="" aria-hidden="true" />
-                        </button>
-                        <template x-if="isProfileMenuOpen">
-                            <ul x-transition:leave="transition ease-in duration-150"
-                                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
-                                @click.away="closeProfileMenu" @keydown.escape="closeProfileMenu"
-                                class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:text-gray-300 dark:bg-gray-700"
-                                aria-label="submenu">
-                                <li class="flex">
-                                    <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                        href="#">
-                                        <svg class="w-4 h-4 mr-3" aria-hidden="true" fill="none"
-                                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path
-                                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z">
-                                            </path>
-                                        </svg>
-                                        <span>Profile</span>
-                                    </a>
-                                </li>
-                                <li class="flex">
-                                    <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                        href="#">
-                                        <svg class="w-4 h-4 mr-3" aria-hidden="true" fill="none"
-                                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path
-                                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
-                                            </path>
-                                            <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                        </svg>
-                                        <span>Settings</span>
-                                    </a>
-                                </li>
-                                <li class="flex">
-                                    <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                        href="#">
-                                        <svg class="w-4 h-4 mr-3" aria-hidden="true" fill="none"
-                                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path
-                                                d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1">
-                                            </path>
-                                        </svg>
-                                        <span>Log out</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </template>
-                    </li>
+                    <div class="hidden sm:flex sm:items-center sm:ml-6">
+                        <!-- Teams Dropdown -->
+                        @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
+                            <div class="ml-3 relative">
+                                <x-jet-dropdown align="right" width="60">
+                                    <x-slot name="trigger">
+                                        <span class="inline-flex rounded-md">
+                                            <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition">
+                                                {{ Auth::user()->currentTeam->name }}
+        
+                                                <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd" d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                </svg>
+                                            </button>
+                                        </span>
+                                    </x-slot>
+        
+                                    <x-slot name="content">
+                                        <div class="w-60">
+                                            <!-- Team Management -->
+                                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                                {{ __('Manage Team') }}
+                                            </div>
+        
+                                            <!-- Team Settings -->
+                                            <x-jet-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
+                                                {{ __('Team Settings') }}
+                                            </x-jet-dropdown-link>
+        
+                                            @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
+                                                <x-jet-dropdown-link href="{{ route('teams.create') }}">
+                                                    {{ __('Create New Team') }}
+                                                </x-jet-dropdown-link>
+                                            @endcan
+        
+                                            <div class="border-t border-gray-100"></div>
+        
+                                            <!-- Team Switcher -->
+                                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                                {{ __('Switch Teams') }}
+                                            </div>
+        
+                                            @foreach (Auth::user()->allTeams() as $team)
+                                                <x-jet-switchable-team :team="$team" />
+                                            @endforeach
+                                        </div>
+                                    </x-slot>
+                                </x-jet-dropdown>
+                            </div>
+                        @endif
+        
+                        <!-- Settings Dropdown -->
+                        <div class="ml-3 relative">
+                            <x-jet-dropdown align="right" width="48">
+                                <x-slot name="trigger">
+                                    @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
+                                        <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
+                                            <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                                        </button>
+                                    @else
+                                        <span class="inline-flex rounded-md">
+                                            <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
+                                                {{ Auth::user()->name }}
+        
+                                                <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                </svg>
+                                            </button>
+                                        </span>
+                                    @endif
+                                </x-slot>
+        
+                                <x-slot name="content">
+                                    <!-- Account Management -->
+                                    <div class="block px-4 py-2 text-xs text-gray-400">
+                                        {{ __('Manage Account') }}
+                                    </div>
+        
+                                    <x-jet-dropdown-link href="{{ route('profile.show') }}">
+                                        {{ __('Profile') }}
+                                    </x-jet-dropdown-link>
+        
+                                    @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
+                                        <x-jet-dropdown-link href="{{ route('api-tokens.index') }}">
+                                            {{ __('API Tokens') }}
+                                        </x-jet-dropdown-link>
+                                    @endif
+        
+                                    <div class="border-t border-gray-100"></div>
+        
+                                    <!-- Authentication -->
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+        
+                                        <x-jet-dropdown-link href="{{ route('logout') }}"
+                                                 onclick="event.preventDefault();
+                                                        this.closest('form').submit();">
+                                            {{ __('Log Out') }}
+                                        </x-jet-dropdown-link>
+                                    </form>
+                                </x-slot>
+                            </x-jet-dropdown>
+                        </div>
+                    </div>
                     </ul>
                 </div>
             </header>

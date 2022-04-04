@@ -33,7 +33,7 @@
     </x-jet-action-message>
     <h1 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
         Productos
-    </h2>
+    </h2>   
     <div>
         <label class="block text-sm">
             <input type="hidden"
@@ -68,12 +68,10 @@
                 role="dialog" id="modal">
                 <!-- Remove header if you don't want a close icon. Use modal body to place modal tile. -->
                 <header class="flex justify-end">
-                    <button
-                        class="inline-flex items-center justify-center w-6 h-6 text-gray-400 transition-colors duration-150 rounded dark:hover:text-gray-200 hover: hover:text-gray-700"
+                    <button class="inline-flex items-center justify-center w-6 h-6 text-gray-400 transition-colors duration-150 rounded dark:hover:text-gray-200 hover: hover:text-gray-700"
                         aria-label="close" @click="open = false">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" role="img" aria-hidden="true">
-                            <path
-                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            <path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                                 clip-rule="evenodd" fill-rule="evenodd"></path>
                         </svg>
                     </button>
@@ -86,50 +84,70 @@
                     </p>
                     <!-- Modal description -->
                     <label class="block text-sm">
-                        <span class="text-gray-700 dark:text-gray-400">Nombre</span>
-                        <input
-                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        <span class="text-gray-700 dark:text-gray-400">Nombre Comercial</span>
+                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                             placeholder="Nombre medicamento" wire:model='name' />
                     </label>
-
+                    <x-jet-input-error for="name" />
                     <label class="block text-sm">
                         <span class="text-gray-700 dark:text-gray-400">Nombre Genérico</span>
-                        <input
-                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                            wire:model='g_name' />
                     </label>
+                    <div>
+                        <x-lwa::autocomplete
+                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            name="generic-name"
+                            wire:model-text="gname"
+                            wire:model-id="gnameId"
+                            wire:model-results="gnames"
+                            :options="[
+                                'text'=> 'gname',
+                                'allow-new'=> 'false',
+                            ]" />
+                    </div>
+                    <x-jet-input-error for="pro" />
+                    {{-- <div class="w-48">
+                        <h1 class="font-bold">Selected Product</h1>
+                        <p>ID: {{ $pro->id ?? null }}</p>
+                        <p>Name: {{ $pro->gname ?? null }}</p>
+                    </div> --}}
 
                     <div class="grid grid-cols-2 gap-4">
-                        <div><label class="block text-sm">
+                        <div>
+                            <label class="block text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">Stock</span>
-                                <input
-                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                     wire:model='stock' />
                             </label>
-                        </div>
-                        <div><label class="block text-sm">
+                            <x-jet-input-error for="stock" />
+                        </div>                        
+                        <div>
+                            <label class="block text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">Lote</span>
                                 <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                     wire:model='lot' />
                             </label>
-                        </div>
+                            <x-jet-input-error for="lot" />
+                        </div>                        
                     </div>
                     <div class="grid grid-cols-2 gap-4">
-                        <div><label class="block text-sm">
+                        <div>
+                            <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Fecha de Vencimiento</span>
                             <input type="date"
                                 class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 wire:model='exp_date' />
                             </label>
-                        </div>
-                        <div><label class="block text-sm">
+                            <x-jet-input-error for="exp_date" />
+                        </div>                       
+                        <div>
+                            <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Precio</span>
                             <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 wire:model='price' />
                             </label>
-                        </div>
+                            <x-jet-input-error for="price" />
+                        </div>                       
                     </div>
-
                     <label class="block mt-4 text-sm">
                         <span class="text-gray-700 dark:text-gray-400">
                             Laboratorio
@@ -141,8 +159,8 @@
                             @foreach ($laboratories as $laboratory)
                                 <option value="{{$laboratory->id}}">{{ $laboratory->name }}</option>                        
                             @endforeach
-                        </select>
-                    </label>
+                        </select> 
+                    </label>   
                     <label class="block mt-4 text-sm">
                         <span class="text-gray-700 dark:text-gray-400">
                             Presentación
@@ -153,19 +171,6 @@
                             <option selected>Seleccione una Presentación</option>
                             @foreach ($presentations as $presentation)
                                 <option value="{{ $presentation->id }}">{{ $presentation->name }}</option>
-                            @endforeach
-                        </select>
-                    </label>
-                    <label class="block mt-4 text-sm">
-                        <span class="text-gray-700 dark:text-gray-400">
-                            Sucursal
-                        </span>
-                        <select
-                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                            wire:model='branch_id'>
-                            <option selected>Seleccione una Sucursal</option>
-                            @foreach ($branches as $branch)
-                                <option value="{{ $branch->id }}">{{ $branch->name }}</option>
                             @endforeach
                         </select>
                     </label>
@@ -205,8 +210,7 @@
                         class="inline-flex items-center justify-center w-6 h-6 text-gray-400 transition-colors duration-150 rounded dark:hover:text-gray-200 hover: hover:text-gray-700"
                         aria-label="close" @click="open2 = false, Livewire.emit('resetVariables')">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" role="img" aria-hidden="true">
-                            <path
-                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            <path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                                 clip-rule="evenodd" fill-rule="evenodd"></path>
                         </svg>
                     </button>
@@ -219,17 +223,27 @@
                     </p>
                     <!-- Modal description -->
                     <label class="block text-sm">
-                        <span class="text-gray-700 dark:text-gray-400">Nombre</span>
-                        <input
-                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        <span class="text-gray-700 dark:text-gray-400">Nombre Comercial</span>
+                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                             placeholder="Nombre medicamento" wire:model='name' />
                     </label>
-
+                    <x-jet-input-error for="name" />
                     <label class="block text-sm">
                         <span class="text-gray-700 dark:text-gray-400">Nombre Genérico</span>
-                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                            wire:model='g_name' />
                     </label>
+                    <div>
+                        <x-lwa::autocomplete
+                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            name="generic-name"
+                            wire:model-text="gname"
+                            wire:model-id="gnameId"
+                            wire:model-results="gnames"
+                            :options="[
+                                'text'=> 'gname',
+                                'allow-new'=> 'false',
+                            ]" />
+                    </div>
+                    <x-jet-input-error for="pro" />
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm">
@@ -237,6 +251,7 @@
                                 <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                     wire:model='stock' />
                             </label>
+                            <x-jet-input-error for="stock" />
                         </div>
                         <div>
                             <label class="block text-sm">
@@ -244,22 +259,26 @@
                                 <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                     wire:model='lot' />
                             </label>
+                            <x-jet-input-error for="lot" />
                         </div>
-                    </div>
-                    
+                    </div>                    
                     <div class="grid grid-cols-2 gap-4">
-                        <div><label class="block text-sm">
+                        <div>
+                            <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Fecha de Vencimiento</span>
                             <input type="date"
                                 class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 wire:model='exp_date' />
                             </label>
+                            <x-jet-input-error for="exp_date" />
                         </div>
-                        <div><label class="block text-sm">
+                        <div>
+                            <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Precio</span>
                             <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 wire:model='price' />
                             </label>
+                            <x-jet-input-error for="price" />
                         </div>
                     </div>
                     <label class="block mt-4 text-sm">
@@ -287,18 +306,6 @@
                             @endforeach
                         </select>
                     </label>
-                    <label class="block mt-4 text-sm">
-                        <span class="text-gray-700 dark:text-gray-400">
-                            Sucursal
-                        </span>
-                        <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                            wire:model='branch_id'>
-                            <option selected>Seleccione una Sucursal</option>
-                            @foreach ($branches as $branch)
-                                <option value="{{ $branch->id }}">{{ $branch->name }}</option>
-                            @endforeach
-                        </select>
-                    </label>
                 </div>
                 <footer class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-gray-50 dark:bg-gray-800">
                     {{-- Modal Actualizar: Boton Cancelar --}}
@@ -320,7 +327,8 @@
             <table class="w-full whitespace-no-wrap">
                 <thead>
                     <tr class="text-xs font-semibold tracking-wide text-left bg-green-600 dark:bg-green-700 text-gray-50 uppercase border-b dark:border-gray-700 dark:text-gray-50 ">
-                        <th class="px-4 py-3">Producto</th>
+                        <th class="px-4 py-3">Nombre Comercial</th>
+                        <th class="px-4 py-3">Nombre Genérico</th>
                         <th class="px-4 py-3">Stock</th>
                         <th class="px-4 py-3">Lote</th>
                         <th class="px-4 py-3">Fecha de Expiración</th>
@@ -333,6 +341,11 @@
                             <td class="px-4 py-3">
                                 <div class="flex items-center text-sm  dark:bg-green-700 rounded-full px-2 py-1 dark:text-green-100">
                                     <p class="font-semibold">{{ $product->name }}</p>
+                                </div>
+                            </td>
+                            <td class="px-4 py-3">
+                                <div class="flex items-center text-sm  dark:bg-green-700 rounded-full px-2 py-1 dark:text-green-100">
+                                    <p class="font-semibold">{{ $product->g_name }}</p>
                                 </div>
                             </td>
                             <td class="px-4 py-3 text-sm">

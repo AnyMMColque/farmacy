@@ -135,7 +135,7 @@ class SalesCreate extends Component
         $this->emit('saved');
         $this->emit('select', $newCustomer->name, $newCustomer->id);
     }
-
+    /* Registrar Venta */
     public function saveOrder()
     {
 

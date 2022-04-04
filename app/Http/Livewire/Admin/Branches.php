@@ -11,7 +11,7 @@ class Branches extends Component
 {
     use WithPagination;
 
-    public $name, $address, $telephone, $turn, $nit, $authorization;
+    public $name_p, $register, $name, $address, $telephone, $turn, $nit, $authorization;
     public $lat = 0, $lng;
     public $num, $map_id;
 
@@ -22,6 +22,8 @@ class Branches extends Component
     protected $listeners = ['delete', 'updateSearch', 'resetVariables', 'getLatitudeFromInput']; 
     
     protected $rules = [
+        'name_p' => 'required|min:6|max:30',
+        'register' => 'required|numeric',
         'name' => 'required|min:6|max:30',
         'address' => 'required|min:6|max:50',
         'telephone' => 'required|max:99999999|numeric',
@@ -58,7 +60,7 @@ class Branches extends Component
     /* Reinicia las variables */
     public function resetVariables()
     {
-        $this->reset(['name', 'address', 'telephone', 'turn', 'nit', 'authorization', 'lat', 'lng']);
+        $this->reset(['name_p','register','name', 'address', 'telephone', 'turn', 'nit', 'authorization', 'lat', 'lng']);
         $this->resetValidation();
         $this->render();
     }
@@ -68,6 +70,8 @@ class Branches extends Component
         $this->validate($this->rules);
 
         $branch = new Branch();
+        $branch->name_p = $this->name_p;
+        $branch->register = $this->register;
         $branch->name = $this->name;
         $branch->address = $this->address;
         $branch->telephone = $this->telephone;
@@ -78,13 +82,15 @@ class Branches extends Component
         $branch->lng = $this->lng;
         
         $branch->save();
-        $this->reset(['name', 'address', 'telephone', 'turn', 'nit', 'authorization', 'lat', 'lng']);
+        $this->reset(['name_p','register','name', 'address', 'telephone', 'turn', 'nit', 'authorization', 'lat', 'lng']);
         $this->emit('saved');
     }
     /* Editar Sucursal */
     public function edit(Branch $branch)
     {
         $this->num = $branch->id;
+        $this->name_p = $branch->name_p;
+        $this->register = $branch->register;
         $this->name = $branch->name;
         $this->address = $branch->address;
         $this->telephone = $branch->telephone;
@@ -102,6 +108,8 @@ class Branches extends Component
     public function update(Branch $branch)
     {   
         $this->validate($this->rules);
+        $branch->name_p = $this->name_p;
+        $branch->register = $this->register;
         $branch->name = $this->name;
         $branch->address = $this->address;
         $branch->telephone = $this->telephone;
@@ -112,7 +120,7 @@ class Branches extends Component
         $branch->lng = $this->lng;
        
         $branch->save();        
-        $this->reset(['name', 'address','telephone','turn','nit','authorization','lat','lng','num']);        
+        $this->reset(['name_p','register','name', 'address','telephone','turn','nit','authorization','lat','lng','num']);        
         $this->emit('updated');  
     }
     /* Eliminar Sucursal */

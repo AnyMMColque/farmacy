@@ -14,6 +14,8 @@ class BranchFactory extends Factory
     public function definition()
     {
         return [
+            'name_p' => $this->faker->sentence(2),
+            'register' => '264890',
             'name' => $this->faker->sentence(2),
             'address' => $this->faker->address,
             'telephone' => '231353',

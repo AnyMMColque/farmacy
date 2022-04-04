@@ -99,9 +99,23 @@
                         </p>
                         <!-- Modal description -->
                         <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">Nombre</span>
+                            <span class="text-gray-700 dark:text-gray-400">Nombre Propietario</span>
                             <input
                                 class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                wire:model='name_p' />
+                            {{-- Validacion de Nombre propietario--}}
+                            <x-jet-input-error for="name_p" />
+                        </label>
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Numero de registro profesional</span>
+                            <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                wire:model='register' />
+                            {{-- Validacion de numero de registro profesional--}}
+                            <x-jet-input-error for="register" />
+                        </label>
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Nombre Farmacia</span>
+                            <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 wire:model='name' />
                             {{-- Validacion de Nombre --}}
                             <x-jet-input-error for="name" />
@@ -174,6 +188,9 @@
                 role="" id="modal">
                 {{-- Aqui insertamos el mapa  --}}
                 <div>
+                    <p class="mt-10 mb-2 text-lg font-semibold text-gray-700 dark:text-gray-300">
+                        A continuación marque la ubicación aproximada en el mapa
+                    </p>
                     <div class="h-80 mt-10" id="{{$map_id}}" wire:ignore></div>
                 </div>
                 <div>
@@ -195,6 +212,20 @@
                             Actualizar Sucursal
                         </p>
                         <!-- Modal description -->
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Nombre Propietario</span>
+                            <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                wire:model='name_p' />
+                            {{-- Validacion de Nombre propietario--}}
+                            <x-jet-input-error for="name_p" />
+                        </label>
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Numero de registro profesional</span>
+                            <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                wire:model='register' />
+                            {{-- Validacion de numero de registro profesional --}}
+                            <x-jet-input-error for="register" />
+                        </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Nombre</span>
                             <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"

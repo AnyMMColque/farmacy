@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             'ci' => '123',
             'address' => '123',
             'telephone' => '123',
-            'email' => '123',
+            'email' => 'admin',
             'user' => 'pr',
             'password' => Hash::make('123456'),
         ]);

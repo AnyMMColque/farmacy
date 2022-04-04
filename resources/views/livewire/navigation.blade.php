@@ -99,7 +99,7 @@
                     @auth
                     <div class="mt-3 md:pl-4 md:mt-0 flex items-center py-2 -mx-1 md:mx-0">
                         {{-- <a class="block w-1/2 px-3 py-2 mx-1 text-sm font-medium leading-5 text-center text-white transition-colors duration-200 transform bg-gray-500 rounded-md hover:bg-blue-600 md:mx-2 md:w-auto" href="/login">Panel de Control</a> --}}
-                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Panel de Control</a>
+                        <a href="{{ route('admin.dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Panel de Control</a>
                         {{-- <form method="POST" action="{{ route('logout') }}">
                             @csrf
 

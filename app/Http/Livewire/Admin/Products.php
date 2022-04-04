@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin;
 
 use App\Models\Product;
 use App\Models\Branch;
+use App\Models\Generic;
 use App\Models\Laboratory;
 use App\Models\Presentation;
 use Livewire\Component;
@@ -14,9 +15,21 @@ class Products extends Component
     use WithPagination;
 
     public $name, $g_name, $stock, $lot, $exp_date, $price;
-    public $laboratory_id, $branch_id, $presentation_id;
-    public $branches, $presentations, $laboratories;
+    public $laboratory_id, $presentation_id;
+    public $presentations, $laboratories;
     public $num;
+
+    public $gnames, $gname, $gnameId;
+
+    public $pro;
+
+    protected $rules = [
+        'gnames.*.id' => '',
+        'gnames.*.gname' => '',
+
+        'pro.id' => '',
+        'pro.gname' => '',
+    ];
 
     private $products;
 
@@ -24,9 +37,9 @@ class Products extends Component
 
     protected $listeners = ['delete', 'updateSearch', 'resetVariables']; 
 
-    protected $rules = [
+    protected $rules2= [
         'name' => 'required|min:6|max:30',
-        'g_name' => 'required|min:6|max:50',
+        'pro' => 'required',
         'stock' => 'required|numeric',
         'lot' => 'nullable',
         'exp_date' => 'required|date',
@@ -41,64 +54,88 @@ class Products extends Component
     /* Aqui mandamos los datos de otras vistas */
     public function mount()
     {
-        $this->branches =Branch::all();
         $this->presentations =Presentation::all();
         $this->laboratories =Laboratory::all();
+        $this->getGnames();
     }
+
+    public function updatedGnameId()
+    {
+        $this->pro = Generic::find($this->gnameId);
+    }
+
+    public function updatedGname()
+    {
+        $this->getGnames();
+    }
+
+    public function getGnames()
+    {
+        $this->gnames = Generic::query()
+            ->when($this->gname, function ($query, $gname) {
+                return $query->where('gname', 'LIKE', '%' . $gname . '%');
+            })
+            ->orderBy('gname')
+            ->get();
+    }
+
     public function resetVariables()
     {
-        $this->reset(['name', 'g_name', 'stock', 'lot', 'exp_date', 'price', 'laboratory_id', 'branch_id', 'presentation_id']);
+        $this->reset(['name', 'pro', 'stock', 'lot', 'exp_date', 'price', 'laboratory_id', 'presentation_id']);
     }
     /* Guardar Producto  */
     public function save()
     {
-        /* $this->validate($this->rules); */
+        $this->validate($this->rules2);
         
         $product = new Product();
         $product->name = $this->name;
-        $product->g_name = $this->g_name;
+        $product->g_name = $this->pro->gname;
         $product->stock = $this->stock;
         $product->lot = $this->lot;
         $product->exp_date = $this->exp_date;
         $product->price = $this->price;
         $product->laboratory_id = $this->laboratory_id;
-        $product->branch_id = $this->branch_id;
         $product->presentation_id = $this->presentation_id;
 
         $product->save();
-        $this->reset(['name', 'g_name', 'stock', 'lot', 'exp_date', 'price']);
+        $this->reset(['name', 'pro', 'stock', 'lot', 'exp_date', 'price']);
         $this->emit('saved');
     }
     /* Editar Producto */
     public function edit(Product $product)
     {
+        $this->pro = Generic::where('gname', $product->g_name)->first();
+        $this->gname = $this->pro->gname;
+        $this->gnameId = $this->pro->id;
+
         $this->num = $product->id;
         $this->name = $product->name;
-        $this->g_name = $product->g_name;
+        $this->pro->gname = $product->g_name;
         $this->stock = $product->stock;
         $this->lot = $product->lot;
         $this->exp_date = $product->exp_date;
         $this->price = $product->price;
         $this->laboratory_id = $product->laboratory_id;
-        $this->branch_id = $product->branch_id;
         $this->presentation_id = $product->presentation_id;
     }
 
     /* Actualizar Producto */
     public function update(Product $product)
     {
+        $this->validate($this->rules2);
+
         $product->name = $this->name;
-        $product->g_name = $this->g_name;
+        $product->g_name = $this->pro->gname;
         $product->stock = $this->stock;
         $product->lot = $this->lot;
         $product->exp_date = $this->exp_date;
         $product->price = $this->price;
         $product->laboratory_id = $this->laboratory_id;
-        $product->branch_id = $this->branch_id;
         $product->presentation_id = $this->presentation_id;
         
         $product->save();
-        $this->reset(['name', 'g_name','stock','lot','exp_date','price','laboratory_id','branch_id','presentation_id','num']);
+        $this->reset(['name', 'pro','stock','lot','exp_date','price','laboratory_id','presentation_id','num']);
         $this->emit('updated');
     }
     /* Eliminar Producto */
