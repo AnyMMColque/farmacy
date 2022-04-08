@@ -2932,6 +2932,10 @@ html {
   margin-top: auto;
   margin-bottom: auto;
 }
+.my-8 {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
 .ml-3 {
   margin-left: 0.75rem;
 }
@@ -3106,6 +3110,9 @@ html {
 .h-3 {
   height: 0.75rem;
 }
+.h-32 {
+  height: 8rem;
+}
 .max-h-56 {
   max-height: 14rem;
 }
@@ -3193,6 +3200,9 @@ html {
 .max-w-6xl {
   max-width: 72rem;
 }
+.max-w-4xl {
+  max-width: 56rem;
+}
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -3226,6 +3236,18 @@ html {
   --tw-translate-y: 50%;
   transform: var(--tw-transform);
 }
+.translate-x-0\.5 {
+  --tw-translate-x: 0.125rem;
+  transform: var(--tw-transform);
+}
+.translate-y-0\.5 {
+  --tw-translate-y: 0.125rem;
+  transform: var(--tw-transform);
+}
+.translate-x-0 {
+  --tw-translate-x: 0px;
+  transform: var(--tw-transform);
+}
 .-translate-x-20 {
   --tw-translate-x: -5rem;
   transform: var(--tw-transform);
@@ -3236,6 +3258,10 @@ html {
 }
 .-translate-y-1 {
   --tw-translate-y: -0.25rem;
+  transform: var(--tw-transform);
+}
+.rotate-12 {
+  --tw-rotate: 12deg;
   transform: var(--tw-transform);
 }
 .scale-95 {
@@ -3486,6 +3512,9 @@ html {
   --tw-border-opacity: 1;
   border-color: rgb(134 239 172 / var(--tw-border-opacity));
 }
+.border-current {
+  border-color: currentColor;
+}
 .border-white {
   --tw-border-opacity: 1;
   border-color: rgb(255 255 255 / var(--tw-border-opacity));
@@ -3569,6 +3598,14 @@ html {
 .bg-black {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+}
+.bg-\[\#1A2238\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(26 34 56 / var(--tw-bg-opacity));
+}
+.bg-\[\#FF6A3D\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 106 61 / var(--tw-bg-opacity));
 }
 .bg-purple-600 {
   --tw-bg-opacity: 1;
@@ -3690,6 +3727,10 @@ html {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
 }
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
 .py-0 {
   padding-top: 0px;
   padding-bottom: 0px;
@@ -3809,6 +3850,10 @@ html {
   font-size: 1.25rem;
   line-height: 1.75rem;
 }
+.text-9xl {
+  font-size: 8rem;
+  line-height: 1;
+}
 .font-medium {
   font-weight: 500;
 }
@@ -3817,6 +3862,9 @@ html {
 }
 .font-bold {
   font-weight: 700;
+}
+.font-extrabold {
+  font-weight: 800;
 }
 .uppercase {
   text-transform: uppercase;
@@ -3932,6 +3980,10 @@ html {
 .text-green-700 {
   --tw-text-opacity: 1;
   color: rgb(21 128 61 / var(--tw-text-opacity));
+}
+.text-\[\#FF6A3D\] {
+  --tw-text-opacity: 1;
+  color: rgb(255 106 61 / var(--tw-text-opacity));
 }
 .text-purple-600 {
   --tw-text-opacity: 1;
@@ -4194,6 +4246,10 @@ html {
   --tw-text-opacity: 1;
   color: rgb(243 244 246 / var(--tw-text-opacity));
 }
+.hover\:underline:hover {
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
+}
 .focus\:z-10:focus {
   z-index: 10;
 }
@@ -4380,10 +4436,30 @@ html {
   --tw-text-opacity: 1;
   color: rgb(31 41 55 / var(--tw-text-opacity));
 }
+.active\:text-orange-500:active {
+  --tw-text-opacity: 1;
+  color: rgb(249 115 22 / var(--tw-text-opacity));
+}
 .disabled\:opacity-25:disabled {
   opacity: 0.25;
 }
+.group:hover .group-hover\:translate-y-0 {
+  --tw-translate-y: 0px;
+  transform: var(--tw-transform);
+}
+.group:hover .group-hover\:translate-x-0 {
+  --tw-translate-x: 0px;
+  transform: var(--tw-transform);
+}
 @media (prefers-color-scheme: dark) {
+
+  .dark\:block {
+    display: block;
+  }
+
+  .dark\:hidden {
+    display: none;
+  }
 
   .dark\:divide-gray-700 > :not([hidden]) ~ :not([hidden]) {
     --tw-divide-opacity: 1;
@@ -4503,6 +4579,11 @@ html {
   .dark\:text-red-100 {
     --tw-text-opacity: 1;
     color: rgb(254 226 226 / var(--tw-text-opacity));
+  }
+
+  .dark\:text-purple-400 {
+    --tw-text-opacity: 1;
+    color: rgb(192 132 252 / var(--tw-text-opacity));
   }
 
   .dark\:placeholder-gray-500::-moz-placeholder {
@@ -4771,6 +4852,10 @@ html {
     padding: 1.5rem;
   }
 
+  .sm\:p-12 {
+    padding: 3rem;
+  }
+
   .sm\:px-6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
@@ -4852,8 +4937,16 @@ html {
     display: none;
   }
 
+  .md\:h-auto {
+    height: auto;
+  }
+
   .md\:w-auto {
     width: auto;
+  }
+
+  .md\:w-1\/2 {
+    width: 50%;
   }
 
   .md\:grid-cols-3 {

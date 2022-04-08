@@ -2,9 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\PermissionRegistrar;
 
 class UserSeeder extends Seeder
 {
@@ -15,15 +19,70 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
+        // Reset cached roles and permissions
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
+
+        // create permissions for users
+        Permission::create(['name' => 'create user']);
+        Permission::create(['name' => 'read user']);
+        Permission::create(['name' => 'update user']);
+        Permission::create(['name' => 'register user']);
+        Permission::create(['name' => 'deregister user']);
+
+        // create permissions for salesman
+        Permission::create(['name' => 'create order']);
+        Permission::create(['name' => 'read order']);
+        Permission::create(['name' => 'deregister salesman']);        
+        
+
+        $role1 = Role::create(['name' => 'Super-Admin']);
+        $role1->givePermissionTo('create user');
+        $role1->givePermissionTo('read user');
+        $role1->givePermissionTo('update user');
+        $role1->givePermissionTo('register user');
+        $role1->givePermissionTo('deregister user');
+
+        $role2 = Role::create(['name' => 'farmacia1']);
+        $role2->givePermissionTo('create user');
+        $role2->givePermissionTo('read user');
+        $role2->givePermissionTo('update user');
+        $role2->givePermissionTo('register user');
+        $role2->givePermissionTo('deregister user');
+
+        $role3 = Role::create(['name' => 'salesman']);
+        $role3->givePermissionTo('create order');
+        $role3->givePermissionTo('read order');
+        $role3->givePermissionTo('deregister salesman');
+
+        
+        User::create([
             'id' => 1,
-            'name' => 'prueba',
-            'ci' => '123',
-            'address' => '123',
-            'telephone' => '123',
-            'email' => 'admin',
-            'user' => 'pr',
+            'name' => 'Administrador',
+            'ci' => '8574924',
+            'address' => 'address xxx',
+            'telephone' => '9854624',
+            'username' => 'admin',
             'password' => Hash::make('123456'),
-        ]);
+        ])->assignRole($role1);
+
+        User::create([
+            'id' => 2,
+            'name' => 'Admin sucursal',
+            'ci' => '548667',
+            'address' => 'address xx',
+            'telephone' => '96584724',
+            'username' => 'farmacia1',
+            'password' => Hash::make('123456'),
+        ])->assignRole($role2);
+
+        User::create([
+            'id' => 3,
+            'name' => 'vendedor',
+            'ci' => '548667',
+            'address' => 'address xx',
+            'telephone' => '96584724',
+            'username' => 'vendedor',
+            'password' => Hash::make('123456'),
+        ])->assignRole($role3);
     }
 }

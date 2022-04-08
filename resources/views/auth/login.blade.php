@@ -16,8 +16,8 @@
             @csrf
 
             <div>
-                <x-jet-label for="email" value="Usuario" />
-                <input class="block mt-1 w-full" type="TEXT" name="email" />
+                <x-jet-label for="username" value="Usuario" />
+                <input class="block mt-1 w-full" type="TEXT" name="username" />
                 {{-- <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus  /> --}}
             </div>
 

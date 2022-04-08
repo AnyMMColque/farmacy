@@ -3,20 +3,24 @@
 namespace App\Http\Livewire\Admin;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Spatie\Permission\Models\Role;
 
 class Users extends Component
 {
     use WithPagination;
 
-    public $name, $ci, $address, $telephone, $email, $user;
+    public $name, $ci, $address, $telephone, $username, $user;
     public $password;
     public $num;
 
     private $users;
 
     public $search = "";
+
+    public $rol, $create, $read, $update, $delete;
 
     protected $listeners = ['delete', 'updateSearch', 'resetVariables']; 
 
@@ -25,8 +29,7 @@ class Users extends Component
         'ci' => 'required|numeric',
         'address' => 'required|min:6|max:50',
         'telephone' => 'required|max:99999999|numeric',
-        'email' => 'nullable',
-        'user' => 'required',
+        'username' => 'required',
         'password' => 'required|numeric',
     ];
     /* Buscar Usuario */
@@ -43,19 +46,18 @@ class Users extends Component
     /* Guardar Usuario */
     public function save()
     {
-        $this->validate($this->rules);
+        // $this->validate($this->rules);
 
         $user = new User();
         $user->name = $this->name;
         $user->ci = $this->ci;
         $user->address = $this->address;
         $user->telephone = $this->telephone;
-        $user->email = $this->email;
-        $user->user = $this->user;
-        $user->password = $this->password;
+        $user->username = $this->username;
+        $user->password = Hash::make($this->password);
 
         $user->save();
-        $this->reset(['name','ci', 'address', 'telephone', 'email', 'user', 'password']);
+        $this->reset(['name', 'ci','address','telephone','username','password', 'num']);
         $this->emit('saved');
     }
     /* Editar Usuario */
@@ -66,8 +68,7 @@ class Users extends Component
         $this->ci = $user1->ci;
         $this->address = $user1->address;
         $this->telephone = $user1->telephone;
-        $this->email = $user1->email;
-        $this->user = $user1->user;
+        $this->username = $user1->username;
         $this->password = $user1->password;
     }
     /* Actualizar Usuario */
@@ -77,12 +78,11 @@ class Users extends Component
         $user1->ci = $this->ci;
         $user1->address = $this->address;
         $user1->telephone = $this->telephone;
-        $user1->email = $this->email;
-        $user1->user = $this->user;
-        $user1->password = $this->password;
+        $user1->username = $this->username;
+        $user1->password = Hash::make($this->password);
 
         $user1->save();
-        $this->reset(['name', 'ci','address','telephone','email','user','password', 'num']);
+        $this->reset(['name', 'ci','address','telephone','username','password', 'num']);
         $this->emit('updated');
     }
     /* Eliminar Usuario */
@@ -91,6 +91,17 @@ class Users extends Component
         $user1->delete();
         $this->emit('deleted');
     }
+
+    public function saveRole()
+    {
+        Role::create(['name' => $this->rol])
+        ->givePermissionTo('create users')
+        ->givePermissionTo('read users')
+        ->givePermissionTo('update users')
+        ->givePermissionTo('delete users')
+        ;
+    }
+
     /* Paginacion Sucursal */
     public function paginationView()
     {

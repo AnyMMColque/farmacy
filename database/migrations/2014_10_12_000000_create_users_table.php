@@ -19,9 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('ci');
             $table->string('address');
             $table->string('telephone');
-            $table->string('email')->unique();
+            $table->string('username')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('user');
             $table->string('password');
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();

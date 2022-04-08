@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BranchFactory extends Factory
@@ -14,6 +15,7 @@ class BranchFactory extends Factory
     public function definition()
     {
         return [
+            'user_id' => User::all()->random()->id,
             'name_p' => $this->faker->sentence(2),
             'register' => '264890',
             'name' => $this->faker->sentence(2),

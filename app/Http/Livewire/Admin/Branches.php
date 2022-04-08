@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\User;
 use App\Models\Branch;
 use Livewire\Component;
 use Illuminate\Support\Str;
@@ -13,7 +14,7 @@ class Branches extends Component
 
     public $name_p, $register, $name, $address, $telephone, $turn, $nit, $authorization;
     public $lat = 0, $lng;
-    public $num, $map_id;
+    public $num, $map_id, $users;
 
     private $branches;
 
@@ -22,7 +23,7 @@ class Branches extends Component
     protected $listeners = ['delete', 'updateSearch', 'resetVariables', 'getLatitudeFromInput']; 
     
     protected $rules = [
-        'name_p' => 'required|min:6|max:30',
+        'name_p' => 'required',
         'register' => 'required|numeric',
         'name' => 'required|min:6|max:30',
         'address' => 'required|min:6|max:50',
@@ -47,7 +48,7 @@ class Branches extends Component
     }
     public function mount()
     {
-
+        $this->users = User::all();
     }
     /* Obtiene la Ubicación de la Sucursal  */
     public function getLatitudeFromInput($lat, $lng)
@@ -70,6 +71,7 @@ class Branches extends Component
         $this->validate($this->rules);
 
         $branch = new Branch();
+        $branch->user_id = $this->name_p;
         $branch->name_p = $this->name_p;
         $branch->register = $this->register;
         $branch->name = $this->name;

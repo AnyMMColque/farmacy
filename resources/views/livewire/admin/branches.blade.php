@@ -4,6 +4,7 @@
         crossorigin="" />
     <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css" />
 @endpush
+@role('Super-Admin')
 <div x-data="{ open: false, open2: false }">
     {{-- Alert despues de registrar una sucursal --}}
     <x-jet-action-message class="" on="saved">
@@ -100,9 +101,15 @@
                         <!-- Modal description -->
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Nombre Propietario</span>
-                            <input
+                            <select wire:model='name_p' class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                <option value="" selected>Seleccionar usuario</option>
+                                @foreach ($users as $user)
+                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                @endforeach
+                            </select>
+                           {{--  <input
                                 class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                wire:model='name_p' />
+                                wire:model='name_p' /> --}}
                             {{-- Validacion de Nombre propietario--}}
                             <x-jet-input-error for="name_p" />
                         </label>
@@ -393,3 +400,25 @@
         <script src="https://unpkg.com/esri-leaflet-geocoder"></script>
     @endpush
 </div>
+@else
+<!-- component -->
+<main class="h-screen w-full flex flex-col justify-center items-center bg-[#1A2238]">
+	<h1 class="text-9xl font-extrabold text-white tracking-widest">404</h1>
+	<div class="bg-[#FF6A3D] px-2 text-sm rounded rotate-12 absolute">
+		Page Not Found
+	</div>
+	<button class="mt-5">
+      <a
+        class="relative inline-block text-sm font-medium text-[#FF6A3D] group active:text-orange-500 focus:outline-none focus:ring"
+      >
+        <span
+          class="absolute inset-0 transition-transform translate-x-0.5 translate-y-0.5 bg-[#FF6A3D] group-hover:translate-y-0 group-hover:translate-x-0"
+        ></span>
+
+        <span class="relative block px-8 py-3 bg-[#1A2238] border border-current">
+          <router-link to="/">Go Home</router-link>
+        </span>
+      </a>
+    </button>
+</main>
+@endrole

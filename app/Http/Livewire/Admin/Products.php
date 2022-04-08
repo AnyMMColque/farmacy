@@ -97,7 +97,7 @@ class Products extends Component
         $product->price = $this->price;
         $product->laboratory_id = $this->laboratory_id;
         $product->presentation_id = $this->presentation_id;
-
+        $product->branch_id = Auth()->user()->branch->id;
         $product->save();
         $this->reset(['name', 'pro', 'stock', 'lot', 'exp_date', 'price']);
         $this->emit('saved');
@@ -133,7 +133,7 @@ class Products extends Component
         $product->price = $this->price;
         $product->laboratory_id = $this->laboratory_id;
         $product->presentation_id = $this->presentation_id;
-        
+        $product->branch_id = Auth()->user()->branch->id;
         $product->save();
         $this->reset(['name', 'pro','stock','lot','exp_date','price','laboratory_id','presentation_id','num']);
         $this->emit('updated');
@@ -153,7 +153,9 @@ class Products extends Component
     public function render()
     {
         /* Buscar producto por nombre o nombre generico */
-        $products = Product::where(function($query){
+        $products_branch = Product::where('branch_id', Auth()->user()->branch->id);
+
+        $products = $products_branch->where(function($query){
             $query->where('name', 'like', '%'.$this->search.'%');
             $query->orwhere('g_name', 'like', '%'.$this->search.'%');
         })->orderBy('created_at', 'desc')->paginate();
