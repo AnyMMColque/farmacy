@@ -1,5 +1,5 @@
 <div>
-    {{-- Carrusel --}}
+    {{-- Carrousel de imagenes--}}
     <script defer src="https://unpkg.com/alpinejs@3.2.3/dist/cdn.min.js"></script>
     <article x-data="slider" class="relative w-full flex flex-shrink-0 overflow-hidden shadow-2xl">
         <div class="rounded-full bg-gray-600 text-white absolute top-5 right-5 text-sm px-2 text-center z-10">
@@ -29,6 +29,7 @@
             </svg>
         </button>
     </article>
+    {{-- Script carrousel de imagenes --}}
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('slider', () => ({
@@ -63,10 +64,10 @@
                     Busca la disponibilidad del medicamento que tu necesites</h1>
                 <form action="" class="w-full mt-12">
                     <div class="relative flex p-1 rounded-full bg-white border border-yellow-200 shadow-md md:p-2">
-                        <input placeholder="Nombre medicamento" class="w-full p-4 rounded-full" type="text">
-                        <input placeholder="Cantidad solicitada" class="w-full p-4 rounded-full" type="text">
+                        <input placeholder="Nombre medicamento" class="w-full p-4 m-2 rounded-full" type="text">
+                        <input placeholder="Cantidad solicitada" class="w-full p-4 m-2 rounded-full" type="text">
                         <button type="button" title="Start buying"
-                            class="ml-auto py-3 px-6 rounded-full text-center transition bg-gradient-to-b from-green-700 to-yellow-300 hover:to-red-300 active:from-green-700 focus:from-red-400 md:px-12">
+                            class="ml-auto py-20 px-6 rounded-full text-center transition bg-gradient-to-b from-green-700 to-yellow-300 hover:to-yellow-300 active:from-green-700 focus:from-green-600 md:px-12">
                             <span class="hidden text-gray-900 font-semibold md:block">
                                 Buscar
                             </span>
@@ -77,8 +78,10 @@
                         </button>
                     </div>
                 </form>
-                <p class="mt-8 text-gray-700 lg:w-10/12">Sit amet consectetur adipisicing elit. <a href="#"
-                        class="text-yellow-700">connection</a> tenetur nihil quaerat suscipit, sunt dignissimos.
+                <p class="mt-8 text-gray-700 lg:w-10/12">Introduce el nombre del medicamento y la cantidad que buscas para 
+                    mostrarte todas las farmacias que lo tienen disponible. O busca en nuestra 
+                    <a href="#"
+                    class="text-yellow-700">lista de medicamentos </a>lo que tu necesites.
                 </p>
             </div>
             <div class="ml-auto -mb-24 lg:-mb-12 lg:w-6/12 px-36">
