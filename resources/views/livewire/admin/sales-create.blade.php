@@ -55,11 +55,11 @@ use App\Models\Product;
                             name="state">
                             <option value="0" disabled selected>Selecciona un producto</option>
                             @foreach ($products as $prod)
-                                <option value="{{ $prod->id }}" wire:key='{{ $prod->id }}'>{{ $prod->name }}
-                                    ({{ $prod->presentation->name }})        
+                                <option value="{{ $prod->id }}" wire:key='{{ $prod->id }}'>{{ $prod->name . ' - ' . $prod->g_name }}
+                                    ({{ $prod->presentation->name }})
                                 </option>
-                                <option value="{{ $prod->id }}" wire:key='{{ $prod->id }}'>{{ $prod->g_name }}
-                                    ({{ $prod->presentation->name }})</option>
+                                {{-- <option value="{{ $prod->id }}" wire:key='{{ $prod->id }}'>{{ $prod->g_name }}
+                                    ({{ $prod->presentation->name }})</option> --}}
                             @endforeach
                         </select>
                     </div>
@@ -166,15 +166,15 @@ use App\Models\Product;
                             {{ $product->stock }}
                         </td>
                         <td class="px-4 py-3 text-sm">
-                            {{ $product->price }}
+                            {{ $product->sale_price }}
                         </td>
-                        <td class="px-4 py-3 text-xs">
+                        <td class="px-4 py-3 text-sm">
                             <span class="px-2 py-1">
                                 {{ $subtotal[$key] }}
                             </span>
                         </td>
                         <td class="px-4 py-3 text-sm">
-                            {{ $product->price * $subtotal[$key] }}
+                            {{ $product->sale_price * $subtotal[$key] }}
                         </td>
                         <td class="px-4 py-3">
                             <div class="flex items-center space-x-4 text-sm">
@@ -230,21 +230,10 @@ use App\Models\Product;
                     <input wire:model.lazy="pay"
                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                         placeholder="0" />
+                    <x-jet-input-error for="pay" />
                 </label>
                 <x-jet-action-message class="mt-4 mb-2" on="pay">
-                    <div class="flex w-full max-w-lg mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
-                        <div class="flex items-center justify-center w-12 bg-red-500">
-                            <svg class="w-6 h-6 text-white fill-current" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20 3.36667C10.8167 3.36667 3.3667 10.8167 3.3667 20C3.3667 29.1833 10.8167 36.6333 20 36.6333C29.1834 36.6333 36.6334 29.1833 36.6334 20C36.6334 10.8167 29.1834 3.36667 20 3.36667ZM19.1334 33.3333V22.9H13.3334L21.6667 6.66667V17.1H27.25L19.1334 33.3333Z" />
-                            </svg>
-                        </div>            
-                        <div class="px-4 py-2 -mx-3">
-                            <div class="mx-3">
-                                <span class="font-semibold text-red-500 dark:text-red-400">Error</span>
-                                <p class="text-sm text-gray-600 dark:text-gray-200">¡Este producto ya a sido agregado!</p>
-                            </div>
-                        </div>
-                    </div>
+                    Incorrecto
                 </x-jet-action-message>
             </div>
         </div>
@@ -271,10 +260,14 @@ use App\Models\Product;
         </div> --}}
     </div>
     <div>
-        <button wire:click="saveOrder"
+        <button wire:click="saveOrder" wire:loading.attr="disabled"
         class="mt-3 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-700 dark:bg-green-700 border border-transparent rounded-lg active:bg-green-800 hover:bg-green-800 focus:outline-none focus:shadow-outline-purple">
             Registrar venta
         </button>
+        <a href="{{ route('admin.sales') }}"
+        class="cursor-pointer mt-3 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-700 dark:bg-red-700 border border-transparent rounded-lg active:bg-red-800 hover:bg-red-800 focus:outline-none focus:shadow-outline-purple">
+            Cancelar
+        </a>
     </div>
 </div>
 

@@ -12,9 +12,9 @@ class Branches extends Component
 {
     use WithPagination;
 
-    public $name_p, $register, $name, $address, $telephone, $turn, $nit, $authorization;
-    public $lat = 0, $lng;
-    public $num, $map_id, $users;
+    public $name_p, $register, $name, $address, $telephone, $nit, $authorization;
+    public $lat, $lng;
+    public $num, $map_id;
 
     private $branches;
 
@@ -28,13 +28,12 @@ class Branches extends Component
         'name' => 'required|min:6|max:30',
         'address' => 'required|min:6|max:50',
         'telephone' => 'required|max:99999999|numeric',
-        'turn' => 'nullable',
         'nit' => 'required|numeric',
         'authorization' => 'required|numeric',
         'lat' => 'required',
         'lng' => 'required',
     ];
-    /* Buscar Sucursal */
+    /* Buscar farmacia */
     public function updateSearch($search)
     {
         $this->search = $search;
@@ -48,9 +47,10 @@ class Branches extends Component
     }
     public function mount()
     {
-        $this->users = User::all();
+
     }
-    /* Obtiene la Ubicación de la Sucursal  */
+
+    /* Obtiene la Ubicación de la farmacia  */
     public function getLatitudeFromInput($lat, $lng)
     {
         if (!is_null($lat && $lng)){
@@ -61,33 +61,31 @@ class Branches extends Component
     /* Reinicia las variables */
     public function resetVariables()
     {
-        $this->reset(['name_p','register','name', 'address', 'telephone', 'turn', 'nit', 'authorization', 'lat', 'lng']);
+        $this->reset(['name_p','register','name', 'address', 'telephone', 'nit', 'authorization', 'lat', 'lng']);
         $this->resetValidation();
         $this->render();
     }
-    /* Guardar Sucursal */
+    /* Guardar farmacia */
     public function save()
     {
         $this->validate($this->rules);
 
         $branch = new Branch();
-        $branch->user_id = $this->name_p;
         $branch->name_p = $this->name_p;
         $branch->register = $this->register;
         $branch->name = $this->name;
         $branch->address = $this->address;
         $branch->telephone = $this->telephone;
-        $branch->turn = $this->turn;
         $branch->nit = $this->nit;
         $branch->authorization = $this->authorization;
         $branch->lat = $this->lat;
         $branch->lng = $this->lng;
         
         $branch->save();
-        $this->reset(['name_p','register','name', 'address', 'telephone', 'turn', 'nit', 'authorization', 'lat', 'lng']);
+        $this->reset(['name_p','register','name', 'address', 'telephone', 'nit', 'authorization', 'lat', 'lng']);
         $this->emit('saved');
     }
-    /* Editar Sucursal */
+    /* Editar farmacia */
     public function edit(Branch $branch)
     {
         $this->num = $branch->id;
@@ -96,7 +94,6 @@ class Branches extends Component
         $this->name = $branch->name;
         $this->address = $branch->address;
         $this->telephone = $branch->telephone;
-        $this->turn = $branch->turn;
         $this->nit = $branch->nit;
         $this->authorization = $branch->authorization;
         $this->lat = $branch->lat;
@@ -106,7 +103,7 @@ class Branches extends Component
 
         $this->emit('sendLatitude', $branch->lat, $branch->lng, $this->map_id);
     }    
-    /* Actualizar Sucursal */
+    /* Actualizar farmacia */
     public function update(Branch $branch)
     {   
         $this->validate($this->rules);
@@ -115,17 +112,16 @@ class Branches extends Component
         $branch->name = $this->name;
         $branch->address = $this->address;
         $branch->telephone = $this->telephone;
-        $branch->turn = $this->turn;
         $branch->nit = $this->nit;
         $branch->authorization = $this->authorization;
         $branch->lat = $this->lat;
         $branch->lng = $this->lng;
        
         $branch->save();        
-        $this->reset(['name_p','register','name', 'address','telephone','turn','nit','authorization','lat','lng','num']);        
+        $this->reset(['name_p','register','name', 'address','telephone','nit','authorization','lat','lng','num']);        
         $this->emit('updated');  
     }
-    /* Eliminar Sucursal */
+    /* Eliminar farmacia */
     public function delete(Branch $branch)
     {
         $branch->delete();

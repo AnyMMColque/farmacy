@@ -15,10 +15,9 @@ class BranchFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => User::all()->random()->id,
             'name_p' => $this->faker->sentence(2),
             'register' => '264890',
-            'name' => $this->faker->sentence(2),
+            'name' => $this->faker->name(),
             'address' => $this->faker->address,
             'telephone' => '231353',
             'turn' => 'no',

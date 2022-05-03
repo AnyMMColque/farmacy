@@ -14,11 +14,7 @@ class CreateBranchesTable extends Migration
     public function up()
     {
         Schema::create('branches', function (Blueprint $table) {
-            $table->id();
-            
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
-
+            $table->id();           
             $table->string('name_p');
             $table->string('register');
             $table->string('name');
@@ -26,9 +22,10 @@ class CreateBranchesTable extends Migration
             $table->string('telephone');
             $table->string('lat');
             $table->string('lng');
-            $table->string('turn')->default('no');
+            $table->string('turn')->default('no')->nullable();
             $table->string('nit');
             $table->string('authorization');
+            $table->string('qty_sold')->default(0);
             $table->timestamps();
         });
     }

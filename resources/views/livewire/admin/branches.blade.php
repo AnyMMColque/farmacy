@@ -6,59 +6,55 @@
 @endpush
 @role('Super-Admin')
 <div x-data="{ open: false, open2: false }">
-    {{-- Alert despues de registrar una sucursal --}}
+    {{-- Alert despues de registrar una farmacia --}}
     <x-jet-action-message class="" on="saved">
-        <div
-            class="mt-4 mb-4 flex w-full max-w-lg mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
+        <div class="mt-4 mb-4 flex w-full max-w-lg mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
             <div class="flex items-center justify-center w-12 bg-emerald-500">
                 <svg class="w-6 h-6 text-white fill-current" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z" />
+                    <path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z" />
                 </svg>
             </div>
             <div class="px-4 py-2 -mx-3">
                 <div class="mx-3">
                     <span class="font-semibold text-emerald-500 dark:text-emerald-400">Exito</span>
-                    <p class="text-sm text-gray-600 dark:text-gray-200">Sucursal Registrada!</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-200">Farmacia Registrada!</p>
                 </div>
             </div>
         </div>
     </x-jet-action-message>
     {{-- Alert despues de actualizar una sucursal --}}
     <x-jet-action-message class="" on="updated">
-        <div
-            class="mt-4 mb-4 flex w-full max-w-lg mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
+        <div class="mt-4 mb-4 flex w-full max-w-lg mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
             <div class="flex items-center justify-center w-12 bg-emerald-500">
                 <svg class="w-6 h-6 text-white fill-current" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z" />
+                    <path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z" />
                 </svg>
             </div>
             <div class="px-4 py-2 -mx-3">
                 <div class="mx-3">
                     <span class="font-semibold text-emerald-500 dark:text-emerald-400">Exito</span>
-                    <p class="text-sm text-gray-600 dark:text-gray-200">Sucursal Actualizada!</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-200">Farmacia Actualizada!</p>
                 </div>
             </div>
         </div>
     </x-jet-action-message>
     <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-        Sucursales
+        Farmacias
     </h2>
-    {{-- Boton para registrar nueva Sucursal --}}
+    {{-- Boton para registrar nueva farmacia --}}
     <div>
         <button @click="open = true"
             class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-700 dark:bg-green-700 border border-transparent rounded-lg active:bg-green-800 hover:bg-green-800 focus:outline-none focus:shadow-outline-purple"
             id="size">
-            Registrar Sucursal
+            Registrar Farmacia
         </button>
     </div>
-    {{-- Tabla donde se muestran las sucursales --}}
+    {{-- Tabla donde se muestran las farmacias --}}
     <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300 py-3 my-3">
-        Lista de Sucursales
+        Lista de Farmacias
     </h4>
     <div class="w-full overflow-hidden rounded-lg shadow-xs">
-        {{-- Modal para registrar Sucursales --}}
+        {{-- Modal para registrar farmacias --}}
         <div x-show="open" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0"
             x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
             x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
@@ -75,7 +71,7 @@
                 {{-- Aqui insertamos el mapa para registrar ubicacion --}}
                 <div>
                     <p class="mt-10 mb-2 text-lg font-semibold text-gray-700 dark:text-gray-300">
-                        A continuación marque la ubicación aproximada en el mapa
+                        A continuación marque la ubicación aproximada de la farmacia en el mapa
                     </p>
                     <div id='mapa' class="h-80" wire:ignore></div>
                     <x-jet-input-error for="lat" />
@@ -95,21 +91,15 @@
                     <!-- Modal body -->
                     <div class="mt-4 mb-6">
                         <!-- Modal title -->
-                        <p class="mb-2 text-lg font-semibold text-gray-700 dark:text-gray-300">
-                            Nueva Sucursal
+                        <p class="mb-2 text-lg font-semibold text-green-700 dark:text-green-700">
+                            Nueva Farmacia
                         </p>
                         <!-- Modal description -->
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Nombre Propietario</span>
-                            <select wire:model='name_p' class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                <option value="" selected>Seleccionar usuario</option>
-                                @foreach ($users as $user)
-                                    <option value="{{$user->id}}">{{$user->name}}</option>
-                                @endforeach
-                            </select>
-                           {{--  <input
+                            <input
                                 class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                wire:model='name_p' /> --}}
+                                wire:model='name_p' />
                             {{-- Validacion de Nombre propietario--}}
                             <x-jet-input-error for="name_p" />
                         </label>
@@ -142,13 +132,6 @@
                             <x-jet-input-error for="telephone" />
                         </label>
                         <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">Turno</span>
-                            <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                wire:model='turn' />
-                            {{-- Validacion de Turno --}}
-                            <x-jet-input-error for="turn" />
-                        </label>
-                        <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">NIT</span>
                             <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 wire:model='nit' />
@@ -178,7 +161,7 @@
                 </div>
             </div>
         </div>
-        {{-- Modal para editar Sucursales --}}
+        {{-- Modal para editar farmacias --}}
         <div x-show="open2" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0"
             x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
             x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
@@ -196,7 +179,7 @@
                 {{-- Aqui insertamos el mapa  --}}
                 <div>
                     <p class="mt-10 mb-2 text-lg font-semibold text-gray-700 dark:text-gray-300">
-                        A continuación marque la ubicación aproximada en el mapa
+                        A continuación marque la ubicación aproximada de la farmacia en el mapa
                     </p>
                     <div class="h-80 mt-10" id="{{$map_id}}" wire:ignore></div>
                 </div>
@@ -215,8 +198,8 @@
                     <!-- Modal body -->
                     <div class="mt-4 mb-6">
                         <!-- Modal title -->
-                        <p class="mb-2 text-lg font-semibold text-gray-700 dark:text-gray-300">
-                            Actualizar Sucursal
+                        <p class="mb-2 text-lg font-semibold text-green-700 dark:text-green-700">
+                            Actualizar Farmacia
                         </p>
                         <!-- Modal description -->
                         <label class="block text-sm">
@@ -255,13 +238,6 @@
                             <x-jet-input-error for="telephone" />
                         </label>
                         <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">Turno</span>
-                            <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                wire:model='turn' />
-                            {{-- Validacion de Turno --}}
-                            <x-jet-input-error for="turn" />
-                        </label>
-                        <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">NIT</span>
                             <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 wire:model='nit' />
@@ -293,12 +269,12 @@
                 </div>
             </div>
         </div>
-        {{-- Lista que muestra sucursales registradas --}}
+        {{-- Lista que muestra farmacias registradas --}}
         <div class="w-full overflow-x-auto">
             <table class="w-full whitespace-no-wrap">
                 <thead>
                     <tr class="text-xs font-semibold tracking-wide text-left bg-green-600 dark:bg-green-700 text-gray-50 uppercase border-b dark:border-gray-700 dark:text-gray-50 ">
-                        <th class="px-4 py-3">Sucursal</th>
+                        <th class="px-4 py-3">Farmacia</th>
                         <th class="px-4 py-3">Dirección</th>
                         <th class="px-4 py-3">Teléfono</th>
                         <th class="px-4 py-3">NIT</th>
@@ -307,6 +283,7 @@
                 </thead>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                     @foreach ($branches as $branch)
+                    @if ($branch->id !== 1)
                         <tr class="text-gray-700 dark:text-gray-400">
                             <td class="px-4 py-3">
                                 <div class="flex items-center text-sm  dark:bg-green-700 rounded-full px-2 py-1 dark:text-green-100">
@@ -336,24 +313,26 @@
                                             </path>
                                         </svg>
                                     </button>
-                                    {{-- Accion de eliminar dentro de la lista --}}
-                                    <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg dark:text-green-700 focus:outline-none focus:shadow-outline-gray"
-                                        aria-label="Delete" wire:click="$emit('deleteBranch', {{ $branch }})">
-                                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
-                                            viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd"
-                                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                clip-rule="evenodd"></path>
-                                        </svg>
-                                    </button>
+                                    {{-- Accion de eliminar dentro de la lista --}}                                    
+                                        <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg dark:text-green-700 focus:outline-none focus:shadow-outline-gray"
+                                            aria-label="Delete" wire:click="$emit('deleteBranch', {{ $branch }})">
+                                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
+                                                viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                    clip-rule="evenodd"></path>
+                                            </svg>
+                                        </button>
+
                                 </div>
                             </td>
                         </tr>
+                    @endif
                     @endforeach
                 </tbody>
             </table>
         </div>
-        {{-- Paginación para Lista de Sucursales --}}
+        {{-- Paginación para Lista de farmacias --}}
         <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
             <span class="flex items-center col-span-3">
                 {!! $branches->links('pagination::message') !!}
@@ -366,7 +345,7 @@
             </span>
         </div>
     </div>
-    {{-- SweetAlet para Eliminar Sucursal --}}
+    {{-- SweetAlet para Eliminar farmacia --}}
     @push('script')
         <script>
             Livewire.on('deleteBranch', Branch => {
@@ -386,7 +365,7 @@
                         Livewire.emit('delete', Branch)
                         Swal.fire(
                             '¡Eliminado!',
-                            'Sucursal eliminada.',
+                            'Farmacia eliminada.',
                             'success'
                         )
                     }
@@ -401,6 +380,7 @@
     @endpush
 </div>
 @else
+{{-- Error 404 --}}
 <!-- component -->
 <main class="h-screen w-full flex flex-col justify-center items-center bg-[#1A2238]">
 	<h1 class="text-9xl font-extrabold text-white tracking-widest">404</h1>

@@ -14,7 +14,7 @@ class Products extends Component
 {
     use WithPagination;
 
-    public $name, $g_name, $stock, $lot, $exp_date, $price;
+    public $name, $g_name, $stock, $lot, $exp_date, $price, $sale_price;
     public $laboratory_id, $presentation_id;
     public $presentations, $laboratories;
     public $num;
@@ -44,6 +44,7 @@ class Products extends Component
         'lot' => 'nullable',
         'exp_date' => 'required|date',
         'price' => 'required|numeric',
+        'sale_price' => 'required|numeric',
     ];
     /* Buscar Sucursal */
     public function updateSearch($search)
@@ -64,11 +65,19 @@ class Products extends Component
         $this->pro = Generic::find($this->gnameId);
     }
 
+    public function updatedPrice()
+    {
+        $this->validate([
+            'price' => 'numeric'
+        ]);
+        $this->sale_price = $this->price + $this->price*0.03;
+    }
+
     public function updatedGname()
     {
         $this->getGnames();
     }
-
+    /* Aqui introducimos la semilla de los nombres genericos */
     public function getGnames()
     {
         $this->gnames = Generic::query()
@@ -81,7 +90,8 @@ class Products extends Component
 
     public function resetVariables()
     {
-        $this->reset(['name', 'pro', 'stock', 'lot', 'exp_date', 'price', 'laboratory_id', 'presentation_id']);
+        $this->resetErrorBag();
+        $this->reset(['name', 'pro', 'stock', 'lot', 'exp_date', 'price', 'sale_price', 'laboratory_id', 'presentation_id']);
     }
     /* Guardar Producto  */
     public function save()
@@ -95,9 +105,11 @@ class Products extends Component
         $product->lot = $this->lot;
         $product->exp_date = $this->exp_date;
         $product->price = $this->price;
+        $product->sale_price = $this->price + $this->price*0.03;
         $product->laboratory_id = $this->laboratory_id;
         $product->presentation_id = $this->presentation_id;
         $product->branch_id = Auth()->user()->branch->id;
+        $product->user_id = Auth()->user()->id;
         $product->save();
         $this->reset(['name', 'pro', 'stock', 'lot', 'exp_date', 'price']);
         $this->emit('saved');
@@ -116,6 +128,7 @@ class Products extends Component
         $this->lot = $product->lot;
         $this->exp_date = $product->exp_date;
         $this->price = $product->price;
+        $this->sale_price = $product->sale_price;
         $this->laboratory_id = $product->laboratory_id;
         $this->presentation_id = $product->presentation_id;
     }
@@ -131,11 +144,12 @@ class Products extends Component
         $product->lot = $this->lot;
         $product->exp_date = $this->exp_date;
         $product->price = $this->price;
+        $product->sale_price = $this->sale_price;
         $product->laboratory_id = $this->laboratory_id;
         $product->presentation_id = $this->presentation_id;
         $product->branch_id = Auth()->user()->branch->id;
         $product->save();
-        $this->reset(['name', 'pro','stock','lot','exp_date','price','laboratory_id','presentation_id','num']);
+        $this->reset(['name', 'pro','stock','lot','exp_date','price','sale_price','laboratory_id','presentation_id','num']);
         $this->emit('updated');
     }
     /* Eliminar Producto */

@@ -21,10 +21,14 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
 
+            $table->unsignedBigInteger('branch_id');
+            $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');
+
             $table->string('pay');
             $table->string('discount');
             $table->string('total')->nullable();
             $table->string('status')->default('0');
+            $table->date('date');
 
             $table->timestamps();
         });

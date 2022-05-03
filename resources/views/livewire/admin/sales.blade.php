@@ -52,6 +52,7 @@
                                 <td class="px-4 py-3 text-sm">
                                     {{ $order->total }}
                                 </td>
+                                @if ($order->status == 0)
                                 <td class="px-4 py-3" Width="20px;">
                                     <div class="flex items-center space-x-4 text-sm">
                                         {{-- Accion de editar dentro de la lista --}}
@@ -79,6 +80,34 @@
                                         </button>
                                     </div>
                                 </td>
+                                @else
+                                <td class="px-4 py-3" Width="20px;">
+                                    <div class="flex items-center space-x-4 text-sm">
+                                        {{-- Accion de editar dentro de la lista --}}
+                                            <p
+                                                class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-gray-600 rounded-lg dark:text-gray-700 focus:outline-none focus:shadow-outline-gray"
+                                                aria-label="Edit">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6"
+                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                                    stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                                                </svg>
+                                            </p>
+                                        {{-- Accion de eliminar dentro de la lista --}}
+                                        <p
+                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-gray-600 rounded-lg dark:text-gray-700 focus:outline-none focus:shadow-outline-gray"
+                                            aria-label="Delete">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </p>
+                                    </div>
+                                </td>
+                                @endif
+                               
                                 <td class="px-4 py-3" Width="5px;">
                                     @if ($order->status == 0)
                                     @else
@@ -98,18 +127,17 @@
                 </table>
             </div>
             {{-- Paginación para Lista de Sucursales --}}
-            {{-- <div
-                    class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
-                    <span class="flex items-center col-span-3">
-                        {!! $branches->links('pagination::message') !!}
-                    </span>
-                    <span class="col-span-2"></span>
-                    <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
-                        <nav aria-label="Table navigation">
-                            {{ $branches->links() }}
-                        </nav>
-                    </span>
-                </div> --}}
+            <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+                <span class="flex items-center col-span-3">
+                    {!! $orders->links('pagination::message') !!}
+                </span>
+                <span class="col-span-2"></span>
+                <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
+                    <nav aria-label="Table navigation">
+                        {!! $orders->links('pagination::personal-tailwind') !!}
+                    </nav>
+                </span>
+            </div>
         </div>
     </div>
 </div>

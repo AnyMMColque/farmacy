@@ -1,6 +1,11 @@
 <?php
 
+use App\Http\Livewire\AboutUs;
+use App\Http\Livewire\Contact;
+use App\Http\Livewire\Home;
 use App\Http\Livewire\Login;
+use App\Http\Livewire\Pharmacy;
+use App\Http\Livewire\Prod;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,10 +21,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/login', Login::class)->name('login');
 
-Route::get('/', function () {
-    return view('welcome2');
-});
+Route::get('/', Home::class)->name('home');
+Route::get('/farmacias', Pharmacy::class)->name('pharmacies');
+Route::get('/productos', Prod::class)->name('products');
+Route::get('/contacto', Contact::class)->name('contacts');
+Route::get('/somos', AboutUs::class)->name('about');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');

@@ -27,6 +27,7 @@ class CreateInvoicesTable extends Migration
             $table->string('discount');
             $table->string('change');
             $table->string('status')->default(0);
+            $table->date('date');
 
             $table->timestamps();
         });

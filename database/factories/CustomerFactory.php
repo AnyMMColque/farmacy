@@ -15,7 +15,7 @@ class CustomerFactory extends Factory
     {
         return [
             'ci' => '1352352',
-            'name' => $this->faker->sentence(2),
+            'name' => $this->faker->name(),
             'cellphone' => '231353',
         ];
     }

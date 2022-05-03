@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use App\Models\Branch;
 use App\Models\Laboratory;
 use App\Models\Presentation;
@@ -12,7 +13,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable =['name','g_name','stock','lot','exp_date', 'price'];
+    protected $fillable =['name','g_name','stock','lot','exp_date', 'price', 'sale_price', 'qty_sold'];
 
     public function laboratory(){
         return $this->belongsTo(Laboratory::class);
@@ -29,5 +30,9 @@ class Product extends Model
     
     public function presentation(){
         return $this->belongsTo(Presentation::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }

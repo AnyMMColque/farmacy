@@ -23,6 +23,9 @@ class CreateProductsTable extends Migration
 
             $table->unsignedBigInteger('branch_id');
             $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');
+            
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->string('name');
             $table->string('g_name');
@@ -30,6 +33,8 @@ class CreateProductsTable extends Migration
             $table->string('lot');
             $table->string('exp_date');
             $table->string('price');
+            $table->string('sale_price');
+            $table->integer('qty_sold')->default(0);
             $table->timestamps();
         });
     }

@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Branch;
 use App\Models\Customer;
-use App\Http\Livewire\Admin\Customers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -24,5 +24,10 @@ class Order extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class)->withPivot('quantity', 'price');
+    }
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
     }
 }

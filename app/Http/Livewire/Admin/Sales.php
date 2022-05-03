@@ -2,13 +2,14 @@
 
 namespace App\Http\Livewire\Admin;
 
-use App\Models\Customer;
 use App\Models\Order;
 use Livewire\Component;
+use App\Models\Customer;
+use Livewire\WithPagination;
 
 class Sales extends Component
 {
-    
+    use WithPagination;
 
     public function new()
     {
@@ -19,6 +20,11 @@ class Sales extends Component
     {
         $order->status = 1;
         $order->save();
+
+        foreach ($order->products as $product){
+            $product->stock = $product->stock + $product->pivot->quantity;
+            $product->save();
+        }
     }
 
     public function render()
@@ -36,7 +42,7 @@ class Sales extends Component
         return view('livewire.admin.sales', [
             'articles' => $articles,
         ])->layout('layouts.admin'); */
-        $orders = Order::all();
+        $orders = Order::where('branch_id', Auth()->user()->branch->id)->orderBy('created_at', 'desc')->paginate(5);
 
         return view('livewire.admin.sales', compact('orders'))->layout('layouts.admin');
     }

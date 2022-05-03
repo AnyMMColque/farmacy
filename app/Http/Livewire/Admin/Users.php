@@ -3,35 +3,47 @@
 namespace App\Http\Livewire\Admin;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use App\Models\Branch;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
 
 class Users extends Component
 {
     use WithPagination;
 
-    public $name, $ci, $address, $telephone, $username, $user;
-    public $password;
-    public $num;
+    public $name, $ci, $address, $telephone, $username, $branches, $branch;
+    public $num, $password;
 
     private $users;
 
     public $search = "";
 
-    public $rol, $create, $read, $update, $delete;
+    public $roles, $rol, $create, $read, $update, $delete;
 
-    protected $listeners = ['delete', 'updateSearch', 'resetVariables']; 
+    protected $listeners = ['delete', 'updateSearch', 'resetVariables'];
 
     protected $rules = [
         'name' => 'required|min:6|max:30',
         'ci' => 'required|numeric',
         'address' => 'required|min:6|max:50',
         'telephone' => 'required|max:99999999|numeric',
-        'username' => 'required',
-        'password' => 'required|numeric',
+        'username' => 'required|unique:users,username',
+        'rol' => 'required'
     ];
+
+    public function updatedCi()
+    {
+        $this->username = $this->ci;
+    }
+
+    public function mount()
+    {
+        $this->branches = Branch::all();
+        $this->roles = Role::all()->pluck('name');
+    }
+
     /* Buscar Usuario */
     public function updateSearch($search)
     {
@@ -46,60 +58,147 @@ class Users extends Component
     /* Guardar Usuario */
     public function save()
     {
-        // $this->validate($this->rules);
+        if (auth()->user()->getRoleNames()->first() == 'Super-Admin') {
+            $this->validate([
+                'name' => 'required|min:6|max:30',
+                'ci' => 'required|numeric',
+                'address' => 'required|min:6|max:50',
+                'telephone' => 'required|max:99999999|numeric',
+                'username' => 'required|unique:users,username',
+                'rol' => 'required',
+                'branch' => 'required'
+            ]);
 
-        $user = new User();
-        $user->name = $this->name;
-        $user->ci = $this->ci;
-        $user->address = $this->address;
-        $user->telephone = $this->telephone;
-        $user->username = $this->username;
-        $user->password = Hash::make($this->password);
+            $user = new User();
+            $user->branch_id = $this->branch;
+            $user->name = $this->name;
+            $user->ci = $this->ci;
+            $user->address = $this->address;
+            $user->telephone = $this->telephone;
+            $user->username = $this->username;
+            $user->password = Hash::make($this->ci);
+        } else {
+            $this->validate($this->rules);
+
+            $user = new User();
+            $user->branch_id = auth()->user()->branch_id;
+            $user->name = $this->name;
+            $user->ci = $this->ci;
+            $user->address = $this->address;
+            $user->telephone = $this->telephone;
+            $user->username = $this->username;
+            $user->password = Hash::make($this->ci);
+        }
 
         $user->save();
-        $this->reset(['name', 'ci','address','telephone','username','password', 'num']);
+        $user->assignRole($this->rol);
+        $this->reset(['name', 'ci', 'address', 'telephone', 'username', 'branch', 'num', 'rol']);
         $this->emit('saved');
     }
     /* Editar Usuario */
-    public function edit(User $user1)
+    public function edit($username)
     {
-        $this->num = $user1->id;
-        $this->name = $user1->name;
-        $this->ci = $user1->ci;
-        $this->address = $user1->address;
-        $this->telephone = $user1->telephone;
-        $this->username = $user1->username;
-        $this->password = $user1->password;
+        $user = User::where('username', $username)->first();
+
+        $this->name = $user->name;
+        $this->ci = $user->ci;
+        $this->address = $user->address;
+        $this->telephone = $user->telephone;
+        $this->username = $user->username;
+        $this->branch = $user->branch_id;
+        $this->rol = $user->getRoleNames()->first();
+
+        $this->editUser = $user;
     }
     /* Actualizar Usuario */
-    public function update(User $user1)
+    public function update()
     {
-        $user1->name = $this->name;
-        $user1->ci = $this->ci;
-        $user1->address = $this->address;
-        $user1->telephone = $this->telephone;
-        $user1->username = $this->username;
-        $user1->password = Hash::make($this->password);
+        $user = $this->editUser;
+        if (auth()->user()->getRoleNames()->first() == 'Super-Admin') {
+            if ($this->username !== $user->username) {
+                $this->validate([
+                    'name' => 'required|min:6|max:30',
+                    'ci' => 'required|numeric',
+                    'address' => 'required|min:6|max:50',
+                    'telephone' => 'required|max:99999999|numeric',
+                    'username' => 'required|unique:users,username',
+                    'rol' => 'required'
 
-        $user1->save();
-        $this->reset(['name', 'ci','address','telephone','username','password', 'num']);
+                ]);
+            } else {
+                $this->validate([
+                    'name' => 'required|min:6|max:30',
+                    'ci' => 'required|numeric',
+                    'address' => 'required|min:6|max:50',
+                    'telephone' => 'required|max:99999999|numeric',
+                    'username' => 'required|exists:users,username',
+                    'rol' => 'required'
+                ]);
+            }
+
+            $user->branch_id = $this->branch;
+            $user->name = $this->name;
+            $user->ci = $this->ci;
+            $user->address = $this->address;
+            $user->telephone = $this->telephone;
+            $user->username = $this->username;
+            $user->password = Hash::make($this->ci);
+        } else {
+            if ($this->username !== $user->username) {
+                $this->validate([
+                    'name' => 'required|min:6|max:30',
+                    'ci' => 'required|numeric',
+                    'address' => 'required|min:6|max:50',
+                    'telephone' => 'required|max:99999999|numeric',
+                    'username' => 'required|unique:users,username',
+                    'rol' => 'required'
+                ]);
+            } else {
+                $this->validate([
+                    'name' => 'required|min:6|max:30',
+                    'ci' => 'required|numeric',
+                    'address' => 'required|min:6|max:50',
+                    'telephone' => 'required|max:99999999|numeric',
+                    'username' => 'required|exists:users,username',
+                    'rol' => 'required'
+                ]);
+            }
+            $user->branch_id = auth()->user()->branch_id;
+            $user->name = $this->name;
+            $user->ci = $this->ci;
+            $user->address = $this->address;
+            $user->telephone = $this->telephone;
+            $user->username = $this->username;
+            $user->password = Hash::make($this->ci);
+        }
+
+        $user->save();
+        $aux = $user->getRoleNames()->first();
+        $user->removeRole($aux);
+        $user->assignRole($this->rol);
+        $this->reset(['name', 'ci', 'address', 'telephone', 'username', 'password', 'rol']);
         $this->emit('updated');
     }
-    /* Eliminar Usuario */
-    public function delete(User $user1)
+
+    /* Dar de alta Usuario */
+    public function register(User $user)
     {
-        $user1->delete();
-        $this->emit('deleted');
+        if ($user->email_verified_at) {
+            $user->email_verified_at = NULL;
+            $user->save();
+        } else {
+            $user->email_verified_at = now();
+            $user->save();
+        }
     }
 
     public function saveRole()
     {
         Role::create(['name' => $this->rol])
-        ->givePermissionTo('create users')
-        ->givePermissionTo('read users')
-        ->givePermissionTo('update users')
-        ->givePermissionTo('delete users')
-        ;
+            ->givePermissionTo('create users')
+            ->givePermissionTo('read users')
+            ->givePermissionTo('update users')
+            ->givePermissionTo('delete users');
     }
 
     /* Paginacion Sucursal */
@@ -110,7 +209,12 @@ class Users extends Component
 
     public function render()
     {
-        $users = User::where('name', 'like', '%'.$this->search.'%',)->orderBy('created_at', 'desc')->paginate();
+        if (auth()->user()->getRoleNames()->first() == 'Super-Admin') {
+            $users = User::where('name', 'like', '%' . $this->search . '%',)->orderBy('created_at', 'desc')->paginate();
+        } else {
+            $users_branch = User::where('branch_id', auth()->user()->branch_id);
+            $users = $users_branch->where('name', 'like', '%' . $this->search . '%',)->orderBy('created_at', 'desc')->paginate();
+        }
         return view('livewire.admin.users', compact('users'))->layout('layouts.admin');
     }
 }

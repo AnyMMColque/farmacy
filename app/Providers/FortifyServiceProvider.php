@@ -12,6 +12,7 @@ use Illuminate\Cache\RateLimiting\Limit;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use Illuminate\Support\Facades\RateLimiter;
+use Laravel\Fortify\Contracts\LoginResponse;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 
 class FortifyServiceProvider extends ServiceProvider
@@ -37,6 +38,19 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
+
+        $this->app->instance(LoginResponse::class, new class implements LoginResponse {
+            public function toResponse($request)
+            {
+                if (auth()->user()->getRoleNames()->first() == 'vendedor') {
+                    return redirect(route('admin.sales'));
+                } elseif (auth()->user()->getRoleNames()->first() == 'Super-Admin') {
+                    return redirect(route('admin.branches'));
+                } else {
+                    return redirect(route('admin.dashboard'));
+                }
+            }
+        });
 
         Fortify::loginView(function () {
             return view('login');

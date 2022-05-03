@@ -12,6 +12,8 @@ use App\Http\Livewire\Admin\Reports;
 use App\Http\Livewire\Admin\Sales;
 use App\Http\Livewire\Admin\SalesCreate;
 use App\Http\Livewire\Admin\Users;
+use App\Http\Livewire\Pharmacy;
+use App\Http\Livewire\Prod;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', Dashboard::class)->name('admin.dashboard');
@@ -30,3 +32,6 @@ Route::get('/pdf/{id}', [InvoiceController::class, 'pdf'])->name('pdf.pdfInvoice
 
 // Reportes excel
 Route::get('facturas/export/', [InvoiceController::class, 'exportAll']);
+Route::get('facturas/hoy/', [InvoiceController::class, 'exportToday'])->name('today');
+Route::get('facturas/semanal/', [InvoiceController::class, 'exportWeek'])->name('week');
+Route::get('facturas/mes/', [InvoiceController::class, 'exportMonth'])->name('month');

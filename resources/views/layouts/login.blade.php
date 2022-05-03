@@ -18,7 +18,7 @@
             <div class="flex flex-col overflow-y-auto md:flex-row">
                 <div class="h-32 md:h-auto md:w-1/2">
                     <img aria-hidden="true" class="object-cover w-full h-full dark:hidden"
-                        src="{{ asset('windmill/assets/img/login-office.jpeg') }}" alt="Office" />
+                        src="https://i.pinimg.com/564x/db/96/4e/db964ee66c8734a3f79aa96358378d8e.jpg" alt="Office" />
                     <img aria-hidden="true" class="hidden object-cover w-full h-full dark:block"
                         src="../assets/img/login-office-dark.jpeg" alt="Office" />
                 </div>

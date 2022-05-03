@@ -34,7 +34,8 @@ class SalesCreate extends Component
     public function mount()
     {
         $this->customers = Customer::all();
-        $this->products = Product::all();
+        $this->products = Product::where('branch_id', auth()->user()->branch_id)->
+                                    where('stock', '>=', 1)->get();
     }
 
     /* Agregar Productos a la Venta */
@@ -51,11 +52,14 @@ class SalesCreate extends Component
             array_push($this->listProducts, $this->product->id);
             array_push($this->subtotal, $this->quantity);
             $this->emit('clearProduct');
-            $this->reset(['product', 'quantity']);
+            $this->reset(['product', 'quantity', 'total']);
 
-            $this->render();
+            $input = Product::whereIn('id', $this->listProducts)->get();
+
+            $this->saveProducts = $input;
+
             foreach ($this->saveProducts as $key => $product) {
-                $this->total = $this->total + $product->price * $this->subtotal[$key];
+                $this->total = $this->total + $product->sale_price * $this->subtotal[$key];
             }
         }
 
@@ -111,6 +115,14 @@ class SalesCreate extends Component
 
         unset($this->subtotal[$key]);
         $this->subtotal = array_values($this->subtotal);
+
+        $input = Product::whereIn('id', $this->listProducts)->get();
+        $this->saveProducts = $input;
+        $this->reset('total');
+
+        foreach ($this->saveProducts as $key => $product) {
+            $this->total = $this->total + $product->sale_price * $this->subtotal[$key];
+        }
     }
     /*  Registrar Nuevo Usuario para realizar la venta*/
     public function registerCustomer()
@@ -141,14 +153,17 @@ class SalesCreate extends Component
 
         $this->validate([
             'customer' => 'required',
-            'listProducts' => 'required'
+            'listProducts' => 'required',
+            'pay' => 'required'
         ]);
 
         $order = new Order;
         $order->user_id = auth()->user()->id;
         $order->customer_id = $this->customer->id;
+        $order->branch_id = auth()->user()->branch->id;
         $order->pay = $this->pay;
         $order->discount = $this->discount;
+        $order->date = now();
         $order->save();
 
         foreach ($this->saveProducts as $key => $saveProduct) {
@@ -163,15 +178,23 @@ class SalesCreate extends Component
         $order->total = $this->total;
         $order->save();
 
+        foreach ($order->products as $product){
+            $product->stock = $product->stock - $product->pivot->quantity;
+            $product->qty_sold = $product->qty_sold + 1;
+            $product->save();
+        }
+
         $products = $order->products;
         $product = $products->first();
         $branch = Branch::where('id', $product->branch_id)->first();
+        $branch->qty_sold += 1;
+        $branch->save();
 
         $user = User::where('id', auth()->user()->id)->first();
         $product_string = "";
 
         foreach ($products as $product){
-            $product_string .=  $product->g_name . " (" . $product->pivot->price. ") ";
+            $product_string .=  $product->g_name . " (" . $product->pivot->price. ") ";   
         }
 
         Invoice::create([
@@ -185,7 +208,8 @@ class SalesCreate extends Component
             'total' => $order->total,
             'pay' => $order->pay,
             'discount' => $order->discount,
-            'change' => $order->pay - ($order->total - $order->discount)
+            'change' => $order->pay - ($order->total - $order->discount),
+            'date' => now()
         ]);
 
         return redirect(route('admin.sales'));
@@ -195,7 +219,6 @@ class SalesCreate extends Component
     {
         $input = Product::whereIn('id', $this->listProducts)->get();
 
-        $this->saveProducts = $input;
 
         return view('livewire.admin.sales-create', compact('input'))->layout('layouts.admin');
     }

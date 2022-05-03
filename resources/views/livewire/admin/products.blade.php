@@ -59,27 +59,30 @@
             x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
             class="fixed inset-0 z-30 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
             <!-- Modal -->
-            <div x-show="open" x-transition:enter="transition ease-out duration-150"
+            <div x-transition:enter="transition ease-out duration-150"
                 x-transition:enter-start="opacity-0 transform translate-y-1/2" x-transition:enter-end="opacity-100"
                 x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
-                x-transition:leave-end="opacity-0  transform translate-y-1/2" @click.away="open = false"
-                @keydown.escape="open = false"
-                class="w-full px-6 py-4 overflow-hidden bg-white rounded-t-lg dark:bg-gray-800 sm:rounded-lg sm:m-4 sm:max-w-xl"
+                x-transition:leave-end="opacity-0  transform translate-y-1/2" @click.away="open = false, Livewire.emit('resetVariables')"
+                @keydown.escape="open = false, Livewire.emit('resetVariables')"
+                {{-- Esto hace que el modal no se abra ni bien se entra en la pagina --}}
+                :class="{'block':open, 'hidden': !open}"
+                class="hidden w-full px-6 py-4 overflow-hidden bg-white rounded-t-lg dark:bg-gray-800 sm:rounded-lg sm:m-4 sm:max-w-xl"
                 role="dialog" id="modal">
                 <!-- Remove header if you don't want a close icon. Use modal body to place modal tile. -->
                 <header class="flex justify-end">
                     <button class="inline-flex items-center justify-center w-6 h-6 text-gray-400 transition-colors duration-150 rounded dark:hover:text-gray-200 hover: hover:text-gray-700"
-                        aria-label="close" @click="open = false">
+                        aria-label="close" @click="open = false, Livewire.emit('resetVariables')">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" role="img" aria-hidden="true">
                             <path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                clip-rule="evenodd" fill-rule="evenodd"></path>
+                                clip-rule="evenodd" fill-rule="evenodd">
+                            </path>
                         </svg>
                     </button>
                 </header>
                 <!-- Modal body -->
                 <div class="mt-4 mb-6">
                     <!-- Modal title -->
-                    <p class="mb-2 text-lg font-semibold text-gray-700 dark:text-gray-300">
+                    <p class="mb-2 text-lg font-semibold text-green-700 dark:text-green-700">
                         Nuevo Producto
                     </p>
                     <!-- Modal description -->
@@ -105,12 +108,6 @@
                             ]" />
                     </div>
                     <x-jet-input-error for="pro" />
-                    {{-- <div class="w-48">
-                        <h1 class="font-bold">Selected Product</h1>
-                        <p>ID: {{ $pro->id ?? null }}</p>
-                        <p>Name: {{ $pro->gname ?? null }}</p>
-                    </div> --}}
-
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm">
@@ -129,25 +126,33 @@
                             <x-jet-input-error for="lot" />
                         </div>                        
                     </div>
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-2 gap-4">                     
                         <div>
                             <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">Fecha de Vencimiento</span>
-                            <input type="date"
-                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                wire:model='exp_date' />
-                            </label>
-                            <x-jet-input-error for="exp_date" />
-                        </div>                       
-                        <div>
-                            <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">Precio</span>
+                            <span class="text-gray-700 dark:text-gray-400">Precio Compra</span>
                             <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 wire:model='price' />
                             </label>
                             <x-jet-input-error for="price" />
-                        </div>                       
+                        </div>  
+                        <div>
+                            <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Precio Venta</span>
+                            <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                wire:model='sale_price' />
+                            </label>
+                            <x-jet-input-error for="sale_price" />
+                        </div>                      
                     </div>
+                    <div>
+                        <label class="block text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">Fecha de Vencimiento</span>
+                        <input type="date"
+                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            wire:model='exp_date' />
+                        </label>
+                        <x-jet-input-error for="exp_date" />
+                    </div>  
                     <label class="block mt-4 text-sm">
                         <span class="text-gray-700 dark:text-gray-400">
                             Laboratorio
@@ -178,7 +183,7 @@
                 <footer
                     class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-gray-50 dark:bg-gray-800">
                     {{-- Modal Registrar: Boton Cancelar --}}
-                    <button @click="open = false"
+                    <button @click="open = false, Livewire.emit('resetVariables')"
                     class="w-full px-5 py-3 text-sm font-medium leading-5 text-green-700 transition-colors duration-150 border border-green-400 rounded-lg dark:text-green-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-green-500 focus:border-green-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
                         Cancelar
                     </button>
@@ -202,7 +207,9 @@
                 x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
                 x-transition:leave-end="opacity-0  transform translate-y-1/2" @click.away="open2 = false, Livewire.emit('resetVariables')"
                 @keydown.escape="open2 = false, Livewire.emit('resetVariables')"
-                class="w-full px-6 py-4 overflow-hidden bg-white rounded-t-lg dark:bg-gray-800 sm:rounded-lg sm:m-4 sm:max-w-xl"
+                {{-- Esto hace que el modal no se abra ni bien se entra en la pagina --}}
+                :class="{'block':open2, 'hidden': !open2}"
+                class="hidden w-full px-6 py-4 overflow-hidden bg-white rounded-t-lg dark:bg-gray-800 sm:rounded-lg sm:m-4 sm:max-w-xl"
                 role="dialog" id="modal">
                 <!-- Remove header if you don't want a close icon. Use modal body to place modal tile. -->
                 <header class="flex justify-end">
@@ -211,14 +218,15 @@
                         aria-label="close" @click="open2 = false, Livewire.emit('resetVariables')">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" role="img" aria-hidden="true">
                             <path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                clip-rule="evenodd" fill-rule="evenodd"></path>
+                                clip-rule="evenodd" fill-rule="evenodd">
+                            </path>
                         </svg>
                     </button>
                 </header>
                 <!-- Modal body -->
                 <div class="mt-4 mb-6">
                     <!-- Modal title -->
-                    <p class="mb-2 text-lg font-semibold text-gray-700 dark:text-gray-300">
+                    <p class="mb-2 text-lg font-semibold text-green-700 dark:text-green-700">
                         Actualizar Producto
                     </p>
                     <!-- Modal description -->
@@ -265,21 +273,29 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">Fecha de Vencimiento</span>
-                            <input type="date"
-                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                wire:model='exp_date' />
-                            </label>
-                            <x-jet-input-error for="exp_date" />
-                        </div>
-                        <div>
-                            <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">Precio</span>
+                            <span class="text-gray-700 dark:text-gray-400">Precio de Venta</span>
                             <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 wire:model='price' />
                             </label>
                             <x-jet-input-error for="price" />
                         </div>
+                        <div>
+                            <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Precio de Compra</span>
+                            <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                wire:model='sale_price' />
+                            </label>
+                            <x-jet-input-error for="sale_price" />
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">Fecha de Vencimiento</span>
+                        <input type="date"
+                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            wire:model='exp_date' />
+                        </label>
+                        <x-jet-input-error for="exp_date" />
                     </div>
                     <label class="block mt-4 text-sm">
                         <span class="text-gray-700 dark:text-gray-400">
@@ -310,11 +326,11 @@
                 <footer class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-gray-50 dark:bg-gray-800">
                     {{-- Modal Actualizar: Boton Cancelar --}}
                     <button @click="open2 = false, Livewire.emit('resetVariables')"
-                        class="w-full px-5 py-3 text-sm font-medium leading-5 text-white text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
+                    class="w-full px-5 py-3 text-sm font-medium leading-5 text-green-700 transition-colors duration-150 border border-green-400 rounded-lg dark:text-green-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-green-500 focus:border-green-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
                         Cancelar
                     </button>
                     {{-- Modal Actualizar: Boton Registrar --}}
-                    <button class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 dark:bg-green-700 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-purple"
+                    <button class="w-full px-5 py-3 text-sm font-medium leading-5 bg-green-700 text-white transition-colors duration-150 dark:bg-green-700 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-green-900 hover:bg-green-900 focus:outline-none focus:shadow-outline-purple"
                         wire:click="update({{ $num }})" 
                         @click="Livewire.on('updated', Id => {open2 = false;})">
                         Actualizar
@@ -328,10 +344,13 @@
                 <thead>
                     <tr class="text-xs font-semibold tracking-wide text-left bg-green-600 dark:bg-green-700 text-gray-50 uppercase border-b dark:border-gray-700 dark:text-gray-50 ">
                         <th class="px-4 py-3">Nombre Comercial</th>
-                        <th class="px-4 py-3">Nombre Genérico</th>
+                        <th class="px-4 py-3">Laboratorio</th>
+                        <th class="px-4 py-3">Presentación</th>
                         <th class="px-4 py-3">Stock</th>
-                        <th class="px-4 py-3">Lote</th>
-                        <th class="px-4 py-3">Fecha de Expiración</th>
+                        <th class="px-4 py-3">Precio Compra</th>
+                        <th class="px-4 py-3">Precio Venta</th>
+                        <th class="px-4 py-3">Vencimiento</th>               
+                        <th class="px-4 py-3">Usuario</th>               
                         <th class="px-4 py-3">Actions</th>
                     </tr>
                 </thead>
@@ -343,21 +362,44 @@
                                     <p class="font-semibold">{{ $product->name }}</p>
                                 </div>
                             </td>
-                            <td class="px-4 py-3">
-                                <div class="flex items-center text-sm  dark:bg-green-700 rounded-full px-2 py-1 dark:text-green-100">
-                                    <p class="font-semibold">{{ $product->g_name }}</p>
-                                </div>
+                            <td class="px-4 py-3 text-sm">
+                                {{ $product->laboratory->name }}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                {{ $product->stock }}
-                            </td>
-                            <td class="px-4 py-3 text-xs">
-                                <span class="px-2 py-1">
-                                    {{ $product->lot }}
-                                </span>
+                                {{ $product->presentation->name}}
                             </td>
                             <td class="px-4 py-3 text-sm">
+                                {{ $product->stock}}
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                {{ $product->price }}
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                {{ $product->sale_price }}
+                            </td>
+                            @php
+                                $date = date("Y-m-d", strtotime("-1 month", strtotime($product->exp_date)));
+                            @endphp
+                            {{-- <td class="px-4 py-3 text-sm">
                                 {{ $product->exp_date }}
+                                <br>
+                                {{$date}} <br>
+                                {{date("Y-m-d" , strtotime(now())) }}
+                            </td> --}}
+                            {{-- Control de la Fecha de Vencimiento --}}
+                            @if ($date <= date("Y-m-d" , strtotime(now())))
+                                <td class="px-4 py-3 text-sm">
+                                    <p class="font-bold text-red-700">
+                                        {{ $product->exp_date }}
+                                    </p>
+                                </td>
+                            @else
+                                <td class="px-4 py-3 text-sm">
+                                    {{ $product->exp_date }}
+                                </td>
+                            @endif
+                            <td class="px-4 py-3 text-sm">
+                                {{ $product->user->name }}
                             </td>
                             <td class="px-4 py-3">
                                 <div class="flex items-center space-x-4 text-sm">
