@@ -67,7 +67,7 @@
                         <input placeholder="Nombre medicamento" class="w-full p-4 m-2 rounded-full" type="text">
                         <input placeholder="Cantidad solicitada" class="w-full p-4 m-2 rounded-full" type="text">
                         <button type="button" title="Start buying"
-                            class="ml-auto py-20 px-6 rounded-full text-center transition bg-gradient-to-b from-green-700 to-yellow-300 hover:to-yellow-300 active:from-green-700 focus:from-green-600 md:px-12">
+                            class="ml-auto py-3 px-6 rounded-full text-center transition bg-gradient-to-b from-green-700 to-yellow-300 hover:to-yellow-300 active:from-green-700 focus:from-green-600 md:px-12">
                             <span class="hidden text-gray-900 font-semibold md:block">
                                 Buscar
                             </span>
