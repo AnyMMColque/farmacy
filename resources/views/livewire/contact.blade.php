@@ -31,7 +31,7 @@
                         </div>
                         {{-- Boton Enviar --}}
                         <div class=" mt-6">
-                            <button class="w-full px-10 py-2 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-green-500 rounded-lg lg:w-auto lg:mx-4 hover:bg-blue-400 focus:outline-none focus:bg-blue-400">
+                            <button class="w-full px-10 py-2 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-green-500 rounded-lg lg:w-auto lg:mx-4 hover:bg-green-400 focus:outline-none focus:bg-green-400">
                                 Enviar
                             </button>
                         </div>

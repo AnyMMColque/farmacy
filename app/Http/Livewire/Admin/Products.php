@@ -5,10 +5,12 @@ namespace App\Http\Livewire\Admin;
 use App\Models\Product;
 use App\Models\Branch;
 use App\Models\Generic;
+use App\Models\Inventory;
 use App\Models\Laboratory;
 use App\Models\Presentation;
 use Livewire\Component;
 use Livewire\WithPagination;
+use phpDocumentor\Reflection\Types\Null_;
 
 class Products extends Component
 {
@@ -21,7 +23,7 @@ class Products extends Component
 
     public $gnames, $gname, $gnameId;
 
-    public $pro;
+    public $pro, $aux;
 
     protected $rules = [
         'gnames.*.id' => '',
@@ -35,9 +37,9 @@ class Products extends Component
 
     public $search = "";
 
-    protected $listeners = ['delete', 'updateSearch', 'resetVariables']; 
+    protected $listeners = ['delete', 'updateSearch', 'resetVariables'];
 
-    protected $rules2= [
+    protected $rules2 = [
         'name' => 'required|min:6|max:30',
         'pro' => 'required',
         'stock' => 'required|numeric',
@@ -55,11 +57,16 @@ class Products extends Component
     /* Aqui mandamos los datos de otras vistas */
     public function mount()
     {
-        $this->presentations =Presentation::all();
-        $this->laboratories =Laboratory::all();
+        $this->presentations = Presentation::all();
+        $this->laboratories = Laboratory::all();
         $this->getGnames();
     }
-
+    /* Seleccionar un producto para el lote */
+    public function selectProduct($id)
+    {
+        $this->aux = $id;
+    }
+    /* Actualiza el nombre generico */
     public function updatedGnameId()
     {
         $this->pro = Generic::find($this->gnameId);
@@ -70,7 +77,10 @@ class Products extends Component
         $this->validate([
             'price' => 'numeric'
         ]);
-        $this->sale_price = $this->price + $this->price*0.03;
+
+        if (!is_null($this->price)) {
+            $this->sale_price = $this->price + $this->price * 0.03;
+        }
     }
 
     public function updatedGname()
@@ -91,21 +101,39 @@ class Products extends Component
     public function resetVariables()
     {
         $this->resetErrorBag();
-        $this->reset(['name', 'pro', 'stock', 'lot', 'exp_date', 'price', 'sale_price', 'laboratory_id', 'presentation_id']);
+        $this->reset(['name', 'pro', 'stock', 'lot', 'exp_date', 'price', 'sale_price', 'laboratory_id', 'presentation_id', 'gnames', 'gname', 'gnameId', 'aux']);
+    }
+    /* Registrar por lote */
+    public function addInventory(Product $product)
+    {
+        $inventory = new Inventory();
+        $inventory->product_id = $this->aux;
+        $inventory->stock = $this->stock;
+        $inventory->lot = $this->lot;
+        $inventory->price = $this->price;
+        $inventory->sale_price = $this->price + $this->price * 0.03;
+        $inventory->exp_date = $this->exp_date;
+        $inventory->save();
+
+        $totalStock = 0;
+        foreach (Inventory::where('product_id', $this->aux)->get() as $inventoryStock) {
+            $totalStock += $inventoryStock->stock;
+        }
+
+        $product->stock = $totalStock;
+        $product->save();
+        $this->resetVariables();
+        $this->emit('saved');
     }
     /* Guardar Producto  */
     public function save()
     {
         $this->validate($this->rules2);
-        
+
         $product = new Product();
         $product->name = $this->name;
         $product->g_name = $this->pro->gname;
         $product->stock = $this->stock;
-        $product->lot = $this->lot;
-        $product->exp_date = $this->exp_date;
-        $product->price = $this->price;
-        $product->sale_price = $this->price + $this->price*0.03;
         $product->laboratory_id = $this->laboratory_id;
         $product->presentation_id = $this->presentation_id;
         $product->branch_id = Auth()->user()->branch->id;
@@ -120,7 +148,6 @@ class Products extends Component
         $this->pro = Generic::where('gname', $product->g_name)->first();
         $this->gname = $this->pro->gname;
         $this->gnameId = $this->pro->id;
-
         $this->num = $product->id;
         $this->name = $product->name;
         $this->pro->gname = $product->g_name;
@@ -132,7 +159,6 @@ class Products extends Component
         $this->laboratory_id = $product->laboratory_id;
         $this->presentation_id = $product->presentation_id;
     }
-
     /* Actualizar Producto */
     public function update(Product $product)
     {
@@ -149,7 +175,7 @@ class Products extends Component
         $product->presentation_id = $this->presentation_id;
         $product->branch_id = Auth()->user()->branch->id;
         $product->save();
-        $this->reset(['name', 'pro','stock','lot','exp_date','price','sale_price','laboratory_id','presentation_id','num']);
+        $this->reset(['name', 'pro', 'stock', 'lot', 'exp_date', 'price', 'sale_price', 'laboratory_id', 'presentation_id', 'num']);
         $this->emit('updated');
     }
     /* Eliminar Producto */
@@ -168,10 +194,9 @@ class Products extends Component
     {
         /* Buscar producto por nombre o nombre generico */
         $products_branch = Product::where('branch_id', Auth()->user()->branch->id);
-
-        $products = $products_branch->where(function($query){
-            $query->where('name', 'like', '%'.$this->search.'%');
-            $query->orwhere('g_name', 'like', '%'.$this->search.'%');
+        $products = $products_branch->where(function ($query) {
+            $query->where('name', 'like', '%' . $this->search . '%');
+            $query->orwhere('g_name', 'like', '%' . $this->search . '%');
         })->orderBy('created_at', 'desc')->paginate();
 
         return view('livewire.admin.products', compact('products'))->layout('layouts.admin');

@@ -24,6 +24,7 @@ class SalesCreate extends Component
     public $listProducts = [];
     public $saveProducts, $discount = 0;
     public $total = 0;
+    public $lot, $lots = [];
 
     protected $listeners = ['selectCustomer', 'selectProduct', 'updateDiscount'];
 
@@ -44,13 +45,16 @@ class SalesCreate extends Component
         $this->validate([
             'product' => 'required',
             'quantity' => 'required',
+            'lot' => 'required',
         ]);  
+        //TODO lote
         if (in_array($this->product->id, $this->listProducts)) {
             $this->emit('exist');
 
         } else {
             array_push($this->listProducts, $this->product->id);
             array_push($this->subtotal, $this->quantity);
+            array_push($this->lots, $this->lot);
             $this->emit('clearProduct');
             $this->reset(['product', 'quantity', 'total']);
 
@@ -59,7 +63,8 @@ class SalesCreate extends Component
             $this->saveProducts = $input;
 
             foreach ($this->saveProducts as $key => $product) {
-                $this->total = $this->total + $product->sale_price * $this->subtotal[$key];
+                $lot = $product->inventories->where('lot', $this->lots[$key])->first();
+                $this->total = $this->total + $lot->sale_price * $this->subtotal[$key];
             }
         }
 
@@ -167,20 +172,29 @@ class SalesCreate extends Component
         $order->save();
 
         foreach ($this->saveProducts as $key => $saveProduct) {
+            $lot = $saveProduct->inventories->where('lot', $this->lots[$key])->first();
+            
             DB::table('order_product')->insert([
                 'product_id' => $saveProduct->id,
                 'order_id' => $order->id,
                 'quantity' => $this->subtotal[$key],
-                'price' => $saveProduct->price,
+                'price' => $lot->sale_price,
             ]);
         }
 
         $order->total = $this->total;
         $order->save();
 
-        foreach ($order->products as $product){
-            $product->stock = $product->stock - $product->pivot->quantity;
+        foreach ($order->products as $key => $product){
+            $lot = $product->inventories->where('lot', $this->lots[$key])->first();
+            $lot->stock = $lot->stock - $product->pivot->quantity;
+            $lot->save();
+            $stock = 0;
+            foreach ($product->inventories as $key => $lot) {
+                $stock += $lot->stock;
+            }
             $product->qty_sold = $product->qty_sold + 1;
+            $product->stock = $stock;
             $product->save();
         }
 

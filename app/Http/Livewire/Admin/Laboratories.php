@@ -72,7 +72,8 @@ class Laboratories extends Component
         $laboratory->delete();
         $this->emit('deleted');
     }
-    /* Paginacion Sucursal */
+
+    /* Paginacion Laboratorio */
     public function paginationView()
     {
         return 'pagination::personal2-tailwind';

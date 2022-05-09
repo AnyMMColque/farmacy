@@ -17,7 +17,6 @@
     {{-- Script para poder usar Sweetalert 2 --}}
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ mix('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/index.min.js') }}"></script>
     {{-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script> --}}
     {{-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script> --}}
     <script src="{{ asset('windmill/assets/js/init-alpine.js') }}"></script>

@@ -69,7 +69,7 @@
     </div>
     {{-- Sweet Alert despues de registrar Cliente --}}
     <x-jet-action-message class="mr-3" on="saved">
-        <div class="alert alert-success dark:bg-green-700 text-white">
+        <div class="alert alert-success bg-green-600 dark:bg-green-700 text-white">
             <div class="flex-1">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-2 stroke-current" fill="none"
                     viewBox="0 0 24 24" stroke="currentColor">

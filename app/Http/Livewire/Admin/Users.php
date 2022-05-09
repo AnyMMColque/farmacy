@@ -201,11 +201,11 @@ class Users extends Component
             ->givePermissionTo('delete users');
     }
 
-    /* Paginacion Sucursal */
-    public function paginationView()
-    {
-        return 'pagination::personal2-tailwind';
-    }
+     /* Paginacion Usuario*/
+     public function paginationView()
+     {
+         return 'pagination::personal2-tailwind';
+     }
 
     public function render()
     {

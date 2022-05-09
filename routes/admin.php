@@ -1,20 +1,21 @@
 <?php
 
-use App\Http\Controllers\Admin\InvoiceController;
-use App\Http\Controllers\HomeController;
+use App\Http\Livewire\Prod;
+use App\Http\Livewire\Pharmacy;
+use App\Http\Livewire\Admin\Sales;
+use App\Http\Livewire\Admin\Users;
+use App\Http\Livewire\Admin\Reports;
 use App\Http\Livewire\Admin\Branches;
+use App\Http\Livewire\Admin\Products;
+use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Admin\Customers;
 use App\Http\Livewire\Admin\Dashboard;
+use App\Http\Livewire\Admin\Invent;
+use App\Http\Controllers\HomeController;
+use App\Http\Livewire\Admin\SalesCreate;
 use App\Http\Livewire\Admin\Laboratories;
 use App\Http\Livewire\Admin\Presentations;
-use App\Http\Livewire\Admin\Products;
-use App\Http\Livewire\Admin\Reports;
-use App\Http\Livewire\Admin\Sales;
-use App\Http\Livewire\Admin\SalesCreate;
-use App\Http\Livewire\Admin\Users;
-use App\Http\Livewire\Pharmacy;
-use App\Http\Livewire\Prod;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\InvoiceController;
 
 Route::get('/', Dashboard::class)->name('admin.dashboard');
 Route::get('/productos', Products::class)->name('admin.products');
@@ -26,6 +27,7 @@ Route::get('/clientes', Customers::class)->name('admin.customers');
 Route::get('/usuarios', Users::class)->name('admin.users');
 Route::get('/reportes', Reports::class)->name('admin.reports');
 Route::get('/sucursales', Branches::class)->name('admin.branches');
+Route::get('/inventario', Invent::class)->name('admin.inventory');
 
 /* Ruta para imprimir factura */
 Route::get('/pdf/{id}', [InvoiceController::class, 'pdf'])->name('pdf.pdfInvoice');

@@ -10,6 +10,8 @@ class Pharmacy extends Component
     public $branches;
     public $nameId = [];
     public $acent = ['Á', 'É', 'Í', 'Ó', 'Ú', 'á', 'é', 'í', 'ó', 'ú'];
+    public $most = [];
+    public $names = [];
 
     protected $listeners = ['renderMap'];
 
@@ -21,7 +23,13 @@ class Pharmacy extends Component
             $nameId = substr(str_shuffle(strtolower(str_replace($this->acent, "", $nameId))), 0, 4);
             array_push($this->nameId, $nameId);
         }
+        /* Busca la disponibilidad del medicamento solicitado */
+        $branches = Branch::orderBy('qty_sold', 'desc')->limit(3)->get();
 
+        foreach ($branches as $key => $branch) {
+            array_push($this->most, $branch->qty_sold);
+            array_push($this->names, $branch->name);
+        }
       
 
         /* foreach ($branches as $key => $branch) {

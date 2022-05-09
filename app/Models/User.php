@@ -20,7 +20,6 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable;
     use TwoFactorAuthenticatable;
     use HasRoles;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -35,7 +34,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'user',
         'password',
     ];
-
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -47,7 +45,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'two_factor_recovery_codes',
         'two_factor_secret',
     ];
-
     /**
      * The attributes that should be cast.
      *
@@ -56,7 +53,6 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
     /**
      * The accessors to append to the model's array form.
      *
@@ -65,12 +61,10 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $appends = [
         'profile_photo_url',
     ];
-
     public function branch()
     {
         return $this->belongsTo(Branch::class);
     }
-
     public function products()
     {
         return $this->hasMany(Product::class);

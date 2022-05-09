@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Branch;
+use App\Models\Inventory;
 use App\Models\Laboratory;
 use App\Models\Presentation;
 use Illuminate\Database\Eloquent\Model;
@@ -34,5 +35,10 @@ class Product extends Model
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function inventories()
+    {
+        return $this->hasMany(Inventory::class);
     }
 }

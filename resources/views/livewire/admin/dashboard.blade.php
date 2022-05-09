@@ -10,7 +10,7 @@
         </p>
         @if ($branch->turn == 'si')
             <button wire:click='no'
-                class="mt-6 px-10 py-4 font-medium leading-5 text-white transition-colors duration-150 bg-green-600 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-purple">
+                class="mt-6 px-10 py-4 font-medium leading-5 text-white transition-colors duration-150 bg-green-700 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-purple">
                 Turno
             </button>
         @else
@@ -20,6 +20,10 @@
             </button>
         @endif
     </div>
+    <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+        Reportes de Ventas
+        <br>
+    </h2>
     <!-- Reportes-->
     <div class="grid grid-cols-2 gap-8">
         <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
@@ -30,7 +34,7 @@
             <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400">
                 <!-- Chart legend -->
                 <div class="flex items-center">
-                    <span class="inline-block w-3 h-3 mr-1 bg-teal-500 rounded-full"></span>
+                    <span class="inline-block w-3 h-3 mr-1 bg-green-800 rounded-full"></span>
                     <span>Ventas</span>
                 </div>
             </div>
@@ -43,7 +47,7 @@
             <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400">
                 <!-- Chart legend -->
                 <div class="flex items-center">
-                    <span class="inline-block w-3 h-3 mr-1 bg-teal-500 rounded-full"></span>
+                    <span class="inline-block w-3 h-3 mr-1 bg-green-800 rounded-full"></span>
                     <span>Ventas</span>
                 </div>
             </div>
@@ -57,8 +61,8 @@
         <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400">
             <!-- Chart legend -->
             <div class="flex items-center">
-                <span class="inline-block w-3 h-3 mr-1 bg-teal-500 rounded-full"></span>
-                <span>Shoes</span>
+                <span class="inline-block w-3 h-3 mr-1 bg-green-800 rounded-full"></span>
+                <span>Ventas</span>
             </div>
         </div>
     </div>
@@ -96,7 +100,7 @@
                     labels: [day(6), day(5), day(4), day(3), day(2), day(1), day(0)],
                     datasets: [{
                         label: 'Ventas',
-                        backgroundColor: '#0694a2',
+                        backgroundColor: '#064420',
                         // borderColor: window.chartColors.red,
                         borderWidth: 1,
                         data: [@js($sales[0]), @js($sales[1]), @js($sales[2]), @js($sales[3]), @js($sales[4]), @js(
@@ -147,7 +151,7 @@
                     labels: daysMonth,
                     datasets: [{
                         label: 'Ventas',
-                        backgroundColor: '#0694a2',
+                        backgroundColor: '#064420',
                         // borderColor: window.chartColors.red,
                         borderWidth: 1,
                         data: @js($month),
@@ -171,7 +175,7 @@
                     labels: ['00:00', '04:00', '08:00', '12:00','16:00', '20:00', '23:59'],
                     datasets: [{
                         label: 'Ventas',
-                        backgroundColor: '#0694a2',
+                        backgroundColor: '#064420',
                         // borderColor: window.chartColors.red,
                         borderWidth: 1,
                         data: @js($day),
@@ -184,7 +188,6 @@
                     },
                 },
             }
-
             const dayCtx = document.getElementById('day')
             window.myBar = new Chart(dayCtx, dayConfig)
         </script>

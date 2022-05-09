@@ -31,12 +31,16 @@ class Prod extends Component
         $this->search = $search;
         $this->resetPage();
     }
-
+    /* Paginacion */
+    public function paginationView()
+    {
+        return 'pagination::personal2-tailwind';
+    }
     public function render()
     {
         $products = Product::where(function($query){
             $query->where('name', 'like', '%'.$this->search.'%');
-        })->orderBy('name', 'asc')->paginate(5);
+        })->orderBy('name', 'asc')->paginate();
         return view('livewire.prod', compact('products'));
     }
 }

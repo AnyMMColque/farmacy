@@ -29,11 +29,7 @@ class CreateProductsTable extends Migration
 
             $table->string('name');
             $table->string('g_name');
-            $table->string('stock');
-            $table->string('lot');
-            $table->string('exp_date');
-            $table->string('price');
-            $table->string('sale_price');
+            $table->integer('stock')->default(0);
             $table->integer('qty_sold')->default(0);
             $table->timestamps();
         });
