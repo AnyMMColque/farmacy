@@ -4,16 +4,24 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Order;
 use App\Models\Invoice;
+use App\Exports\StockExport;
+use App\Exports\UsersExport;
 use Illuminate\Http\Request;
 use App\Exports\InvoicesWeek;
-use App\Exports\InvoicesExport;
-use App\Exports\InvoicesExportT;
 use App\Exports\InvoicesMonth;
+use App\Exports\BranchesExport;
+use App\Exports\InvoicesExport;
+use App\Exports\ProductsExport;
+use App\Exports\InventoryExport;
+use App\Exports\InvoicesBetween;
+use App\Exports\InvoicesExportT;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Livewire\Admin\Branches;
 
 class InvoiceController extends Controller
 {
+    // Factura
     public function pdf($index)
     {
         // return $pdf->download('venta-'.$numventa[0]->num_comprobante.'.pdf');
@@ -55,5 +63,43 @@ class InvoiceController extends Controller
         $to = date("Y-m-d", strtotime(now()));
 
         return Excel::download(new InvoicesMonth, $from . '_' . $to . '.xlsx');
+    }
+
+    public function betweenDates($from, $to)
+    {
+        $export = new InvoicesBetween($from, $to);
+
+        return Excel::download($export, $from . '_' . $to . '.xlsx');
+    }
+
+    public function products($id)
+    {
+        $products = new ProductsExport($id);
+
+        // return Excel::download($products, 'productos.xlsx');
+        return ($products)->download('productos.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
+    }
+
+    public function stock($id)
+    {
+        $products = new StockExport($id);
+
+        // return Excel::download($products, 'productos_stock.xlsx');
+        return (new StockExport($id))->download('productos_stock.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
+    }
+
+    public function expdate($id)
+    {
+        return (new InventoryExport($id))->download('productos_a_vencer.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
+    }
+
+    public function branches()
+    {
+        return (new BranchesExport())->download('Lista de farmacias.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
+    }
+
+    public function users()
+    {
+        return (new UsersExport())->download('Lista de farmacias.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
     }
 }

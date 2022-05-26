@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Inventory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -16,6 +17,10 @@ class Branch extends Model
 
     public function products(){
         return $this->hasMany(Product::class);
+    }
+
+    public function inventories(){
+        return $this->hasMany(Inventory::class);
     }
 
     public function users()

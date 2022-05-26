@@ -19,6 +19,9 @@ class CreateInventoriesTable extends Migration
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
 
+            $table->unsignedBigInteger('branch_id');
+            $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');
+
             $table->integer('stock');
             $table->string('lot');
             $table->integer('price');

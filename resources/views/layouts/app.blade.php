@@ -43,7 +43,7 @@
                 <div class="w-full -mx-6 lg:w-2/5">
                     <div class="px-6 ">
                         <div>
-                            <a href=""
+                            <a href="{{route('home')}}"
                                 class="text-xl font-bold text-gray-800 dark:text-gray-800 hover:text-gray-700 dark:hover:text-gray-300">
                                 San Lorenzo</a>
                         </div>
@@ -81,7 +81,7 @@
                     <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4">
                         <div>
                             <h3 class="text-gray-900 uppercase dark:text-gray-900">Información</h3>
-                            <a href="#"
+                            <a href="/farmacias"
                                 class="block mt-2 text-sm text-gray-600 dark:text-gray-600 hover:underline">Farmacias</a>
                             <a href="#"
                                 class="block mt-2 text-sm text-gray-600 dark:text-gray-600 hover:underline">Productos</a>

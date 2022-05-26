@@ -42,11 +42,8 @@ class Products extends Component
     protected $rules2 = [
         'name' => 'required|min:6|max:30',
         'pro' => 'required',
-        'stock' => 'required|numeric',
-        'lot' => 'nullable',
-        'exp_date' => 'required|date',
-        'price' => 'required|numeric',
-        'sale_price' => 'required|numeric',
+        'laboratory_id' => 'required',
+        'presentation_id' => 'required',
     ];
     /* Buscar Sucursal */
     public function updateSearch($search)
@@ -108,6 +105,7 @@ class Products extends Component
     {
         $inventory = new Inventory();
         $inventory->product_id = $this->aux;
+        $inventory->branch_id = auth()->user()->branch_id;
         $inventory->stock = $this->stock;
         $inventory->lot = $this->lot;
         $inventory->price = $this->price;
@@ -133,7 +131,7 @@ class Products extends Component
         $product = new Product();
         $product->name = $this->name;
         $product->g_name = $this->pro->gname;
-        $product->stock = $this->stock;
+        $product->stock = 0;
         $product->laboratory_id = $this->laboratory_id;
         $product->presentation_id = $this->presentation_id;
         $product->branch_id = Auth()->user()->branch->id;
@@ -151,11 +149,6 @@ class Products extends Component
         $this->num = $product->id;
         $this->name = $product->name;
         $this->pro->gname = $product->g_name;
-        $this->stock = $product->stock;
-        $this->lot = $product->lot;
-        $this->exp_date = $product->exp_date;
-        $this->price = $product->price;
-        $this->sale_price = $product->sale_price;
         $this->laboratory_id = $product->laboratory_id;
         $this->presentation_id = $product->presentation_id;
     }
@@ -166,11 +159,6 @@ class Products extends Component
 
         $product->name = $this->name;
         $product->g_name = $this->pro->gname;
-        $product->stock = $this->stock;
-        $product->lot = $this->lot;
-        $product->exp_date = $this->exp_date;
-        $product->price = $this->price;
-        $product->sale_price = $this->sale_price;
         $product->laboratory_id = $this->laboratory_id;
         $product->presentation_id = $this->presentation_id;
         $product->branch_id = Auth()->user()->branch->id;

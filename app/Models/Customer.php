@@ -10,7 +10,7 @@ class Customer extends Model
 {
     use HasFactory;
 
-    protected $fillable =['ci','name','cellphone'];
+    protected $fillable =['ci','name','email'];
 
     public static  function search($searchKey)
     {

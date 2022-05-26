@@ -62,6 +62,18 @@ class Dashboard extends Component
         $this->branch->save();
     }
 
+    public function open()
+    {
+        $this->branch->open = 'si';
+        $this->branch->save();
+    }
+
+    public function close()
+    {
+        $this->branch->open = 'no';
+        $this->branch->save();
+    }
+
     public function render()
     {
         return view('livewire.admin.dashboard')->layout('layouts.admin');

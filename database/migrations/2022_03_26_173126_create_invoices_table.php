@@ -22,6 +22,7 @@ class CreateInvoicesTable extends Migration
             $table->json('branch');
             $table->json('products');
             $table->string('products_string');
+            $table->string('prices_string');
             $table->string('total');
             $table->string('pay');
             $table->string('discount');

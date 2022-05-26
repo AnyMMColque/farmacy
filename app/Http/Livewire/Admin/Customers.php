@@ -2,16 +2,18 @@
 
 namespace App\Http\Livewire\Admin;
 
-use App\Models\Customer;
+use App\Mail\Recipe;
 use Livewire\Component;
+use App\Models\Customer;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Mail;
 
 class Customers extends Component
 {
     use WithPagination;
 
-    public $name, $ci, $cellphone;
-    public $true, $num;
+    public $name, $ci, $email;
+    public $true, $num, $message, $aux;
 
     private $customers;
 
@@ -22,7 +24,7 @@ class Customers extends Component
     protected $rules = [
         'name' => 'required|min:3|max:30',
         'ci' => 'required|numeric',
-        'cellphone' => 'nullable',
+        'email' => 'nullable',
     ];
     /* Buscar Cliente */
     public function updateSearch($search)
@@ -33,7 +35,8 @@ class Customers extends Component
 
     public function resetVariables()
     {
-        $this->reset(['name','ci', 'cellphone']);
+        $this->reset(['name','ci', 'email', 'message','aux']);
+        $this->resetErrorBag();
     }
     /* Guardar Cliente */
     public function save()
@@ -43,19 +46,39 @@ class Customers extends Component
         $customer = new Customer();
         $customer->name = $this->name;
         $customer->ci = $this->ci;
-        $customer->cellphone = $this->cellphone;
+        $customer->email = $this->email;
 
         $customer->save();
-        $this->reset(['name','ci', 'cellphone']);
+        $this->resetVariables();
         $this->emit('saved');
     }
+
+    public function selectUser($key)
+    {
+        $this->aux = $key;
+    }
+
+    public function send()
+    {
+        $this->validate([
+            'message' => 'required'
+        ]);
+
+        /* $this->user->notify(new NotifyUser($this->toMail)); */
+        $customer = Customer::find($this->aux);
+        Mail::to($customer->email)->send(new Recipe($this->message));
+
+        
+        $this->emit('saved');
+    }
+
     /* Editar Cliente */
     public function edit(Customer $id, $true)
     {
         $this->num = $id->id;
         $this->name = $id->name;
         $this->ci = $id->ci;
-        $this->cellphone = $id->cellphone;
+        $this->email = $id->email;
         $this->true = $true;
     }
     /* Actualizar Cliente */
@@ -63,10 +86,10 @@ class Customers extends Component
     {
         $customer->name = $this->name;
         $customer->ci = $this->ci;
-        $customer->cellphone = $this->cellphone;
+        $customer->email = $this->email;
         
         $customer->save();
-        $this->reset(['name','ci', 'cellphone', 'num', 'true']);
+        $this->reset(['name','ci', 'email', 'num', 'true']);
         $this->emit('updated');
     }
     /* Eliminar Cliente */

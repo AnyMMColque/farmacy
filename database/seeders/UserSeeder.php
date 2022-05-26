@@ -75,6 +75,7 @@ class UserSeeder extends Seeder
             'telephone' => '96584724',
             'username' => 'farmacia',
             'password' => Hash::make('123456'),
+            'email_verified_at' => now(),
         ])->assignRole($role2);
 
         User::create([
@@ -86,6 +87,7 @@ class UserSeeder extends Seeder
             'telephone' => '96584724',
             'username' => 'vendedor',
             'password' => Hash::make('123456'),
+            'email_verified_at' => now(),
         ])->assignRole($role3);
     }
 }

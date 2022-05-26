@@ -22,7 +22,8 @@ class CreateBranchesTable extends Migration
             $table->string('telephone');
             $table->string('lat');
             $table->string('lng');
-            $table->string('turn')->default('no')->nullable();
+            $table->string('turn')->default('no');
+            $table->string('open')->default('no');
             $table->string('nit');
             $table->string('authorization');
             $table->string('qty_sold')->default(0);

@@ -4,21 +4,40 @@
         <br>
     </h2>
     {{-- Turno Farmacias --}}
-    <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-        <p class="text-sm text-gray-600 dark:text-gray-400">
-            ¿Farmacia de turno?
-        </p>
-        @if ($branch->turn == 'si')
-            <button wire:click='no'
-                class="mt-6 px-10 py-4 font-medium leading-5 text-white transition-colors duration-150 bg-green-700 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-purple">
-                Turno
-            </button>
-        @else
-            <button wire:click='si'
-                class="mt-6 px-10 py-4 font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-purple">
-                Turno
-            </button>
-        @endif
+    <div class="grid grid-cols-2 gap-8">
+        <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+                ¿Farmacia de turno?
+            </p>
+            @if ($branch->turn == 'si')
+                <button wire:click='no'
+                    class="mt-6 px-10 py-4 font-medium leading-5 text-white transition-colors duration-150 bg-green-700 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-purple">
+                    Turno
+                </button>
+            @else
+                <button wire:click='si'
+                    class="mt-6 px-10 py-4 font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-purple">
+                    Turno
+                </button>
+            @endif
+        </div>
+
+        <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+                ¿Farmacia abierta?
+            </p>
+            @if ($branch->open == 'si')
+                <button wire:click='close'
+                    class="mt-6 px-10 py-4 font-medium leading-5 text-white transition-colors duration-150 bg-green-700 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-purple">
+                    Abierto
+                </button>
+            @else
+                <button wire:click='open'
+                    class="mt-6 px-10 py-4 font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-purple">
+                    Cerrado
+                </button>
+            @endif
+        </div>
     </div>
     <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
         Reportes de Ventas

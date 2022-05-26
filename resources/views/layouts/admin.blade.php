@@ -185,7 +185,7 @@
                         </li>
                     @endrole
                     {{-- Vista Reportes --}}
-                    @role('admin')
+                    @hasanyrole('Super-Admin|admin')
                     <li class="relative px-6 py-3">
                         <span
                             class=" {{ url()->current() == route('admin.dashboard') . '/reportes' ? 'bg-green-600' : 'none' }} absolute inset-y-0  left-0 w-1 rounded-tr-lg rounded-br-lg"
@@ -201,7 +201,7 @@
                             <span class="ml-4">Reportes</span>
                         </a>
                     </li>
-                    @endrole
+                    @endhasanyrole
                 </ul>
             </div>
         </aside>

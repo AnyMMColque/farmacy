@@ -97,7 +97,7 @@
                         <h1 class="mx-3 text-lg font-semibold text-white">Buscando medicamento...</h1>
                     </div>
                     @foreach ($products as $product)
-                        @if ($product->branch->turn == 'si')
+                        {{-- @if ($product->branch->turn == 'si') --}}
                             <div class="max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
                                 <div class="px-6 py-4">
                                     <div class="flex items-center mt-4 text-gray-700 dark:text-gray-200">
@@ -117,12 +117,26 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                         </svg>
-                                        <h1 class="px-2 text-sm"><a href="{{route('pharmacies')}}">Farmacia: {{ $product->branch->name }}</a></h1>
+                                        <h1 class="px-2 text-sm">Farmacia: {{ $product->branch->name }} <a href="{{route('pharmacies')}}" class="link link-primary">(Ver en el mapa)</a></h1>
+                                    </div>
+                                    <div class="flex items-center mt-4 text-gray-700 dark:text-gray-200">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                        <h1 class="px-2 text-sm">De turno: {{ $product->branch->turn }}</h1>
+                                    </div>
+                                    <div class="flex items-center mt-4 text-gray-700 dark:text-gray-200">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                        <h1 class="px-2 text-sm">Abierto: {{ $product->branch->open }}</h1>
                                     </div>
                                 </div>
                             </div>
                             <hr>
-                        @endif
+                        {{-- @endif --}}
                     @endforeach
                 </div>
                 @else

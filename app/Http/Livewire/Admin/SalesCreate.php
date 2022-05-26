@@ -18,7 +18,7 @@ class SalesCreate extends Component
 {
     use WithPagination;
 
-    public $name, $ci, $cellphone;
+    public $name, $ci, $email;
     public $customers, $customer, $search, $products, $pay, $change=false;
     public $product, $quantity, $subtotal = [];
     public $listProducts = [];
@@ -135,20 +135,20 @@ class SalesCreate extends Component
         $this->validate([
             'name' => 'required',
             'ci' => 'required',
-            'cellphone' => 'required'
+            'email' => 'required'
         ]);
 
         $newCustomer = new Customer;
 
         $newCustomer->name = $this->name;
         $newCustomer->ci = $this->ci;
-        $newCustomer->cellphone = $this->cellphone;
+        $newCustomer->email = $this->email;
 
         $newCustomer->save();
 
         $this->customer = $newCustomer;
 
-        $this->reset(['name', 'ci', 'cellphone']);
+        $this->reset(['name', 'ci', 'email']);
         $this->emit('saved');
         $this->emit('select', $newCustomer->name, $newCustomer->id);
     }
@@ -206,9 +206,11 @@ class SalesCreate extends Component
 
         $user = User::where('id', auth()->user()->id)->first();
         $product_string = "";
+        $prices_string = "";
 
         foreach ($products as $product){
-            $product_string .=  $product->g_name . " (" . $product->pivot->price. ") ";   
+            $product_string .=  $product->name;   
+            $prices_string .=  " (" . $product->pivot->price . "x" . $product->pivot->quantity . ")";
         }
 
         Invoice::create([
@@ -219,6 +221,7 @@ class SalesCreate extends Component
             'branch' => json_encode($branch),
             'products' => json_encode($products),
             'products_string' => $product_string,
+            'prices_string' => $prices_string,
             'total' => $order->total,
             'pay' => $order->pay,
             'discount' => $order->discount,
