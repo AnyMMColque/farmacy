@@ -34,12 +34,14 @@
     @foreach ($branches as $key => $branch)
         @if ($branch->id !== 1)
             <div class="card lg:card-side bg-base-100 shadow-xl mb-5">
-                <div class="grid grid-cols-3 gap-4">
-                    <div class="col-span-2 h-80 mt-10 m-10" id="{{ $nameId[$key] }}" wire:ignore></div>
-                    <div class="mt-10">
+                <div class="grid grid-cols-12 gap-4">
+                    <div class="col-span-8 h-80 mt-10 m-10" id="{{ $nameId[$key] }}" wire:ignore></div>
+                    <div class="mt-10 col-span-4 w-80">
                         <h2 class="card-title text-green-700">{{ $branch->name }}</h2>
                         <p> <span class="font-bold">Dirección: </span>{{ $branch->address }}</p>
                         <p> <span class="font-bold">Teléfono: </span>{{ $branch->telephone }}</p>
+                        <p> <span class="font-bold">Turno: </span>{{ $branch->turn }}</p>
+                        <p> <span class="font-bold">Abierto: </span>{{ $branch->open }}</p>
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin;
 
 use Livewire\Component;
+use Illuminate\Support\Facades\Artisan;
 
 class Reports extends Component
 {
@@ -42,6 +43,12 @@ class Reports extends Component
     public function reportUsers()
     {
         return redirect()->to('admin/reportes/usuarios/');
+    }
+    /* Copias de Seguridad */
+    public function backUp()
+    {
+        Artisan::call("backup:run --only-db");
+        $this->emit('saved');
     }
 
     public function render()

@@ -95,8 +95,7 @@
         <div class="w-full overflow-x-auto">
             <table class="w-full whitespace-no-wrap">
                 <thead>
-                    <tr
-                        class="text-xs font-semibold tracking-wide text-left bg-green-600 dark:bg-green-700 text-gray-50 uppercase border-b dark:border-gray-700 dark:text-gray-50 ">
+                    <tr class="text-xs font-semibold tracking-wide text-left bg-green-600 dark:bg-green-700 text-gray-50 uppercase border-b dark:border-gray-700 dark:text-gray-50 ">
                         <th class="px-4 py-3">Nombre</th>
                         <th class="px-4 py-3">CI / NIT</th>
                         <th class="px-4 py-3">E-mail</th>
@@ -107,14 +106,12 @@
                     @foreach ($customers as $customer)
                         <tr class="text-gray-700 dark:text-gray-400">
                             <td class="px-4 py-3">
-                                <div
-                                    class="flex items-center text-sm  dark:bg-green-700 rounded-full px-2 py-1 dark:text-green-100">
+                                <div class="flex items-center text-sm  dark:bg-green-700 rounded-full px-2 py-1 dark:text-green-100">
                                     <p class="font-semibold">{{ $customer->name }}</p>
                                 </div>
                             </td>
                             <td class="px-4 py-3">
-                                <div
-                                    class="flex items-center text-sm  dark:bg-green-700 rounded-full px-2 py-1 dark:text-green-100">
+                                <div class="flex items-center text-sm  dark:bg-green-700 rounded-full px-2 py-1 dark:text-green-100">
                                     <p class="font-semibold">{{ $customer->ci }}</p>
                                 </div>
                             </td>

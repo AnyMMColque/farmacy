@@ -2,9 +2,9 @@
     <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
         Dashboard
         <br>
-    </h2>
-    {{-- Turno Farmacias --}}
+    </h2>  
     <div class="grid grid-cols-2 gap-8">
+        {{-- Turno Farmacias --}}
         <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
             <p class="text-sm text-gray-600 dark:text-gray-400">
                 ¿Farmacia de turno?
@@ -21,7 +21,7 @@
                 </button>
             @endif
         </div>
-
+        {{-- Abierto Farmacias --}}
         <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
             <p class="text-sm text-gray-600 dark:text-gray-400">
                 ¿Farmacia abierta?
@@ -43,7 +43,7 @@
         Reportes de Ventas
         <br>
     </h2>
-    <!-- Reportes-->
+    <!-- Reportes Estadisticos-->
     <div class="grid grid-cols-2 gap-8">
         <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
             <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
@@ -85,6 +85,7 @@
             </div>
         </div>
     </div>
+    {{-- Script de reportes estadisticos  --}}
     @push('script')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"
                 integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ=="

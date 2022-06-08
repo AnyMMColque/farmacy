@@ -2,11 +2,11 @@
     @push('styles')
         <link rel="stylesheet" href="{{ asset('windmill/assets/css/tailwind.output.css') }}" />
     @endpush
-    {{-- Chart para reportar el producto mas vendido --}}
     <div class="mt-8 h-100 min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
         <h1 class="my-6 text-2xl font-semibold text-green-800 dark:text-gray-200">
             Productos más vendidos
         </h1>
+        {{-- Gráfico de Producto más vendido --}}
         <canvas id="pie" class="max-h-64">
         </canvas>
         <div class="flex justify-center space-x-3 text-sm text-gray-600 dark:text-gray-400">
@@ -37,8 +37,7 @@
                         clip-rule="evenodd"></path>
                 </svg>
             </div>
-            <input
-                class="w-full pl-8 pr-2 text-sm  text-gray-700 placeholder-gray-800 bg-white border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-700 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
+            <input class="w-full pl-8 pr-2 text-sm  text-gray-700 placeholder-gray-800 bg-white border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-700 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
                 type="text" placeholder="Buscar por nombre..." aria-label="Search" x-model="message"
                 @input="Livewire.emit('updateSearch', message)" />
         </div>
@@ -47,22 +46,21 @@
     <div class="w-full overflow-x-auto">
         <table class="w-full whitespace-no-wrap">
             <thead>
-                <tr
-                    class="text-xs font-semibold tracking-wide text-left bg-green-600 dark:bg-green-700 text-gray-50 uppercase border-b dark:border-gray-700 dark:text-gray-50 ">
+                <tr class="text-xs font-semibold tracking-wide text-left bg-green-600 dark:bg-green-700 text-gray-50 uppercase border-b dark:border-gray-700 dark:text-gray-50 ">
                     <th class="px-4 py-3">Nombre</th>
                     <th class="px-4 py-3">Laboratorio</th>
                     <th class="px-4 py-3">Presentación</th>
                     <th class="px-4 py-3">Cantidad Disponible</th>
                     <th class="px-4 py-3">Farmacia</th>
                     <th class="px-4 py-3">Turno</th>
+                    <th class="px-4 py-3">Abierto</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                 @foreach ($products as $product)
                     <tr class="text-gray-700 dark:text-gray-400">
                         <td class="px-4 py-3">
-                            <div
-                                class="flex items-center text-sm  dark:bg-green-700 rounded-full px-2 py-1 dark:text-green-100">
+                            <div class="flex items-center text-sm  dark:bg-green-700 rounded-full px-2 py-1 dark:text-green-100">
                                 <p class="font-semibold">{{ $product->name }}</p>
                             </div>
                         </td>
@@ -81,11 +79,14 @@
                         <td class="px-4 py-3 text-sm">
                             {{ $product->branch->turn }}
                         </td>
+                        <td class="px-4 py-3 text-sm">
+                            {{ $product->branch->open }}
+                        </td>
                 @endforeach
             </tbody>
         </table>
     </div>
-    {{-- TO DO: pagination --}}
+    {{-- paginacion --}}
     <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
         <span class="flex items-center col-span-3">
             {!! $products->links('pagination::message') !!}

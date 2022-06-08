@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="{{ asset('windmill/assets/css/tailwind.output.css') }}" />
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" /> --}}
-
     <!-- Scripts -->
     {{-- Script para poder usar Sweetalert 2 --}}
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -74,7 +73,8 @@
                             </a>
                         </li>
                     @endrole
-                    @hasanyrole('Super-Admin|admin')
+                    {{-- Vista usuarios --}}
+                    @hasanyrole('Super-Admin|admin') 
                         <li class="relative px-6 py-3">
                             {{-- Desliza la barrita de color cuando entra a la vista de sucursales --}}
                             <span class=" {{ url()->current() == route('admin.dashboard') . '/usuarios' ? 'bg-green-600' : 'none' }} absolute inset-y-0  left-0 w-1 rounded-tr-lg rounded-br-lg"
@@ -609,5 +609,4 @@
     @livewireScripts
     @stack('script')
 </body>
-
 </html>

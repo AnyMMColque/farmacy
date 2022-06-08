@@ -85,9 +85,10 @@
                     </div>
                 </form>
                 @if (isset($products))
+                {{-- Lista que se muestra al buscar un medicamento --}}
                 <div class="mt-4 max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
                     <img class="object-cover object-center w-full h-56"
-                        src="https://tevafarmacia.es/sites/default/files/styles/max_650x650/public/tv-post-images/2020-10/dibujos-para-pacientes.jpg?itok=CKQkGDW3"
+                        src="https://cdn.xxl.thumbs.canstockphoto.com/illustration-of-a-patient-listening-to-a-pharmacist-explaining-eps-vectors_csp77204033.jpg"
                         alt="avatar">
                     <div class="flex items-center px-6 py-3 bg-green-900">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -141,9 +142,8 @@
                 </div>
                 @else
                     <p class="mt-8 text-gray-700 lg:w-10/12">Introduce el nombre del medicamento y la cantidad que
-                        buscas para
-                        mostrarte todas las farmacias que lo tienen disponible. O busca en nuestra
-                        <a href="#" class="text-yellow-700">lista de medicamentos </a>lo que tu necesites.
+                        buscas para mostrarte todas las farmacias que lo tienen disponible. O busca en nuestra
+                        <a href="/productos" class="text-yellow-700">lista de medicamentos </a>lo que tu necesites.
                     </p>
                 @endif
             </div>

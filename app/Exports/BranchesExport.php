@@ -14,7 +14,6 @@ class BranchesExport implements FromCollection, WithHeadings, WithMapping
     /**
     * @return \Illuminate\Support\Collection
     */
-
     use Exportable;
 
     public function headings(): array
@@ -29,7 +28,6 @@ class BranchesExport implements FromCollection, WithHeadings, WithMapping
             'Número de autorización',
         ];
     }
-
     public function map($branch): array
     {
         return [
@@ -42,7 +40,6 @@ class BranchesExport implements FromCollection, WithHeadings, WithMapping
             $branch->authorization,
         ];
     }
-
     public function collection()
     {
         return Branch::all();

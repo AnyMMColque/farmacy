@@ -68,7 +68,7 @@ class UserSeeder extends Seeder
 
         User::create([
             'id' => 2,
-            'branch_id' => 1,
+            'branch_id' => 2,
             'name' => 'Admin farmacia',
             'ci' => '548667',
             'address' => 'address xx',
@@ -80,7 +80,7 @@ class UserSeeder extends Seeder
 
         User::create([
             'id' => 3,
-            'branch_id' => 1,
+            'branch_id' => 2,
             'name' => 'vendedor',
             'ci' => '548667',
             'address' => 'address xx',

@@ -92,14 +92,14 @@ class InvoiceController extends Controller
     {
         return (new InventoryExport($id))->download('productos_a_vencer.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
     }
-
+    /* PDF de farmacias */
     public function branches()
     {
         return (new BranchesExport())->download('Lista de farmacias.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
     }
-
+    /* PDF de usuarios */
     public function users()
     {
-        return (new UsersExport())->download('Lista de farmacias.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
+        return (new UsersExport())->download('Lista de usuarios.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
     }
 }
