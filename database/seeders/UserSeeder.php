@@ -65,7 +65,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('123456'),
             'email_verified_at' => now(),
         ])->assignRole($role1);
-
+        /* Farmacia 2 */
         User::create([
             'id' => 2,
             'branch_id' => 2,
@@ -77,7 +77,6 @@ class UserSeeder extends Seeder
             'password' => Hash::make('123456'),
             'email_verified_at' => now(),
         ])->assignRole($role2);
-
         User::create([
             'id' => 3,
             'branch_id' => 2,
@@ -87,6 +86,29 @@ class UserSeeder extends Seeder
             'telephone' => '96584724',
             'username' => 'vendedor',
             'password' => Hash::make('123456'),
+            'email_verified_at' => now(),
+        ])->assignRole($role3);
+        /* Farmacia 4 */
+        User::create([
+            'id' => 4,
+            'branch_id' => 4,
+            'name' => 'Admin farmacia4',
+            'ci' => '3647867',
+            'address' => 'address xx',
+            'telephone' => '4322724',
+            'username' => 'farmacia4',
+            'password' => Hash::make('1234567'),
+            'email_verified_at' => now(),
+        ])->assignRole($role2);
+        User::create([
+            'id' => 5,
+            'branch_id' => 4,
+            'name' => 'vendedor4',
+            'ci' => '2548667',
+            'address' => 'address xx',
+            'telephone' => '34574724',
+            'username' => 'vendedor4',
+            'password' => Hash::make('1234567'),
             'email_verified_at' => now(),
         ])->assignRole($role3);
     }

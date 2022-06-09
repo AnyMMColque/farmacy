@@ -1,20 +1,5 @@
 <div class="container">
-    <x-jet-action-message class="mr-3" on="saved">
-        <div class="mb-4 flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
-            <div class="flex items-center justify-center w-12 bg-emerald-500">
-                <svg class="w-6 h-6 text-white fill-current" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z" />
-                </svg>
-            </div>
-            <div class="px-4 py-2 -mx-3">
-                <div class="mx-3">
-                    <span class="font-semibold text-emerald-500 dark:text-emerald-400">Exito</span>
-                    <p class="text-sm text-gray-600 dark:text-gray-200">Mensaje enviado.</p>
-                </div>
-            </div>
-        </div>
-    </x-jet-action-message>
+    
     <h1 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"></h1>
     <header class="bg-white dark:bg-gray-800">
         <div class="container px-6 py-16 mx-auto">
@@ -34,8 +19,8 @@
                                 placeholder="Nombre">
                         </div>
                         {{-- Introducir correo electronico --}}
-                        <div wire:model='mail' class="flex flex-col mt-8 space-y-3 lg:space-y-0 lg:flex-row">
-                            <input type="text"
+                        <div class="flex flex-col mt-8 space-y-3 lg:space-y-0 lg:flex-row">
+                            <input wire:model='mail' type="text"
                                 class="px-40 py-2  text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-blue-300"
                                 placeholder="Correo Electrónico">
                         </div>
@@ -50,6 +35,25 @@
                             <button wire:click='send' class="w-full px-10 py-2 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-green-500 rounded-lg lg:w-auto lg:mx-4 hover:bg-green-400 focus:outline-none focus:bg-green-400">
                                 Enviar
                             </button>
+                        </div>
+                        {{-- Alert cuando se envia un mensaje --}}
+                        <div class=" mt-6">
+                            <x-jet-action-message class="mr-3" on="saved">
+                                <div class="mb-4 flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
+                                    <div class="flex items-center justify-center w-12 bg-emerald-500">
+                                        <svg class="w-6 h-6 text-white fill-current" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z" />
+                                        </svg>
+                                    </div>
+                                    <div class="px-4 py-2 -mx-3">
+                                        <div class="mx-3">
+                                            <span class="font-semibold text-emerald-500 dark:text-emerald-400">Exito</span>
+                                            <p class="text-sm text-gray-600 dark:text-gray-200">Mensaje enviado.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </x-jet-action-message>
                         </div>
                     </div>
                 </div>

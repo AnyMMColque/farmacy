@@ -22,7 +22,7 @@ class Reports extends Component
 
     public function sendBranch()
     {
-        return redirect()->to('admin/reportes/products/' . auth()->user()->branch_id);
+        return redirect()->to('admin/reportes/productos/' . auth()->user()->branch_id);
     }
 
     public function sendBranchStock()

@@ -39,7 +39,6 @@
                         <th class="px-4 py-3">Precio de compra</th>
                         <th class="px-4 py-3">Precio de venta</th>
                         <th class="px-4 py-3">Vencimiento</th>
-                        <th class="px-4 py-3">Estado</th>
                         <th class="px-4 py-3">Acciones</th>
                     </tr>
                 </thead>
@@ -94,9 +93,6 @@
                                     {{ $inventory->exp_date }}
                                 </td>
                             @endif
-                            <td class="px-4 py-3 text-sm">
-                                {{ $inventory->status }}
-                            </td>
                             <td class="px-4 py-3">
                                 <div class="flex items-center space-x-4 text-sm">
                                     <button @click="inventory = true"

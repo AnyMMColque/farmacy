@@ -70,7 +70,9 @@ class Invent extends Component
 
     public function render()
     {
-        $inventories = Inventory::orderBy('created_at', 'desc')->paginate();
+        /* Muestra solo los lotes registrados en la farmcacia logueada */
+        $inventories_branch = Inventory::where('branch_id', Auth()->user()->branch->id);
+        $inventories = $inventories_branch->orderBy('created_at', 'desc')->paginate();
 
         return view('livewire.admin.inventory', compact('inventories'))->layout('layouts.admin');
     }

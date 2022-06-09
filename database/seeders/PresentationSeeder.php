@@ -49,6 +49,21 @@ class PresentationSeeder extends Seeder
             'name' => 'Polvo P/ Solución Inyec',
             'description' => 'CAJA CONTENIENDO UN VIAL + DISOLVENTE E INSERTO EXPLICATIVO',            
         ]);
+        Presentation::create([
+            'id' => 8,
+            'name' => 'Sin especificar',
+            'description' => 'NO PERTENECE A NINGUNA PRESENTACION',            
+        ]);
+        Presentation::create([
+            'id' => 9,
+            'name' => 'Comprimido Efervescente',
+            'description' => 'CAJA X UN TUBO DE POLIPROPILENO DE 10 Ó 15 COMP. EF. CAJA X 3 TUBOS DE POLIPROPILENO, CADA TUBO X 10 COMP. EF',            
+        ]);
+        Presentation::create([
+            'id' => 10,
+            'name' => 'Tableta',
+            'description' => 'FRASCO DE POLIETILENO DE ALTA DENSIDAD COLOR AMBAR CON TAPA AMARILLA. FRASCO X 100 TABLETAS',            
+        ]);
         /* Presentation::factory(20)->create(); */
     }
 }

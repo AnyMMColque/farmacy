@@ -14,7 +14,11 @@ class Home extends Component
     public $name;
     public $stock;
     public $products;
-
+    /* Limpiar los campos llenados con variables */
+    public function resetVariables()
+    {
+        $this->reset(['name', 'stock']);
+    }
     /* Busca el producto solicitado con el nombre y el stock */
     public function ShowProducts()
     {
@@ -25,7 +29,9 @@ class Home extends Component
         $this->products = Product::where(function($query){
             $query->where('name', 'like', '%'.$this->name.'%');
             $query->where('stock', '>=', intval($this->stock));
-        })->orderBy('name', 'asc')->get();
+
+            $this->reset();
+        })->orderBy('name', 'asc')->get();     
     }
     public function render()
     {

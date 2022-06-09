@@ -50,10 +50,10 @@ class Users extends Component
         $this->search = $search;
         $this->resetPage();
     }
-
+    /* Limpiar los campos llenados con variables */
     public function resetVariables()
     {
-        $this->reset(['name', 'address', 'telephone', 'turn', 'nit', 'authorization', 'lat', 'lng']);
+        $this->reset(['name', 'ci', 'address', 'telephone', 'username', 'branch', 'num', 'rol']);
     }
     /* Guardar Usuario */
     public function save()
@@ -93,6 +93,7 @@ class Users extends Component
         $user->save();
         $user->assignRole($this->rol);
         $this->reset(['name', 'ci', 'address', 'telephone', 'username', 'branch', 'num', 'rol']);
+        //$this->resetVariables();
         $this->emit('saved');
     }
     /* Editar Usuario */

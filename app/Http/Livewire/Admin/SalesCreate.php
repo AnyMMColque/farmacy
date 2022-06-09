@@ -64,7 +64,7 @@ class SalesCreate extends Component
 
             foreach ($this->saveProducts as $key => $product) {
                 $lot = $product->inventories->where('lot', $this->lots[$key])->first();
-                $this->total = $this->total + $lot->sale_price * $this->subtotal[$key];
+                $this->total = round($this->total + $lot->sale_price * $this->subtotal[$key], 2);
             }
         }
 

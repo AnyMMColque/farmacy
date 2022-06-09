@@ -114,6 +114,16 @@ class LaboratorySeeder extends Seeder
             'name' => 'FEBSA SRL',
             'description' => 'LABORATORIOS FEBSA SRL',            
         ]);
+        Laboratory::create([
+            'id' => 21,
+            'name' => 'PROTEX SRL',
+            'description' => 'PRODUCTOS TEXTILES PREMIER PROTEX S.R.L.',            
+        ]);
+        Laboratory::create([
+            'id' => 22,
+            'name' => 'MEGA VIT S.R.L',
+            'description' => 'MASON VITAMINS, INC.',            
+        ]);
         /* Laboratory::factory(20)->create(); */
     }
 }

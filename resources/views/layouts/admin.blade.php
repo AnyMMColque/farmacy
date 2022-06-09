@@ -422,7 +422,7 @@
                         </button>
                     </li>
                     <!-- Notifications menu -->
-                    <li class="relative">
+                    {{-- <li class="relative">
                         <button class="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple"
                             @click="toggleNotificationsMenu" @keydown.escape="closeNotificationsMenu"
                             aria-label="Notifications" aria-haspopup="true">
@@ -468,7 +468,7 @@
                                 </li>
                             </ul>
                         </template>
-                    </li>
+                    </li> --}}
                     <!-- Profile menu -->
                     <div class="hidden sm:flex sm:items-center sm:ml-6">
                         <!-- Teams Dropdown -->

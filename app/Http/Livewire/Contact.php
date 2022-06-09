@@ -13,18 +13,23 @@ class Contact extends Component
     public $mail;
     public $message;
 
+    public function resetVariables()
+    {
+        $this->reset(['name', 'mail', 'message']);
+    }
+    /* Enviar mensaje desde contacto */
     public function send()
     {
         $this->validate([
             'name' => 'required',
-            // 'mail' => 'email',
+            /* 'mail' => 'email', */
             'message' => 'required'
         ]);
 
         /* $this->user->notify(new NotifyUser($this->toMail)); */
         Mail::to('no-reply@sanlorenzo.com')->send(new MailContact($this->name, $this->mail, $this->message));
 
-        
+        $this->reset();
         $this->emit('saved');
     }
 

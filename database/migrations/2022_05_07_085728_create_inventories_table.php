@@ -27,7 +27,6 @@ class CreateInventoriesTable extends Migration
             $table->integer('price');
             $table->float('sale_price');
             $table->date('exp_date');
-            $table->string('status')->default('0');
             $table->timestamps();
         });
     }
