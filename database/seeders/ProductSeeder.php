@@ -46,7 +46,7 @@ class ProductSeeder extends Seeder
             'name' => 'Bicarbonato de Sodio 8% Vita',
             'g_name' =>'BICARBONATO DE SODIO',
             'stock' => 8,
-            'qty_sold' => 2,            
+            'qty_sold' => 20,            
         ]);
         Product::create([
             'id' => 4,
@@ -57,7 +57,7 @@ class ProductSeeder extends Seeder
             'name' => 'Cotrimoxazol',
             'g_name' =>'COTRIMOXAZOL(SULFAMETOXAZOL + TRIMETOPRIM)',
             'stock' => 2,
-            'qty_sold' => 2,            
+            'qty_sold' => 30,            
         ]);      
         Product::create([
             'id' => 5,
@@ -68,7 +68,7 @@ class ProductSeeder extends Seeder
             'name' => 'Dexacofasona 0,5mg',
             'g_name' =>'DEXAMETASONA',
             'stock' => 10,
-            'qty_sold' => 2,            
+            'qty_sold' => 5,            
         ]);
         Product::create([
             'id' => 6,

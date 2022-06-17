@@ -3,15 +3,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.css" integrity="sha512-CWdvnJD7uGtuypLLe5rLU3eUAkbzBR3Bm1SFPEaRfvXXI2v2H5Y0057EMTzNuGGRIznt8+128QIDQ8RqmHbAdg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     @endpush
     <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-        Clientes {{$message}}
+        Clientes
     </h2>
     {{-- Alert despues de actualizar cliente --}}
     <x-jet-action-message class="mr-3" on="updated">
         <div class="mb-4 flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
             <div class="flex items-center justify-center w-12 bg-emerald-500">
                 <svg class="w-6 h-6 text-white fill-current" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z" />
+                    <path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z" />
                 </svg>
             </div>
             <div class="px-4 py-2 -mx-3">
@@ -74,8 +73,8 @@
             </button>
         @endif
     </div>
-    {{-- Sweet Alert despues de registrar Cliente --}}
-    <x-jet-action-message class="mr-3" on="saved">
+     {{-- Sweet Alert despues de enviar notificación dosificación --}}
+     <x-jet-action-message class="mr-3" on="saved">
         <div class="alert alert-success bg-green-600 dark:bg-green-700 text-white">
             <div class="flex-1">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-2 stroke-current" fill="none"
@@ -83,7 +82,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
                 </svg>
-                <label>Registro exitoso</label>
+                <label>Notificación enviada con exito!</label>
             </div>
         </div>
     </x-jet-action-message>
@@ -172,7 +171,7 @@
             </span>
         </div>
     </div>
-    {{-- Modal para registrar productos --}}
+    {{-- Modal notificación dosificación --}}
     <div x-show="open" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
         x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
@@ -204,7 +203,7 @@
             <div class="mt-4 mb-6">
                 <!-- Modal title -->
                 <p class="mb-2 text-lg font-semibold text-green-700 dark:text-green-700">
-                    Enviar recetario
+                    Enviar Notificación Dosificación
                 </p>
                 <!-- Modal description -->
                 {{-- <div wire:model="message" id="editor">This is some sample content.</div> --}}
@@ -229,6 +228,7 @@
             </footer>
         </div>
     </div>
+   
     {{-- Sweetalert cuando se eliminan clientes --}}
     @push('script')
         <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>

@@ -27,7 +27,7 @@ class BranchSeeder extends Seeder
             'open' => 'si',
             'nit' => 4589256793,
             'authorization' => 309468267289402,
-            'qty_sold' => 2,
+            'qty_sold' => 0,
         ]);
         Branch::create([
             'id' => 2,
@@ -42,7 +42,7 @@ class BranchSeeder extends Seeder
             'open' => 'si',
             'nit' => 2567934589,
             'authorization' => 289309468267402,
-            'qty_sold' => 2,
+            'qty_sold' => 15,
         ]);
         Branch::create([
             'id' => 3,
@@ -72,7 +72,7 @@ class BranchSeeder extends Seeder
             'open' => 'no',
             'nit' => 9956423758,
             'authorization' => 924682430028967,
-            'qty_sold' => 2,
+            'qty_sold' => 8,
         ]);
         Branch::create([
             'id' => 5,
@@ -87,7 +87,7 @@ class BranchSeeder extends Seeder
             'open' => 'no',
             'nit' => 3758599264,
             'authorization' => 926743002868249,
-            'qty_sold' => 2,
+            'qty_sold' => 5,
         ]);
        /*  Branch::factory(4)->create(); */
     }

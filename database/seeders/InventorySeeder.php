@@ -111,8 +111,8 @@ class InventorySeeder extends Seeder
             'branch_id' =>2,
             'stock' =>4,
             'lot' =>4563456897,
-            'price' => 27.11,
-            'sale_price' => 27.92,
+            'price' => 28.11,
+            'sale_price' => 28.92,
             'exp_date' => '2022-11-09',           
         ]);
         Inventory::create([

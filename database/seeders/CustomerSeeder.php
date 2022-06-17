@@ -34,7 +34,7 @@ class CustomerSeeder extends Seeder
         ]);
         Customer::create([
             'id' => 4,
-            'name' => 'Luz Salvador',
+            'name' => 'Braulio Elvira',
             'ci' => 4584378,
             'email' => 'goigrauxikeulli-8254@gmail.com',            
         ]);

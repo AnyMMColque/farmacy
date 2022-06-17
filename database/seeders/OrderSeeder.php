@@ -23,7 +23,7 @@ class OrderSeeder extends Seeder
             'discount' => 0,
             'total' =>15.00,
             'status' => 0,
-            'date' => '2021-02-19',            
+            'date' => '2022-02-19',            
         ]);
         Order::create([
             'id' => 2,
@@ -34,7 +34,7 @@ class OrderSeeder extends Seeder
             'discount' => 2,
             'total' =>75.2,
             'status' => 0,
-            'date' => '2021-02-24',            
+            'date' => '2022-02-24',            
         ]);
         Order::create([
             'id' => 3,
@@ -45,7 +45,7 @@ class OrderSeeder extends Seeder
             'discount' => 0,
             'total' =>39.00,
             'status' => 0,
-            'date' => '2021-05-10',            
+            'date' => '2022-05-10',            
         ]);
         Order::create([
             'id' => 4,
@@ -56,7 +56,7 @@ class OrderSeeder extends Seeder
             'discount' => 0,
             'total' =>10.50,
             'status' => 1,
-            'date' => '2021-07-22',            
+            'date' => '2022-05-22',            
         ]);
         Order::create([
             'id' => 5,
@@ -67,7 +67,7 @@ class OrderSeeder extends Seeder
             'discount' => 0,
             'total' =>5.00,
             'status' => 0,
-            'date' => '2021-09-17',            
+            'date' => '2022-04-17',            
         ]);
         Order::create([
             'id' => 6,
@@ -78,7 +78,7 @@ class OrderSeeder extends Seeder
             'discount' => 0,
             'total' =>158.00,
             'status' => 0,
-            'date' => '2021-11-21',            
+            'date' => '2022-03-21',            
         ]);
         Order::create([
             'id' => 7,
