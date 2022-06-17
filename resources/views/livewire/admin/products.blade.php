@@ -111,8 +111,7 @@
                                 'allow-new'=> 'false',
                             ]" />
                     </div>
-                    <x-jet-input-error for="pro" />
-  
+                    <x-jet-input-error for="pro" /> 
                     <label class="block mt-4 text-sm">
                         <span class="text-gray-700 dark:text-gray-400">
                             Laboratorio
@@ -126,6 +125,7 @@
                             @endforeach
                         </select> 
                     </label>   
+                    <x-jet-input-error for="laboratory_id" /> 
                     <label class="block mt-4 text-sm">
                         <span class="text-gray-700 dark:text-gray-400">
                             Presentación
@@ -139,6 +139,7 @@
                             @endforeach
                         </select>
                     </label>
+                    <x-jet-input-error for="presentation_id" /> 
                 </div>
                 <footer
                     class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-gray-50 dark:bg-gray-800">
@@ -357,7 +358,7 @@
                         <th class="px-4 py-3">Presentación</th>
                         <th class="px-4 py-3">Stock</th>              
                         <th class="px-4 py-3">Usuario</th>               
-                        <th class="px-4 py-3">Actions</th>
+                        <th class="px-4 py-3">Acciones</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">

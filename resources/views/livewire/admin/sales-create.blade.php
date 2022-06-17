@@ -175,10 +175,9 @@ use App\Models\Product;
         <div class="w-full overflow-x-auto">
             <table class="w-full whitespace-no-wrap">
                 <thead>
-                    <tr
-                        class="text-xs font-semibold tracking-wide text-left bg-green-600 dark:bg-green-700 text-gray-50 uppercase border-b dark:border-gray-700 dark:text-gray-50 ">
+                    <tr class="text-xs font-semibold tracking-wide text-left bg-green-600 dark:bg-green-700 text-gray-50 uppercase border-b dark:border-gray-700 dark:text-gray-50 ">
                         <th class="px-4 py-3">Producto</th>
-                        <th class="px-4 py-3">Stock</th>
+                        <th class="px-4 py-3">Lote</th>
                         <th class="px-4 py-3">Precio</th>
                         <th class="px-4 py-3">Cantidad</th>
                         <th class="px-4 py-3">Subtotal</th>
@@ -195,14 +194,15 @@ use App\Models\Product;
                                     <p class="font-semibold">{{ $product->name }}</p>
                                 </div>
                             </td>
+                            @php
+                                $lot1 = $product->inventories->where('lot', $lots[$key])->first();
+                            @endphp
                             <td class="px-4 py-3 text-sm">
-                                {{ $product->stock }}
+                                {{ $lot1->lot }}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                @php
-                                    $lot = $product->inventories->where('lot', $this->lot)->first();
-                                @endphp
-                                {{ $lot->sale_price }}
+
+                                {{ $lot1->sale_price }}
                             </td>
                             <td class="px-4 py-3 text-sm">
                                 <span class="px-2 py-1">
@@ -210,7 +210,7 @@ use App\Models\Product;
                                 </span>
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                {{ $lot->sale_price * $subtotal[$key] }}
+                                {{ $lot1->sale_price * $subtotal[$key] }}
                             </td>
                             <td class="px-4 py-3">
                                 <div class="flex items-center space-x-4 text-sm">
@@ -218,7 +218,7 @@ use App\Models\Product;
                                     <button
                                         class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg dark:text-green-700 focus:outline-none focus:shadow-outline-gray"
                                         aria-label="Delete"
-                                        wire:click="removeProduct({{ $product->id }}, {{ $key }})">
+                                        wire:click="removeProduct({{ $product->id }}, {{ $key }}, {{ $lot1->lot }})">
                                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
                                             viewBox="0 0 20 20">
                                             <path fill-rule="evenodd"
@@ -288,13 +288,6 @@ use App\Models\Product;
                     </div>
                 @endif
             </div>
-            {{-- <div class="justify-self-end stats bg-primary text-primary-content">
-            <div class="stat">
-                <div class="stat-title">Balance total</div>
-                
-                <div class="stat-value">{{$total-$discount}}</div>
-            </div>
-        </div> --}}
         </div>
         <div>
             <button wire:click="saveOrder" wire:loading.attr="disabled"

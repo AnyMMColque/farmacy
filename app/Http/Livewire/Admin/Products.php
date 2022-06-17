@@ -75,7 +75,7 @@ class Products extends Component
             'price' => 'numeric'
         ]);
 
-        if (!is_null($this->price)) {
+        if (!empty($this->price)) {
             $this->sale_price = $this->price + $this->price * 0.03;
         }
     }
@@ -103,6 +103,13 @@ class Products extends Component
     /* Registrar por lote */
     public function addInventory(Product $product)
     {
+        $this->validate([
+            'stock' => 'required|numeric',
+            'lot' => 'required|numeric',
+            'price' => 'required|numeric',
+            'exp_date' => 'required',
+        ]);
+
         $inventory = new Inventory();
         $inventory->product_id = $this->aux;
         $inventory->branch_id = auth()->user()->branch_id;

@@ -678,7 +678,6 @@
             height: 80%;
             width: 80%;
         }
-
     </style>
 </head>
 
@@ -702,56 +701,56 @@
         $customer = json_decode($invoice->customer);
         $user = json_decode($invoice->user);
     @endphp
-    <h3 class="text-center">{{$branch->name}}</h3>
+    <h3 class="text-center">{{ $branch->name }}</h3>
     <br>
-    <h5 class="text-center">{{$branch->nit}}</h5>
+    <h5 class="text-center">{{ $branch->nit }}</h5>
     <br>
-    <h5 class="text-center">{{$branch->address}}</h5>
+    <h5 class="text-center">{{ $branch->address }}</h5>
     <br>
     <div class="border-bottom"></div>
     <div>
 
-            <div class="text-center">
-                <p>FACTURA DE VENTA<br>
-                    {{ $invoice->order_id }}</p>
-            </div>
-            <section>
-                <div>
+        <div class="text-center">
+            <p>FACTURA DE VENTA<br>
+                {{ $invoice->order_id }}</p>
+        </div>
+        <section>
+            <div>
+                <div class="border-bottom"></div>
+                <table id="facliente">
+                    <thead>
+                        <tr>
+                            <th>Datos del Cliente</th>
+                        </tr>
+                    </thead>
                     <div class="border-bottom"></div>
-                    <table id="facliente">
-                        <thead>
-                            <tr>
-                                <th>Datos del Cliente</th>
-                            </tr>
-                        </thead>
-                        <div class="border-bottom"></div>
-                        <tbody>
-                            <tr>
-                                <th>
-                                    <p id="cliente">Sr(a). {{ $customer->name }}<br>
-                                        CI/NIT: {{ $customer->ci }}<br>
-                                        Fecha: {{ $invoice->created_at }}<br>
-                                    </p>
-                                </th>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-            <table id="facvendedor">
-                <thead>
-                    <tr id="fv">
-                        <th>Vendedor</th>
-                        {{-- <th>Fecha de Emisión</th> --}}
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{{ $user->name }}</td>
-                        {{-- <td>{{ $v->created_at }}</td> --}}
-                    </tr>
-                </tbody>
-            </table>
+                    <tbody>
+                        <tr>
+                            <th>
+                                <p id="cliente">Sr(a). {{ $customer->name }}<br>
+                                    CI/NIT: {{ $customer->ci }}<br>
+                                    Fecha: {{ $invoice->created_at }}<br>
+                                </p>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <table id="facvendedor">
+            <thead>
+                <tr id="fv">
+                    <th>Vendedor</th>
+                    {{-- <th>Fecha de Emisión</th> --}}
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ $user->name }}</td>
+                    {{-- <td>{{ $v->created_at }}</td> --}}
+                </tr>
+            </tbody>
+        </table>
 
     </div>
 
@@ -780,40 +779,24 @@
             @endforeach
 
         </tbody>
-        <tbody>
-            {{-- @foreach ($venta as $v)
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th>OP.Gravadas:</th>
-                    <td>s/ {{ round($v->total - $v->total * $v->impuesto, 2) }}</td>
-                </tr>
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th>IGV</th>
-                    <td>s/ {{ round($v->total * $v->impuesto, 2) }}</td>
-                </tr>
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th>Tota a pagar</th>
-                    <td>s/ {{ $v->total }}</td>
-                </tr>
-            @endforeach --}}
+        <tfoot>
             <tr>
-                <th></th>
-                <th></th>
                 <th>Total</th>
                 <td>{{ $invoice->total }}</td>
+            </tr>
+            <tr>
                 <th>Descuento</th>
                 <td>{{ $invoice->discount }}</td>
-                <th>Total a pagar</th>
+            </tr>
+            <tr style="width: 50px;">
+                <th >Total a pagar</th>
                 <td>{{ $invoice->pay }}</td>
+            </tr>
+            <tr>
                 <th>Cambio</th>
                 <td>{{ $invoice->change }}</td>
             </tr>
-        </tbody>
+        </tfoot>
     </table>
     <footer>
         <div id="gracias">

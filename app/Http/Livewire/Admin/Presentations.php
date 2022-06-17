@@ -81,7 +81,7 @@ class Presentations extends Component
 
     public function render()
     {
-        $presentations = Presentation::where('name', 'like', '%'.$this->search.'%',)->orderBy('created_at', 'desc')->paginate();
+        $presentations = Presentation::where('name', 'like', '%'.$this->search.'%',)->orderBy('created_at', 'desc')->paginate(5);
 
         return view('livewire.admin.presentations', compact('presentations'))->layout('layouts.admin');
     }

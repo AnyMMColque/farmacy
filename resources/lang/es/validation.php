@@ -20,6 +20,7 @@ return [
         'content'               => 'contenido',
         'country'               => 'país',
         'current_password'      => 'contraseña actual',
+        'customer'              => 'cliente',
         'date'                  => 'fecha',
         'day'                   => 'día',
         'description'           => 'descripción',
@@ -29,6 +30,7 @@ return [
         'gender'                => 'género',
         'hour'                  => 'hora',
         'last_name'             => 'apellido',
+        'lot'                   => 'lote',
         'message'               => 'mensaje',
         'minute'                => 'minuto',
         'mobile'                => 'móvil',
@@ -36,10 +38,12 @@ return [
         'name'                  => 'nombre',
         'password'              => 'contraseña',
         'password_confirmation' => 'confirmación de la contraseña',
+        'pay'                   => 'total a pagar',
         'phone'                 => 'teléfono',
         'photo'                 => 'foto',
         'price'                 => 'precio',
-        'role'                  => 'rol',
+        'product'               => 'producto',
+        'quantity'              => 'cantidad',
         'second'                => 'segundo',
         'sex'                   => 'sexo',
         'subject'               => 'asunto',
@@ -180,6 +184,27 @@ return [
         ],
         'name_p' => [
             'required' => 'El nombre de propietario es obligatorio.',
+        ],
+        'listProducts' => [
+            'required' => 'Es obligatorio agregar productos a la lista',
+        ],
+        'pro' => [
+            'required' => 'Es obligatorio agregar un nombre generico de la lista',
+        ],
+        'register' => [
+            'required' => 'Es obligatorio agregar el número de registro profesional',
+        ],
+        'branch' => [
+            'required' => 'Es obligatorio seleccionar una farmacia',
+        ],
+        'laboratory_id' => [
+            'required' => 'Es obligatorio seleccionar un laboratorio',
+        ],
+        'presentation_id' => [
+            'required' => 'Es obligatorio seleccionar una presentación',
+        ],
+        'exp_date' => [
+            'required' => 'Es obligatorio seleccionar la fecha de vencimiento',
         ],
     ],
 ];

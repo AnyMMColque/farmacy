@@ -26,7 +26,11 @@ class Sales extends Component
             $product->save();
         }
     }
-
+     /* Paginacion  Ventas */
+    public function paginationView()
+    {
+        return 'pagination::personal2-tailwind';
+    }
     public function render()
     {
         /* if (!is_null($this->search)) {

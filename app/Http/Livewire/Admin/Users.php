@@ -54,6 +54,7 @@ class Users extends Component
     public function resetVariables()
     {
         $this->reset(['name', 'ci', 'address', 'telephone', 'username', 'branch', 'num', 'rol']);
+        $this->resetValidation();
     }
     /* Guardar Usuario */
     public function save()
@@ -95,6 +96,7 @@ class Users extends Component
         $this->reset(['name', 'ci', 'address', 'telephone', 'username', 'branch', 'num', 'rol']);
         //$this->resetVariables();
         $this->emit('saved');
+
     }
     /* Editar Usuario */
     public function edit($username)

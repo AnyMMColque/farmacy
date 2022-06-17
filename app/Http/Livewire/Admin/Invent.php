@@ -12,6 +12,8 @@ class Invent extends Component
     use WithPagination;
 
     public $stock, $lot, $price, $sale_price, $exp_date, $aux;
+
+    protected $listeners = [ 'updatePrice'];
     public $rules = [
         'stock' => 'required|numeric',
         'lot' => 'required|numeric',

@@ -65,10 +65,11 @@ class SalesCreate extends Component
             foreach ($this->saveProducts as $key => $product) {
                 $lot = $product->inventories->where('lot', $this->lots[$key])->first();
                 $this->total = round($this->total + $lot->sale_price * $this->subtotal[$key], 2);
+                // $this->total = $this->total + $lot->sale_price * $this->subtotal[$key];
             }
         }
 
-        $this->reset(['pay']);
+        $this->reset(['pay', 'lot']);
         $this->change = false;
     }
 
@@ -111,7 +112,7 @@ class SalesCreate extends Component
         // $this->quantity = 1;
     }
 
-    public function removeProduct($product_id, $key)
+    public function removeProduct($product_id, $key, $lot)
     {
         $remove = [];
         array_push($remove, $product_id);
@@ -121,12 +122,18 @@ class SalesCreate extends Component
         unset($this->subtotal[$key]);
         $this->subtotal = array_values($this->subtotal);
 
+        $removeLot = [];
+        array_push($removeLot, $lot);
+        $this->lots = array_diff($this->lots, $removeLot);
+        $this->lots = array_values($this->lots);
+
         $input = Product::whereIn('id', $this->listProducts)->get();
         $this->saveProducts = $input;
         $this->reset('total');
 
         foreach ($this->saveProducts as $key => $product) {
-            $this->total = $this->total + $product->sale_price * $this->subtotal[$key];
+            $lot = $product->inventories->where('lot', $this->lots[$key])->first();
+            $this->total = round($this->total + $lot->sale_price * $this->subtotal[$key], 2);
         }
     }
     /*  Registrar Nuevo Usuario para realizar la venta*/

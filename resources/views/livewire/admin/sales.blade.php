@@ -4,8 +4,7 @@
     </h2>
     {{-- Boton para registrar nueva venta --}}
     <div>
-        <button
-            class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-700 dark:bg-green-700 border border-transparent rounded-lg active:bg-green-800 hover:bg-green-800 focus:outline-none focus:shadow-outline-purple"
+        <button class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-700 dark:bg-green-700 border border-transparent rounded-lg active:bg-green-800 hover:bg-green-800 focus:outline-none focus:shadow-outline-purple"
             wire:click="new">
             Nuevo
         </button>
@@ -18,8 +17,7 @@
             <div class="w-full overflow-x-auto">
                 <table class="w-full whitespace-no-wrap">
                     <thead>
-                        <tr
-                            class="text-xs font-semibold tracking-wide text-left bg-green-600 dark:bg-green-700 text-gray-50 uppercase border-b dark:border-gray-700 dark:text-gray-50 ">
+                        <tr class="text-xs font-semibold tracking-wide text-left bg-green-600 dark:bg-green-700 text-gray-50 uppercase border-b dark:border-gray-700 dark:text-gray-50 ">
                             <th class="px-4 py-3">ID</th>
                             <th class="px-4 py-3">Usuario</th>
                             <th class="px-4 py-3">Cliente</th>
@@ -33,8 +31,7 @@
                         @foreach ($orders as $order)
                             <tr class="text-gray-700 dark:text-gray-400">
                                 <td class="px-4 py-3">
-                                    <div
-                                        class="flex items-center text-sm  dark:bg-green-700 rounded-full px-2 py-1 dark:text-green-100">
+                                    <div class="flex items-center text-sm  dark:bg-green-700 rounded-full px-2 py-1 dark:text-green-100">
                                         <p class="font-semibold">{{ $order->id }}</p>
                                     </div>
                                 </td>
@@ -134,7 +131,7 @@
                 <span class="col-span-2"></span>
                 <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
                     <nav aria-label="Table navigation">
-                        {!! $orders->links('pagination::personal-tailwind') !!}
+                        {!! $orders->links() !!}
                     </nav>
                 </span>
             </div>

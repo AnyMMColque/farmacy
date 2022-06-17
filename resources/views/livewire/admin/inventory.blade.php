@@ -12,7 +12,7 @@
             <div class="px-4 py-2 -mx-3">
                 <div class="mx-3">
                     <span class="font-semibold text-emerald-500 dark:text-emerald-400">Exito</span>
-                    <p class="text-sm text-gray-600 dark:text-gray-200">Producto Registrado!</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-200">Lote Actualizado!</p>
                 </div>
             </div>
         </div>
@@ -24,7 +24,7 @@
         </a>
     </div>
     <h1 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-        Lista de productos por lotes {{ $aux }}
+        Lista de productos por lotes 
     </h1>
     <div class="w-full overflow-hidden rounded-lg shadow-xs">
         {{-- Lista que muestra productos registrados --}}
@@ -50,6 +50,7 @@
                                     class="flex items-center text-sm  dark:bg-green-700 rounded-full px-2 py-1 dark:text-green-100">
                                     <p class="font-semibold">{{ $inventory->lot }}</p>
                                 </div>
+                                <x-jet-input-error for="lot" />
                             </td>
                             <td class="px-4 py-3 text-sm">
                                 {{ $inventory->product->name }}
@@ -222,7 +223,7 @@
                     class="w-full px-5 py-3 text-sm font-medium leading-5 bg-green-700 text-white transition-colors duration-150 dark:bg-green-700 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-green-900 hover:bg-green-900 focus:outline-none focus:shadow-outline-purple"
                     wire:click="update({{ $aux }})"
                     @click="Livewire.on('saved', Id => {inventory = false; })">
-                    Actualizar
+                    Editar
                 </button>
             </footer>
         </div>
