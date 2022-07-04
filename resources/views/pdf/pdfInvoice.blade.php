@@ -701,18 +701,18 @@
         $customer = json_decode($invoice->customer);
         $user = json_decode($invoice->user);
     @endphp
-    <h3 class="text-center">{{ $branch->name }}</h3>
-    <br>
-    <h5 class="text-center">{{ $branch->nit }}</h5>
-    <br>
+    <p>CADENA DE FARMACIAS SAN LORENZO</p>
+    <h5 class="text-center">{{ $branch->name }}</h5>
     <h5 class="text-center">{{ $branch->address }}</h5>
-    <br>
+    <h5 class="text-center">{{ $branch->telephone }}</h5>
     <div class="border-bottom"></div>
     <div>
 
         <div class="text-center">
-            <p>FACTURA DE VENTA<br>
-                {{ $invoice->order_id }}</p>
+            <h5>FACTURA DE VENTA<br></h5>
+            <p>NIT:{{ $branch->nit }}</p>
+            <p>Nº Factura:{{ $invoice->order_id }}</p>
+            <p>Nº de Autorización:{{ $branch->authorization }}</p>
         </div>
         <section>
             <div>
@@ -798,7 +798,11 @@
             </tr>
         </tfoot>
     </table>
+
     <footer>
+        <div >
+            <p><b>CODIGO DE CONTROL:</b>{{ $invoice->controlCOde }}</p>
+        </div>
         <div id="gracias">
             <p><b>Gracias por su compra!</b></p>
         </div>

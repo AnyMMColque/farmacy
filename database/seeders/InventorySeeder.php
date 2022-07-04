@@ -59,7 +59,7 @@ class InventorySeeder extends Seeder
             'id' => 5,
             'product_id' =>4,
             'branch_id' =>2,
-            'stock' =>2,
+            'stock' =>5,
             'lot' =>9456734568,
             'price' => 15,
             'sale_price' => 15.045,

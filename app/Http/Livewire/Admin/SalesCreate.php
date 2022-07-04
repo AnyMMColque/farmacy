@@ -9,6 +9,7 @@ use App\Models\Invoice;
 use App\Models\Product;
 use Livewire\Component;
 use App\Models\Customer;
+use App\Models\Inventory;
 use Livewire\WithPagination;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -82,6 +83,18 @@ class SalesCreate extends Component
             $this->resetPage();
         } else {
             $this->change = true;
+        }
+    }
+
+    public function updatedQuantity()
+    {
+        $this->validate([
+            'quantity' => 'required'
+        ]);
+
+        if($this->quantity > Inventory::where('lot', $this->lot)->first()->stock){
+            $this->emit('errorStock');
+            $this->reset('quantity');
         }
     }
 
@@ -220,6 +233,11 @@ class SalesCreate extends Component
             $prices_string .=  " (" . $product->pivot->price . "x" . $product->pivot->quantity . ")";
         }
 
+        $date = date('Ymd', strtotime(now()));
+
+        $controlOrder = new Order();
+        $controlCode = $controlOrder->controlCode($order->id, $this->customer->ci, strval($date), floatval($order->total), 'zZ7Z]xssKqkEf_6K9uH(EcV+%x+u[Cca9T%+_$kiLjT8(zr3T9b5Fx2xG-D+_EBS', intval($branch->authorization));
+        // ($invoiceId, $ci, $date, $amount, $dosageKey, $authorizationNumber)
         Invoice::create([
             'order_id' => $order->id,
             'order' => json_encode($order),
@@ -233,7 +251,8 @@ class SalesCreate extends Component
             'pay' => $order->pay,
             'discount' => $order->discount,
             'change' => $order->pay - ($order->total - $order->discount),
-            'date' => now()
+            'date' => now(),
+            'controlCOde' => $controlCode
         ]);
 
         return redirect(route('admin.sales'));

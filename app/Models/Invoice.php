@@ -9,5 +9,5 @@ class Invoice extends Model
 {
     use HasFactory;
 
-    protected $fillable =['order_id', 'order', 'customer', 'user','branch', 'products', 'products_string', 'total', 'pay', 'discount', 'change', 'status', 'date', 'prices_string'];
+    protected $fillable =['order_id', 'order', 'customer', 'user','branch', 'products', 'products_string', 'total', 'pay', 'discount', 'change', 'status', 'date', 'prices_string', 'controlCOde'];
 }

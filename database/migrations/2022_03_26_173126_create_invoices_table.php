@@ -29,6 +29,7 @@ class CreateInvoicesTable extends Migration
             $table->string('change');
             $table->string('status')->default(0);
             $table->date('date');
+            $table->string('controlCOde');
 
             $table->timestamps();
         });

@@ -50,6 +50,6 @@ class InventoryExport implements FromCollection, WithHeadings, WithMapping
     public function collection()
     {
         return Inventory::where('branch_id', $this->id)
-                        ->where('exp_date', '<=', date('Y-m-d', strtotime('-1 month', strtotime(now()))))->get();
+                        ->where('exp_date', '<=', date('Y-m-d', strtotime('+1 month', strtotime(now()))))->get();
     }
 }

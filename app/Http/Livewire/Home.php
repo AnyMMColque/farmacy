@@ -28,10 +28,11 @@ class Home extends Component
         ]);
         $this->products = Product::where(function($query){
             $query->where('name', 'like', '%'.$this->name.'%');
+            $query->orwhere('g_name', 'like', '%'.$this->name.'%');
             $query->where('stock', '>=', intval($this->stock));
 
             $this->reset();
-        })->orderBy('name', 'asc')->get();     
+        })->orderBy('name', 'asc')->get();
     }
     public function render()
     {
