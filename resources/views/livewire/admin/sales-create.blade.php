@@ -98,7 +98,7 @@ use App\Models\Product;
                                 <option value="" selected>Selecciona un producto</option>
                                 @foreach ($product->inventories as $lote)
                                     @if ($lote->stock !== 0 && $lote->status == 0)
-                                        <option value="{{ $lote->lot }}">{{ $lote->lot }}</option>
+                                        <option value="{{ $lote->lot }}">{{ $lote->lot }} {{ '(Cantidad: ' . $lote->stock . ')' }}</option>
                                     @endif
                                 @endforeach
                             </select>

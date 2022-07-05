@@ -92,7 +92,7 @@ class SalesCreate extends Component
             'quantity' => 'required'
         ]);
 
-        if($this->quantity > Inventory::where('lot', $this->lot)->first()->stock){
+        if($this->quantity > Inventory::where('lot', $this->lot)->first()->stock || $this->quantity < 0){
             $this->emit('errorStock');
             $this->reset('quantity');
         }
